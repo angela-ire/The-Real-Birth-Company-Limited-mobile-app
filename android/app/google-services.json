@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "845963860540",
+    "project_id": "realbirthapp-645e3",
+    "storage_bucket": "realbirthapp-645e3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845963860540:android:4fe9fa66e34f0da5734139",
+        "android_client_info": {
+          "package_name": "com.example.real_birth_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBydBOh_zxVAiV8tjW_8HLW-1tbbsjiDgc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
