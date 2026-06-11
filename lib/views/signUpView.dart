@@ -11,8 +11,11 @@ class Signupview extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(padding: const EdgeInsets.symmetric(horizontal: 25),
+      body:Center( 
+        child:Padding(padding: const EdgeInsets.all(30),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Spacer(),
             const Text("Sign Up", style: TextStyle(fontSize: 40, fontWeight: FontWeight.w700),),
@@ -25,9 +28,9 @@ class Signupview extends StatelessWidget{
           ],
         )
       )
-
-    );
-  }
+    )
+  );
+}
 
   void signup(){
     control.createUser(_email.text, _password.text);
