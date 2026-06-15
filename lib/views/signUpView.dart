@@ -10,11 +10,11 @@ class Signupview extends StatelessWidget{
   final _name = TextEditingController();
   final _postcode = TextEditingController();
   final _hospital = TextEditingController();
-  DateTime? _age;
+  DateTime? _dateOfBirth;
   final _lang = TextEditingController();
   final _bioSex = TextEditingController();
-  final _dueDate = TextEditingController();
-  final _reistrationDate = TextEditingController();
+  DateTime? _dueDate;
+  DateTime? _reistrationDate;
   final _discover = TextEditingController();
   final _classes = TextEditingController();
   final control = signUpController();
@@ -36,16 +36,19 @@ class Signupview extends StatelessWidget{
             const SizedBox(height: 50,),
             TextField(controller: _email,
             decoration: InputDecoration(labelText: "Email"),style: TextStyle(fontSize: 20),),
+            
             /* Password */
             const SizedBox(height: 50,),
             TextField(controller: _password,
             decoration: InputDecoration(labelText: "Password"),style: TextStyle(fontSize: 20),),
+            
             /* Name */
             const SizedBox(height: 50,),
             TextField(controller: _name,
             decoration: InputDecoration(labelText: "Full Name"),style: TextStyle(fontSize: 20),),
-            const SizedBox(height: 50,),
+            
             /* Age */
+            const SizedBox(height: 50,),
             Text("Date Of Birth"),
             BirthPicker(
               decorationBuilder: (bool isFocused) {
@@ -58,9 +61,58 @@ class Signupview extends StatelessWidget{
                 );
               },
               onChanged: (DateTime? dateTime) {
-                _age = dateTime;
+                _dateOfBirth = dateTime;
               },
             ),
+            
+            /* Postcode */
+            const SizedBox(height: 50,),
+            TextField(controller: _postcode,
+            decoration: InputDecoration(labelText: "Postcode"),style: TextStyle(fontSize: 20),),
+            
+            /* Hospital */
+            const SizedBox(height: 50,),
+            TextField(controller: _hospital,
+            decoration: InputDecoration(labelText: "Hospital"),style: TextStyle(fontSize: 20),),
+            
+            /* lang */
+            const SizedBox(height: 50,),
+            TextField(controller: _lang,
+            decoration: InputDecoration(labelText: "lang"),style: TextStyle(fontSize: 20),),
+            
+            /* Bio Sex */
+            const SizedBox(height: 50,),
+            TextField(controller: _bioSex,
+            decoration: InputDecoration(labelText: "Biological Sex"),style: TextStyle(fontSize: 20),),
+            
+            /*Due Date */
+            const SizedBox(height: 50,),
+            Text("Due Date"),
+            BirthPicker(
+              decorationBuilder: (bool isFocused) {
+                return BoxDecoration(
+                  border: Border.all(
+                    color: isFocused ? Colors.blue : Colors.grey,
+                    width: isFocused ? 2.0 : 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                );
+              },
+              onChanged: (DateTime? dateTime) {
+                _dueDate = dateTime;
+              },
+            ),
+            
+            /* FoundOut */
+            const SizedBox(height: 50,),
+            TextField(controller: _discover,
+            decoration: InputDecoration(labelText: "How Did you Find Us"),style: TextStyle(fontSize: 20),),
+            
+            /* Classes */
+            const SizedBox(height: 50,),
+            TextField(controller: _classes,
+            decoration: InputDecoration(labelText: "Do you go to any Classes"),style: TextStyle(fontSize: 20),),
+
             /* SignUp Button */
             const SizedBox(height: 30,),
             ElevatedButton(onPressed:() => signup(), child: Text("SignUp"))
@@ -73,7 +125,7 @@ class Signupview extends StatelessWidget{
 }
 
   void signup(){
-    control.createUser(_name.text, _email.text, _password.text, "BBB", "Good", DateTime.now(), "en", "M", DateTime.now(), DateTime.now(), "Option 1", "No");
+    control.createUser(_name.text, _email.text, _password.text, _postcode.text, _hospital.text, _dateOfBirth!, _lang.text, _bioSex.text, _dueDate!, DateTime.now(), _discover.text, _classes.text);
   }
   
 }
