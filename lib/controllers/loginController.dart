@@ -1,6 +1,9 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:real_birth_app/views/signUpView.dart';
 
 class Logincontroller {
 final auth = FirebaseAuth.instance;
@@ -8,9 +11,9 @@ final auth = FirebaseAuth.instance;
 Future signInUser(String e, String p) async{
   try{
     await auth.signInWithEmailAndPassword(email: e, password: p);
-    log("Success");
+    Get.to(Signupview());
   }
-  catch(e){}
+  catch(e){log("failed");}
 }
 
 }
