@@ -5,48 +5,59 @@ import 'package:real_birth_app/controllers/signUpController.dart';
 import 'package:real_birth_app/models/langModel.dart';
 
 // ignore: must_be_immutable
-class Signupview extends StatelessWidget{
-  final _email = TextEditingController();
-  final _password = TextEditingController();
-  final _name = TextEditingController();
-  final _postcode = TextEditingController();
-  final _hospital = TextEditingController();
-  DateTime? _dateOfBirth;
-  String? _lang;
-  String? _bioSex;
-  DateTime? _dueDate;
-  final _discover = TextEditingController();
-  final _classes = TextEditingController();
-  final control = signUpController();
-  List<Langmodel> languages=[];
+class Signupview extends StatefulWidget{
 
   Signupview({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body:Center( 
-        child:Padding(padding: const EdgeInsets.all(30),
-        child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+  _signUpViewState createState() => _signUpViewState();}
+
+  class _signUpViewState extends State<Signupview>{
+    final _email = TextEditingController();
+    final _password = TextEditingController();
+    final _name = TextEditingController();
+    final _postcode = TextEditingController();
+    final _hospital = TextEditingController();
+    DateTime? _dateOfBirth;
+    String? _lang;
+    String? _bioSex;
+    DateTime? _dueDate;
+    final _discover = TextEditingController();
+    final _classes = TextEditingController();
+    final control = signUpController();
+    List<Langmodel> languages=[];
+
+    bool _validateName = false;
+    bool _validateEmail = false;
+    bool _validatePassword = false;
+    bool _validateHospital = false;
+    bool _validatePostcode = false;
+    
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        body:Center( 
+          child:Padding(padding: const EdgeInsets.all(30),
+          child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
             const Text("Sign Up", style: TextStyle(fontSize: 40, fontWeight: FontWeight.w700),),
             /* Email */
             const SizedBox(height: 50,),
             TextField(controller: _email,
-            decoration: InputDecoration(labelText: "Email"),style: TextStyle(fontSize: 20),),
+            decoration: InputDecoration(labelText: "Email",errorText: _validateEmail? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),),
             
             /* Password */
             const SizedBox(height: 50,),
             TextField(controller: _password,
-            decoration: InputDecoration(labelText: "Password"),style: TextStyle(fontSize: 20),),
+            decoration: InputDecoration(labelText: "Password", errorText: _validatePassword? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),),
             
             /* Name */
             const SizedBox(height: 50,),
             TextField(controller: _name,
-            decoration: InputDecoration(labelText: "Full Name"),style: TextStyle(fontSize: 20),),
+            decoration: InputDecoration(labelText: "Full Name", errorText: _validateName? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),),
             
             /* Age */
             const SizedBox(height: 50,),
@@ -70,12 +81,12 @@ class Signupview extends StatelessWidget{
             /* Postcode */
             const SizedBox(height: 50,),
             TextField(controller: _postcode,
-            decoration: InputDecoration(labelText: "Postcode"),style: TextStyle(fontSize: 20),),
+            decoration: InputDecoration(labelText: "Postcode", errorText: _validatePostcode? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),),
             
             /* Hospital */
             const SizedBox(height: 50,),
             TextField(controller: _hospital,
-            decoration: InputDecoration(labelText: "Hospital"),style: TextStyle(fontSize: 20),),
+            decoration: InputDecoration(labelText: "Hospital", errorText: _validateHospital? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),),
             
             /* lang */
             const SizedBox(height: 50,),
@@ -139,7 +150,15 @@ class Signupview extends StatelessWidget{
 
             /* SignUp Button */
             const SizedBox(height: 30,),
-            ElevatedButton(onPressed:() => signup(), child: Text("SignUp"))
+            ElevatedButton(onPressed: () {
+                setState(() {
+                  _validateName = _name.text.isEmpty;
+                  _validateEmail = _email.text.isEmpty;
+                  _validatePassword = _password.text.isEmpty;
+                  _validateHospital = _hospital.text.isEmpty;
+                  _validatePostcode = _postcode.text.isEmpty;
+                });
+              signup();}, child: Text("SignUp"))
           ],
         )
       )
@@ -150,7 +169,10 @@ class Signupview extends StatelessWidget{
   /* Sends data to controller */
   void signup(){
     try{
-      control.createUser(_name.text, _email.text, _password.text, _postcode.text, _hospital.text, _dateOfBirth!, _lang!, _bioSex!, _dueDate!, DateTime.now(), _discover.text, _classes.text);
+      if(_name.text.isEmpty || _email.text.isEmpty || _password.text.isEmpty || _hospital.text.isEmpty || _postcode.text.isEmpty){}
+      else{
+        control.createUser(_name.text, _email.text, _password.text, _postcode.text, _hospital.text, _dateOfBirth!, _lang!, _bioSex!, _dueDate!, DateTime.now(), _discover.text, _classes.text);
+      }
     }
     catch(e){}
   }
