@@ -12,8 +12,8 @@ class Signupview extends StatelessWidget{
   final _postcode = TextEditingController();
   final _hospital = TextEditingController();
   DateTime? _dateOfBirth;
-  final _lang = TextEditingController();
-  final _bioSex = TextEditingController();
+  String? _lang;
+  String? _bioSex;
   DateTime? _dueDate;
   final _discover = TextEditingController();
   final _classes = TextEditingController();
@@ -84,7 +84,10 @@ class Signupview extends StatelessWidget{
                 languages = snapshot.data!;
                 return DropdownMenu(textStyle: TextStyle(fontSize: 20), 
                 label: Text("Language Selection"),
-                dropdownMenuEntries: languages.map((currLang)=>DropdownMenuEntry(value: currLang.key, label: currLang.text)).toList()/* Uses the members of database as the items in the drop down menu list */
+                dropdownMenuEntries: languages.map((currLang)=>DropdownMenuEntry(value: currLang.key, label: currLang.text)).toList(),/* Uses the members of database as the items in the drop down menu list */
+                onSelected: (value) {
+                  _lang=value;
+                },
               );
             }
             else{
@@ -94,10 +97,13 @@ class Signupview extends StatelessWidget{
 
             /* Bio Sex */
             const SizedBox(height: 50,),
-            DropdownMenu(controller: _bioSex,textStyle: TextStyle(fontSize: 20) ,label: Text("What is your biological sex") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
+            DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text("What is your biological sex") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
               DropdownMenuEntry(value: "M", label: "Male"),
               DropdownMenuEntry(value: "F", label: "Female")
              ],
+             onSelected: (value) {
+                  _bioSex=value;
+                },
             ),
             
             /*Due Date */
@@ -144,7 +150,7 @@ class Signupview extends StatelessWidget{
   /* Sends data to controller */
   void signup(){
     try{
-      control.createUser(_name.text, _email.text, _password.text, _postcode.text, _hospital.text, _dateOfBirth!, _lang.text, _bioSex.text, _dueDate!, DateTime.now(), _discover.text, _classes.text);
+      control.createUser(_name.text, _email.text, _password.text, _postcode.text, _hospital.text, _dateOfBirth!, _lang!, _bioSex!, _dueDate!, DateTime.now(), _discover.text, _classes.text);
     }
     catch(e){}
   }
