@@ -1,9 +1,10 @@
-import 'dart:math';
-
+// ignore: file_names
 import 'package:birth_picker/birth_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:real_birth_app/controllers/signUpController.dart';
+import 'package:real_birth_app/models/langModel.dart';
 
+// ignore: must_be_immutable
 class Signupview extends StatelessWidget{
   final _email = TextEditingController();
   final _password = TextEditingController();
@@ -14,10 +15,10 @@ class Signupview extends StatelessWidget{
   final _lang = TextEditingController();
   final _bioSex = TextEditingController();
   DateTime? _dueDate;
-  DateTime? _reistrationDate;
   final _discover = TextEditingController();
   final _classes = TextEditingController();
   final control = signUpController();
+  List<Langmodel> languages=[];
 
   Signupview({super.key});
 
@@ -50,6 +51,7 @@ class Signupview extends StatelessWidget{
             /* Age */
             const SizedBox(height: 50,),
             Text("Date Of Birth"),
+            /* Handles picking a specific date */
             BirthPicker(
               decorationBuilder: (bool isFocused) {
                 return BoxDecoration(
@@ -77,13 +79,26 @@ class Signupview extends StatelessWidget{
             
             /* lang */
             const SizedBox(height: 50,),
-            TextField(controller: _lang,
-            decoration: InputDecoration(labelText: "lang"),style: TextStyle(fontSize: 20),),
-            
+            StreamBuilder(stream: signUpController().fetchLanguages(), builder: (context, snapshot){/* Stream builder  */
+              if (snapshot.hasData){
+                languages = snapshot.data!;
+                return DropdownMenu(textStyle: TextStyle(fontSize: 20), 
+                label: Text("Language Selection"),
+                dropdownMenuEntries: languages.map((currLang)=>DropdownMenuEntry(value: currLang.key, label: currLang.text)).toList()/* Uses the members of database as the items in the drop down menu list */
+              );
+            }
+            else{
+              return Text("Somthing Went Wrong");
+            }
+            }),
+
             /* Bio Sex */
             const SizedBox(height: 50,),
-            TextField(controller: _bioSex,
-            decoration: InputDecoration(labelText: "Biological Sex"),style: TextStyle(fontSize: 20),),
+            DropdownMenu(controller: _bioSex,textStyle: TextStyle(fontSize: 20) ,label: Text("What is your biological sex") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
+              DropdownMenuEntry(value: "M", label: "Male"),
+              DropdownMenuEntry(value: "F", label: "Female")
+             ],
+            ),
             
             /*Due Date */
             const SizedBox(height: 50,),
@@ -105,8 +120,11 @@ class Signupview extends StatelessWidget{
             
             /* FoundOut */
             const SizedBox(height: 50,),
-            TextField(controller: _discover,
-            decoration: InputDecoration(labelText: "How Did you Find Us"),style: TextStyle(fontSize: 20),),
+            DropdownMenu(controller: _discover,textStyle: TextStyle(fontSize: 20) ,label: Text("How did you find us?") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
+              DropdownMenuEntry(value: "Option 1", label: "Option 1"),
+              DropdownMenuEntry(value: "Option 1", label: "Option 2")
+             ],
+            ),
             
             /* Classes */
             const SizedBox(height: 50,),
@@ -123,9 +141,12 @@ class Signupview extends StatelessWidget{
   )
   );
 }
-
+  /* Sends data to controller */
   void signup(){
-    control.createUser(_name.text, _email.text, _password.text, _postcode.text, _hospital.text, _dateOfBirth!, _lang.text, _bioSex.text, _dueDate!, DateTime.now(), _discover.text, _classes.text);
+    try{
+      control.createUser(_name.text, _email.text, _password.text, _postcode.text, _hospital.text, _dateOfBirth!, _lang.text, _bioSex.text, _dueDate!, DateTime.now(), _discover.text, _classes.text);
+    }
+    catch(e){}
   }
   
 }

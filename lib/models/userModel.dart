@@ -15,6 +15,7 @@ class userModel {
   String? discover;
   String? classes;
 
+/* Converts the object into json data to be sent to Firebase */
   Map<String, dynamic> toJson() =>{
     'uid' : uid,
     'name' : name,

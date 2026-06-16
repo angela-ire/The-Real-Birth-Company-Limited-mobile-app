@@ -8,6 +8,7 @@ import 'package:real_birth_app/views/signUpView.dart';
 class Logincontroller {
 final auth = FirebaseAuth.instance;
 
+/* Sign in */
 Future signInUser(String e, String p) async{
   try{
     await auth.signInWithEmailAndPassword(email: e, password: p);
