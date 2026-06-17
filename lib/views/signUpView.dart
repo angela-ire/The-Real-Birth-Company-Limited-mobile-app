@@ -26,6 +26,7 @@ class Signupview extends StatefulWidget{
     String? _classes;
     final control = signUpController();
     List<Langmodel> languages=[];
+    DateTime curr = DateTime.now();
 
     bool _validateName = false;
     bool _validateEmail = false;
@@ -63,7 +64,7 @@ class Signupview extends StatefulWidget{
             const SizedBox(height: 50,),
             Text("Date Of Birth"),
             /* Handles picking a specific date */
-            BirthPicker(locale: 'en_GB',
+            BirthPicker(locale: 'en_GB', maximumDate: curr,
               decorationBuilder: (bool isFocused) {
                 return BoxDecoration(
                   border: Border.all(
@@ -120,7 +121,7 @@ class Signupview extends StatefulWidget{
             /*Due Date */
             const SizedBox(height: 50,),
             Text("Due Date"),
-            BirthPicker(locale: 'en_GB',
+            BirthPicker(locale: 'en_GB',minimumDate: curr,maximumDate: DateTime(curr.year, curr.month + 10, curr.day),
               decorationBuilder: (bool isFocused) {
                 return BoxDecoration(
                   border: Border.all(
@@ -149,8 +150,8 @@ class Signupview extends StatefulWidget{
             /* Classes */
             const SizedBox(height: 50,),
             DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text("Do you attend classes?") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
-              DropdownMenuEntry(value: "Yes", label: "No"),
-              DropdownMenuEntry(value: "Yes", label: "No")
+              DropdownMenuEntry(value: "Yes", label: "Yes"),
+              DropdownMenuEntry(value: "No", label: "No")
              ],
              onSelected: (value) {
                   _classes=value;
