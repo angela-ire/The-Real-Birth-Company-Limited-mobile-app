@@ -63,7 +63,7 @@ class Signupview extends StatefulWidget{
             const SizedBox(height: 50,),
             Text("Date Of Birth"),
             /* Handles picking a specific date */
-            BirthPicker(
+            BirthPicker(locale: 'en_GB',
               decorationBuilder: (bool isFocused) {
                 return BoxDecoration(
                   border: Border.all(
@@ -120,7 +120,7 @@ class Signupview extends StatefulWidget{
             /*Due Date */
             const SizedBox(height: 50,),
             Text("Due Date"),
-            BirthPicker(
+            BirthPicker(locale: 'en_GB',
               decorationBuilder: (bool isFocused) {
                 return BoxDecoration(
                   border: Border.all(
