@@ -22,8 +22,8 @@ class Signupview extends StatefulWidget{
     String? _lang;
     String? _bioSex;
     DateTime? _dueDate;
-    final _discover = TextEditingController();
-    final _classes = TextEditingController();
+    String? _discover;
+    String? _classes;
     final control = signUpController();
     List<Langmodel> languages=[];
 
@@ -137,16 +137,25 @@ class Signupview extends StatefulWidget{
             
             /* FoundOut */
             const SizedBox(height: 50,),
-            DropdownMenu(controller: _discover,textStyle: TextStyle(fontSize: 20) ,label: Text("How did you find us?") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
+            DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text("How did you find us?") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
               DropdownMenuEntry(value: "Option 1", label: "Option 1"),
               DropdownMenuEntry(value: "Option 1", label: "Option 2")
              ],
+             onSelected: (value) {
+                  _discover=value;
+                },
             ),
             
             /* Classes */
             const SizedBox(height: 50,),
-            TextField(controller: _classes,
-            decoration: InputDecoration(labelText: "Do you go to any Classes"),style: TextStyle(fontSize: 20),),
+            DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text("Do you attend classes?") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
+              DropdownMenuEntry(value: "Yes", label: "No"),
+              DropdownMenuEntry(value: "Yes", label: "No")
+             ],
+             onSelected: (value) {
+                  _classes=value;
+                },
+            ),
 
             /* SignUp Button */
             const SizedBox(height: 30,),
@@ -169,12 +178,20 @@ class Signupview extends StatefulWidget{
   /* Sends data to controller */
   void signup(){
     try{
-      if(_name.text.isEmpty || _email.text.isEmpty || _password.text.isEmpty || _hospital.text.isEmpty || _postcode.text.isEmpty){}
+      if(_name.text.isEmpty || _email.text.isEmpty || _password.text.isEmpty || _hospital.text.isEmpty || _postcode.text.isEmpty){
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Please make sure all fields are full"),
+));
+      }
       else{
-        control.createUser(_name.text, _email.text, _password.text, _postcode.text, _hospital.text, _dateOfBirth!, _lang!, _bioSex!, _dueDate!, DateTime.now(), _discover.text, _classes.text);
+        control.createUser(_name.text, _email.text, _password.text, _postcode.text, _hospital.text, _dateOfBirth!, _lang!, _bioSex!, _dueDate!, DateTime.now(), _discover!, _classes!);
       }
     }
-    catch(e){}
+    catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Please make sure all fields are full"),
+      ));
+    }
   }
 
 String? validateEmail(String? value) {

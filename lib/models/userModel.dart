@@ -30,4 +30,7 @@ class userModel {
     'discover' : discover,
     'classes' : classes
   };
+
+
+
 }

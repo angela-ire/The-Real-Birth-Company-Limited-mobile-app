@@ -18,8 +18,21 @@ class signUpController {
   }
 
   /* Creates the document for the specific user */
-  Future createUserDocument(String name, String uid, String email, String postcode, String hospital, DateTime dateOfBirth, String lang, String bioSex, DateTime dueDate, DateTime registrationDate, String discover, String classes) async{
+  Future createUserDocument(userModel user) async{
     try{
+      await db.collection("users").doc(user.uid).set(user.toJson());
+    }
+    catch(e){}
+  }
+
+  /* Adds user to Auth table(account creation) */
+  Future createUser(String name, String email, String password, String postcode, String hospital, DateTime dateOfBirth, String lang, String bioSex, DateTime dueDate, DateTime registrationDate, String discover, String classes) async{
+    try{
+    await auth.createUserWithEmailAndPassword(email: email, password: password);
+    final u = auth.currentUser;
+    final uid = u!.uid;
+    
+      /* Adds user to Auth table(account creation) */
       userModel user = userModel();
       user.name = name;
       user.email = email;
@@ -33,18 +46,8 @@ class signUpController {
       user.discover = discover;
       user.classes = classes;
       user.uid = uid;
-      await db.collection("users").doc(user.uid).set(user.toJson());
-    }
-    catch(e){}
-  }
 
-  /* Adds user to Auth table(account creation) */
-  Future createUser(String name, String email, String password, String postcode, String hospital, DateTime dateOfBirth, String lang, String bioSex, DateTime dueDate, DateTime registrationDate, String discover, String classes) async{
-    try{
-    await auth.createUserWithEmailAndPassword(email: email, password: password);
-    final u = auth.currentUser;
-    final uid = u!.uid;
-    createUserDocument(name, uid.toString(), email, postcode, hospital, dateOfBirth, lang, bioSex, dueDate, registrationDate, discover, classes);
+    createUserDocument(user);
     }
     catch(e){}
 }
