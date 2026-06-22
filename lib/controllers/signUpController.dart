@@ -22,9 +22,12 @@ class signUpController {
             .toList());
   }
 
-  Future<void> fetchStats()async {
-    DocumentReference<Map<String, dynamic>> stat = db.collection("stats").doc("userStats");
-    Usersignupstats jsonStat = Usersignupstats.fromJson(stat as Map<String, dynamic>);
+  Future<Usersignupstats> fetchStats()async {
+    return db.collection("stats").doc("userStats")
+        .get()
+        .then((value){
+            return Usersignupstats.fromJson(value.data());
+        });
   }
 
 

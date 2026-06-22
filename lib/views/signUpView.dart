@@ -76,6 +76,7 @@ class Signupview extends StatefulWidget{
               },
               onChanged: (DateTime? dateTime) {
                 _dateOfBirth = dateTime;
+                control.fetchStats();
               },
             ),
             

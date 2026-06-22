@@ -18,9 +18,11 @@ class Usersignupstats {
   required this.discoveryOption1, required this.discoveryOption2}){}
 
     /* Converts Firebase Json into class object */
-  static Usersignupstats fromJson(Map<String, dynamic> json) => Usersignupstats(totalUsers: json['totalUsers'], en: json['en'], ar: json['ar'], 
-  classes: json['classes'], underEighteen: json['underEighteen'], eighteenTwentyFive: json['eighteenTwentyFive'], 
-  twentyFivePlus: json['twentyFivePlus'], discoveryOption1: json['discoveryOption1'], discoveryOption2: json['discoveryOption2']);
+  static Usersignupstats fromJson(Map<String, dynamic>? json) => 
+  Usersignupstats(totalUsers: json?['totalUsers'], en: json?['en'], ar: json?['ar'], 
+  classes: json?['classes'], underEighteen: json?['underEighteen'], eighteenTwentyFive: json?['eighteenTwentyFive'], 
+  twentyFivePlus: json?['twentyFivePlus'], discoveryOption1: json?['discoveryOption1'], discoveryOption2: json?['discoveryOption2']);
+  
 
   Map<String, dynamic> toJson() =>{
     'totalUsers' : totalUsers,
