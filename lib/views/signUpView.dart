@@ -3,16 +3,18 @@ import 'package:birth_picker/birth_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:real_birth_app/controllers/signUpController.dart';
 import 'package:real_birth_app/models/langModel.dart';
+import 'package:real_birth_app/models/signUpPageText.dart';
 
 // ignore: must_be_immutable
 class Signupview extends StatefulWidget{
+  const Signupview({super.key});
 
-  Signupview({super.key});
 
   @override
   _signUpViewState createState() => _signUpViewState();}
 
   class _signUpViewState extends State<Signupview>{
+    
     final _email = TextEditingController();
     final _password = TextEditingController();
     final _name = TextEditingController();
@@ -33,7 +35,7 @@ class Signupview extends StatefulWidget{
     bool _validatePassword = false;
     bool _validateHospital = false;
     bool _validatePostcode = false;
-    
+
     @override
     Widget build(BuildContext context) {
       return Scaffold(
@@ -44,25 +46,60 @@ class Signupview extends StatefulWidget{
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-            const Text("Sign Up", style: TextStyle(fontSize: 40, fontWeight: FontWeight.w700),),
+            /* Title */
+            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
+              if(snapshot.hasData){
+                control.pageText = snapshot.data!;
+                return Text(control.pageText.title, style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w700),);
+              }
+              else{return Text("Loading");}
+            },),
+
+
             /* Email */
             const SizedBox(height: 50,),
-            TextFormField(controller: _email, validator: validateEmail,
-            decoration: InputDecoration(labelText: "Email",errorText: _validateEmail? "Value Can't Be Empty" : null),style: TextStyle(fontSize: 20),),
-            
+            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
+              if (snapshot.hasData){
+                control.pageText = snapshot.data!;
+                return TextFormField(controller: _email, validator: validateEmail,
+                decoration: InputDecoration(labelText: control.pageText.emailBox,errorText: _validateEmail? "Value Can't Be Empty" : null),style: TextStyle(fontSize: 20),);
+              }
+              else{return Text("Loading");}
+            },),
+
+
             /* Password */
             const SizedBox(height: 50,),
-            TextField(controller: _password,
-            decoration: InputDecoration(labelText: "Password", errorText: _validatePassword? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),),
+            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
+              if(snapshot.hasData){
+                control.pageText = snapshot.data!;
+                return TextField(controller: _password,
+                decoration: InputDecoration(labelText: control.pageText.passwordBox, errorText: _validatePassword? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),);
+              }
+              else{return Text("Loading");}
+            },),
             
             /* Name */
             const SizedBox(height: 50,),
-            TextField(controller: _name,
-            decoration: InputDecoration(labelText: "Full Name", errorText: _validateName? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),),
+            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
+              if(snapshot.hasData){
+                control.pageText = snapshot.data!;
+                return TextField(controller: _name, decoration: 
+                InputDecoration(labelText: "Full Name", errorText: _validateName? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),);
+              }
+              else{return Text("Loading");}
+            },),
             
+
             /* Age */
             const SizedBox(height: 50,),
-            Text("Date Of Birth"),
+            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
+              if(snapshot.hasData){
+                control.pageText = snapshot.data!;
+                return Text(control.pageText.ageBox);
+              }
+              else{return Text("Loading");}
+            },),
             /* Handles picking a specific date */
             BirthPicker(locale: 'en_GB', maximumDate: curr,
               decorationBuilder: (bool isFocused) {
@@ -76,52 +113,86 @@ class Signupview extends StatefulWidget{
               },
               onChanged: (DateTime? dateTime) {
                 _dateOfBirth = dateTime;
-                control.fetchStats();
+                control.fetchPage(); 
               },
             ),
+
             
             /* Postcode */
             const SizedBox(height: 50,),
-            TextField(controller: _postcode,
-            decoration: InputDecoration(labelText: "Postcode", errorText: _validatePostcode? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),),
-            
+            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
+              if(snapshot.hasData){
+                control.pageText = snapshot.data!;
+                return TextField(controller: _postcode,
+                decoration: InputDecoration(labelText: "Postcode", errorText: _validatePostcode? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),);
+              }
+              else{return Text("Loading");}
+            },),
+      
+
             /* Hospital */
             const SizedBox(height: 50,),
-            TextField(controller: _hospital,
-            decoration: InputDecoration(labelText: "Hospital", errorText: _validateHospital? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),),
+            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
+              if(snapshot.hasData){
+                control.pageText =snapshot.data!;
+                return TextField(controller: _hospital,
+                decoration: InputDecoration(labelText: "Hospital", errorText: _validateHospital? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),);
+              }  
+              else{return Text("Loading");}
+            },),
             
+
             /* lang */
             const SizedBox(height: 50,),
-            StreamBuilder(stream: signUpController().fetchLanguages(), builder: (context, snapshot){/* Stream builder */
-              if (snapshot.hasData){
-                languages = snapshot.data!;
-                return DropdownMenu(textStyle: TextStyle(fontSize: 20), 
-                label: Text("Language Selection"),
-                dropdownMenuEntries: languages.map((currLang)=>DropdownMenuEntry(value: currLang.key, label: currLang.text)).toList(),/* Uses the members of database as the items in the drop down menu list */
-                onSelected: (value) {
-                  _lang=value;
-                },
-              );
-            }
+            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
+              if(snapshot.hasData){
+                control.pageText = snapshot.data!;
+                return StreamBuilder(stream: signUpController().fetchLanguages(), builder: (context, snapshot){/* Stream builder */
+                if (snapshot.hasData){
+                  languages = snapshot.data!;
+                  return DropdownMenu(textStyle: TextStyle(fontSize: 20), 
+                  label: Text(control.pageText.lnBox),
+                  dropdownMenuEntries: languages.map((currLang)=>DropdownMenuEntry(value: currLang.key, label: currLang.text)).toList(),/* Uses the members of database as the items in the drop down menu list */
+                  onSelected: (value) {
+                    _lang=value;
+                  },
+                );
+              }
             else{
               return Text("Somthing Went Wrong");
             }
-            }),
+            });}
+            else{return Text("Loading");}
+            },),
+
 
             /* Bio Sex */
             const SizedBox(height: 50,),
-            DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text("What is your biological sex") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
+            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
+              if(snapshot.hasData){
+                control.pageText = snapshot.data!;
+                return DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text("What is your biological sex") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
               DropdownMenuEntry(value: "M", label: "Male"),
               DropdownMenuEntry(value: "F", label: "Female")
              ],
              onSelected: (value) {
                   _bioSex=value;
                 },
-            ),
+            );
+              }  
+              else{return Text("loading");}
+            },),
+
             
             /*Due Date */
             const SizedBox(height: 50,),
-            Text("Due Date"),
+            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
+              if(snapshot.hasData){
+                control.pageText = snapshot.data!;
+                return Text(control.pageText.dueDateBox);
+              }
+              else{return Text("Loading");}
+            },),
             BirthPicker(locale: 'en_GB',minimumDate: curr,maximumDate: DateTime(curr.year, curr.month + 10, curr.day),
               decorationBuilder: (bool isFocused) {
                 return BoxDecoration(
@@ -137,31 +208,48 @@ class Signupview extends StatefulWidget{
               },
             ),
             
+
             /* FoundOut */
             const SizedBox(height: 50,),
-            DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text("How did you find us?") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
-              DropdownMenuEntry(value: "Option 1", label: "Option 1"),
-              DropdownMenuEntry(value: "Option 1", label: "Option 2")
+            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
+              if(snapshot.hasData){
+                control.pageText = snapshot.data!;
+                return DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text(control.pageText.discoveryBox) ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
+                DropdownMenuEntry(value: "Option 1", label: "Option 1"),
+                DropdownMenuEntry(value: "Option 1", label: "Option 2")
              ],
              onSelected: (value) {
                   _discover=value;
                 },
-            ),
+            );
+              }
+              else{return Text("Loading");}
+            },),
             
             /* Classes */
             const SizedBox(height: 50,),
-            DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text("Do you attend classes?") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
-              DropdownMenuEntry(value: "Yes", label: "Yes"),
-              DropdownMenuEntry(value: "No", label: "No")
-             ],
-             onSelected: (value) {
+            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
+              if(snapshot.hasData){
+                control.pageText = snapshot.data!;
+                return DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text("Do you attend classes?") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
+                DropdownMenuEntry(value: "Yes", label: "Yes"),
+                DropdownMenuEntry(value: "No", label: "No")
+                ],
+                onSelected: (value) {
                   _classes=value;
                 },
-            ),
+                );
+              }
+              else{return Text("Loading");}
+            },),
+          
 
             /* SignUp Button */
             const SizedBox(height: 30,),
-            ElevatedButton(onPressed: () {
+            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
+              if(snapshot.hasData){
+                control.pageText = snapshot.data!;
+                return ElevatedButton(onPressed: () {
                 setState(() {
                   _validateName = _name.text.isEmpty;
                   _validateEmail = _email.text.isEmpty;
@@ -169,7 +257,10 @@ class Signupview extends StatefulWidget{
                   _validateHospital = _hospital.text.isEmpty;
                   _validatePostcode = _postcode.text.isEmpty;
                 });
-              signup();}, child: Text("SignUp"))
+              signup();}, child: Text(control.pageText.title));
+              }
+              else{return Text("Loading");}
+            },)
           ],
         )
       )
@@ -210,5 +301,4 @@ String? validateEmail(String? value) {
       ? 'Enter a valid email address'
       : null;
 }
-
 }
