@@ -34,11 +34,6 @@ class signUpController {
         });
   }
 
-  void loadData() async{ 
-    pageText = await fetchPage();
-    userStats = await fetchStats();
-  }
-
   Future<Signuppagetext> fetchPage()async {
     return db.collection("resources").doc("en").collection("pages").doc("signUpPage")
     .get()
@@ -47,11 +42,61 @@ class signUpController {
     });
   }
 
+  /* Create new user stats records */
+  Future createUserStats(userModel user) async{
+    userStats = await fetchStats();
+    userStats.totalUsers = userStats.totalUsers! + 1;
+
+    /* Finds user age and sperates by bracket */
+    int ageInDays = DateTime.now().difference(user.dateOfBirth).inDays;
+    if(ageInDays < 6575){
+      userStats.underEighteen = userStats.underEighteen! + 1;
+    } 
+    else if(ageInDays >= 6575 && ageInDays < 9132){
+      userStats.eighteenTwentyFive = userStats.eighteenTwentyFive! + 1;
+    }
+    else{
+      userStats.twentyFivePlus = userStats.twentyFivePlus! + 1;
+    }
+
+    /*Checks how user found app*/
+    if(user.discover == "Option 1"){
+      userStats.discoveryOption1 = userStats.discoveryOption1! + 1;
+    }
+    else{
+      userStats.discoveryOption2 = userStats.discoveryOption2! + 1;
+    }
+
+  /*Checks if user takes classes*/
+    if(user.classes == "Yes"){
+      userStats.classes = userStats.classes! + 1;
+     }
+
+  /*Find user Gender*/
+    if(user.bioSex == "F"){
+      userStats.female = userStats.female! + 1;
+    }
+    else{
+      userStats.male = userStats.male! + 1;
+    }
+
+    /*Checks user language*/
+    if(user.lang == "en"){
+      userStats.en = userStats.en! + 1;
+    }
+    else if(user.lang == "ar"){
+      userStats.ar = userStats.ar! + 1;
+    }
+
+    db.collection("stats").doc("userStats").update(userStats.toJson());
+  }
+
   /* Creates the document for the specific user */
   Future createUserDocument(userModel user) async{
     try{
-      Get.to(Homepageview());
       await db.collection("users").doc(user.uid).set(user.toJson());
+      createUserStats(user);
+      Get.to(Homepageview());
     }
     catch(e){}
   }
@@ -64,19 +109,9 @@ class signUpController {
     final uid = u!.uid;
 
       /* Adds user to Auth table(account creation) */
-      userModel user = userModel();
-      user.name = name;
-      user.email = email;
-      user.postcode = postcode;
-      user.hospital = hospital;
-      user.dateOfBirth = dateOfBirth;
-      user.lang = lang;
-      user.bioSex = bioSex;
-      user.dueDate = dueDate;
-      user.registrationDate = registrationDate;
-      user.discover = discover;
-      user.classes = classes;
-      user.uid = uid;
+      userModel user = userModel(uid: uid, name: name, email: email, postcode: postcode, 
+      hospital: hospital, dateOfBirth: dateOfBirth, lang: lang, bioSex: bioSex, 
+      dueDate: dueDate, registrationDate: registrationDate, discover: discover, classes: classes);
 
     createUserDocument(user);
     }

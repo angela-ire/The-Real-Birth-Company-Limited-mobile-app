@@ -3,7 +3,6 @@ import 'package:birth_picker/birth_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:real_birth_app/controllers/signUpController.dart';
 import 'package:real_birth_app/models/langModel.dart';
-import 'package:real_birth_app/models/signUpPageText.dart';
 
 // ignore: must_be_immutable
 class Signupview extends StatefulWidget{
