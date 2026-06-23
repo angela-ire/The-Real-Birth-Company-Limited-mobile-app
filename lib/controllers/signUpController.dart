@@ -50,8 +50,8 @@ class signUpController {
   /* Creates the document for the specific user */
   Future createUserDocument(userModel user) async{
     try{
+      Get.to(Homepageview());
       await db.collection("users").doc(user.uid).set(user.toJson());
-      Get.to((Homepageview));
     }
     catch(e){}
   }
