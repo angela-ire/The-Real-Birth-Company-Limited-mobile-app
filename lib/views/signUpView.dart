@@ -154,6 +154,8 @@ class Signupview extends StatefulWidget{
                   dropdownMenuEntries: languages.map((currLang)=>DropdownMenuEntry(value: currLang.key, label: currLang.text)).toList(),/* Uses the members of database as the items in the drop down menu list */
                   onSelected: (value) {
                     _lang=value;
+                    control.preferences.langKey=value!;
+                    print(control.preferences.langKey);
                   },
                 );
               }

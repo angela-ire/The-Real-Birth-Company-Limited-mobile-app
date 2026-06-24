@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
+import 'package:real_birth_app/models/AppConfig.dart';
 import 'package:real_birth_app/models/langModel.dart';
 import 'package:real_birth_app/models/signUpPageText.dart';
 import 'package:real_birth_app/models/userModel.dart';
@@ -14,6 +15,7 @@ class signUpController {
   final auth = FirebaseAuth.instance;
   final FirebaseFirestore db = FirebaseFirestore.instance;
   late Usersignupstats userStats;
+  var preferences = AppConfig();
 
   late Signuppagetext pageText;
 
@@ -35,7 +37,7 @@ class signUpController {
   }
 
   Future<Signuppagetext> fetchPage()async {
-    return db.collection("resources").doc("en").collection("pages").doc("signUpPage")
+    return db.collection("resources").doc(preferences.langKey).collection("pages").doc("signUpPage")
     .get()
     .then((value){
       return Signuppagetext.fromJson(value.data());

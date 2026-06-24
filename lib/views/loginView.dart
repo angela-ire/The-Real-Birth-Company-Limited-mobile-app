@@ -31,7 +31,7 @@ class Loginview extends StatelessWidget{
             /* 2 buttons */
             const SizedBox(height: 30,),
             ElevatedButton(onPressed:() => login(), child: Text("Login")),
-            ElevatedButton(onPressed: () => pageSwitch(), child: Text("Create Account"))
+            ElevatedButton(onPressed: () => pageSwitch(), child: Text("Create Account")),
           ],
         )
       )
