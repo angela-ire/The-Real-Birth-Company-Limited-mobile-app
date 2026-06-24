@@ -40,65 +40,46 @@ class Signupview extends StatefulWidget{
       return Scaffold(
         body:Center( 
           child:Padding(padding: const EdgeInsets.all(30),
-          child: SingleChildScrollView(
+
+
+          child: FutureBuilder(future: control.fetchPage(), builder: (context,snapshot){
+            if(snapshot.hasData){
+              control.pageText = snapshot.data!;
+              return 
+          SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+            
             /* Title */
-            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
-              if(snapshot.hasData){
-                control.pageText = snapshot.data!;
-                return Text(control.pageText.title, style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w700),);
-              }
-              else{return Text("Loading");}
-            },),
-
+            Text(control.pageText.title, style: const TextStyle(fontSize: 40, fontWeight: FontWeight.w700),),
+              
 
             /* Email */
             const SizedBox(height: 50,),
-            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
-              if (snapshot.hasData){
-                control.pageText = snapshot.data!;
-                return TextFormField(controller: _email, validator: validateEmail,
-                decoration: InputDecoration(labelText: control.pageText.emailBox,errorText: _validateEmail? "Value Can't Be Empty" : null),style: TextStyle(fontSize: 20),);
-              }
-              else{return Text("Loading");}
-            },),
+            TextFormField(controller: _email, validator: validateEmail,
+            decoration: InputDecoration(labelText: control.pageText.emailBox,errorText: _validateEmail? "Value Can't Be Empty" : null),
+            style: TextStyle(fontSize: 20),),
 
 
             /* Password */
             const SizedBox(height: 50,),
-            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
-              if(snapshot.hasData){
-                control.pageText = snapshot.data!;
-                return TextField(controller: _password,
-                decoration: InputDecoration(labelText: control.pageText.passwordBox, errorText: _validatePassword? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),);
-              }
-              else{return Text("Loading");}
-            },),
-            
+            TextField(controller: _password,
+            decoration: InputDecoration(labelText: control.pageText.passwordBox, errorText: _validatePassword? "Value Can't Be Empty" : null,),
+            style: TextStyle(fontSize: 20),),
+
+
             /* Name */
             const SizedBox(height: 50,),
-            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
-              if(snapshot.hasData){
-                control.pageText = snapshot.data!;
-                return TextField(controller: _name, decoration: 
-                InputDecoration(labelText: "Full Name", errorText: _validateName? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),);
-              }
-              else{return Text("Loading");}
-            },),
-            
+            TextField(controller: _name, decoration: 
+            InputDecoration(labelText: "Full Name", errorText: _validateName? "Value Can't Be Empty" : null,),
+            style: TextStyle(fontSize: 20),),
 
+            
             /* Age */
             const SizedBox(height: 50,),
-            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
-              if(snapshot.hasData){
-                control.pageText = snapshot.data!;
-                return Text(control.pageText.ageBox);
-              }
-              else{return Text("Loading");}
-            },),
+            Text(control.pageText.ageBox),
             /* Handles picking a specific date */
             BirthPicker(locale: 'en_GB', maximumDate: curr,
               decorationBuilder: (bool isFocused) {
@@ -119,81 +100,54 @@ class Signupview extends StatefulWidget{
             
             /* Postcode */
             const SizedBox(height: 50,),
-            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
-              if(snapshot.hasData){
-                control.pageText = snapshot.data!;
-                return TextField(controller: _postcode,
-                decoration: InputDecoration(labelText: "Postcode", errorText: _validatePostcode? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),);
-              }
-              else{return Text("Loading");}
-            },),
+            TextField(controller: _postcode,
+            decoration: InputDecoration(labelText: "Postcode", errorText: _validatePostcode? "Value Can't Be Empty" : null,),
+            style: TextStyle(fontSize: 20),),
       
 
             /* Hospital */
             const SizedBox(height: 50,),
-            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
-              if(snapshot.hasData){
-                control.pageText =snapshot.data!;
-                return TextField(controller: _hospital,
-                decoration: InputDecoration(labelText: "Hospital", errorText: _validateHospital? "Value Can't Be Empty" : null,),style: TextStyle(fontSize: 20),);
-              }  
-              else{return Text("Loading");}
-            },),
+            TextField(controller: _hospital,
+            decoration: InputDecoration(labelText: "Hospital", errorText: _validateHospital? "Value Can't Be Empty" : null,),
+            style: TextStyle(fontSize: 20),),
             
 
             /* lang */
             const SizedBox(height: 50,),
-            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
-              if(snapshot.hasData){
-                control.pageText = snapshot.data!;
-                return StreamBuilder(stream: signUpController().fetchLanguages(), builder: (context, snapshot){/* Stream builder */
-                if (snapshot.hasData){
-                  languages = snapshot.data!;
-                  return DropdownMenu(textStyle: TextStyle(fontSize: 20), 
-                  label: Text(control.pageText.lnBox),
-                  dropdownMenuEntries: languages.map((currLang)=>DropdownMenuEntry(value: currLang.key, label: currLang.text)).toList(),/* Uses the members of database as the items in the drop down menu list */
-                  onSelected: (value) {
-                    _lang=value;
-                    control.preferences.langKey=value!;
-                    print(control.preferences.langKey);
-                  },
-                );
+            StreamBuilder(stream: signUpController().fetchLanguages(), builder: (context, snapshot){/* Stream builder */
+              if (snapshot.hasData){
+                languages = snapshot.data!;
+                return DropdownMenu(textStyle: TextStyle(fontSize: 20), 
+                label: Text(control.pageText.lnBox),
+                dropdownMenuEntries: languages.map((currLang)=>DropdownMenuEntry(value: currLang.key, label: currLang.text)).toList(),/* Uses the members of database as the items in the drop down menu list */
+                onSelected: (value) {
+                  _lang=value;
+                  control.preferences.langKey=value!;
+                  print(control.preferences.langKey);
+                },);
               }
             else{
               return Text("Somthing Went Wrong");
             }
-            });}
-            else{return Text("Loading");}
-            },),
+            }),
 
 
             /* Bio Sex */
             const SizedBox(height: 50,),
-            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
-              if(snapshot.hasData){
-                control.pageText = snapshot.data!;
-                return DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text("What is your biological sex") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
-              DropdownMenuEntry(value: "M", label: "Male"),
-              DropdownMenuEntry(value: "F", label: "Female")
-             ],
+            DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text("What is your biological sex") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
+            DropdownMenuEntry(value: "M", label: "Male"),
+            DropdownMenuEntry(value: "F", label: "Female")
+            ],
              onSelected: (value) {
                   _bioSex=value;
                 },
-            );
-              }  
-              else{return Text("loading");}
-            },),
+            ),
 
             
             /*Due Date */
             const SizedBox(height: 50,),
-            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
-              if(snapshot.hasData){
-                control.pageText = snapshot.data!;
-                return Text(control.pageText.dueDateBox);
-              }
-              else{return Text("Loading");}
-            },),
+            Text(control.pageText.dueDateBox),
+            /*Specifc date selector*/
             BirthPicker(locale: 'en_GB',minimumDate: curr,maximumDate: DateTime(curr.year, curr.month + 10, curr.day),
               decorationBuilder: (bool isFocused) {
                 return BoxDecoration(
@@ -212,45 +166,31 @@ class Signupview extends StatefulWidget{
 
             /* FoundOut */
             const SizedBox(height: 50,),
-            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
-              if(snapshot.hasData){
-                control.pageText = snapshot.data!;
-                return DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text(control.pageText.discoveryBox) ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
-                DropdownMenuEntry(value: "Option 1", label: "Option 1"),
-                DropdownMenuEntry(value: "Option 1", label: "Option 2")
-             ],
+            DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text(control.pageText.discoveryBox) ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
+            DropdownMenuEntry(value: "Option 1", label: "Option 1"),
+            DropdownMenuEntry(value: "Option 1", label: "Option 2")
+            ],
              onSelected: (value) {
                   _discover=value;
                 },
-            );
-              }
-              else{return Text("Loading");}
-            },),
+            ),
+
             
             /* Classes */
             const SizedBox(height: 50,),
-            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
-              if(snapshot.hasData){
-                control.pageText = snapshot.data!;
-                return DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text("Do you attend classes?") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
-                DropdownMenuEntry(value: "Yes", label: "Yes"),
-                DropdownMenuEntry(value: "No", label: "No")
-                ],
-                onSelected: (value) {
-                  _classes=value;
-                },
-                );
-              }
-              else{return Text("Loading");}
+            DropdownMenu(textStyle: TextStyle(fontSize: 20) ,label: Text("Do you attend classes?") ,enableFilter: true ,dropdownMenuEntries: <DropdownMenuEntry<String>>[
+            DropdownMenuEntry(value: "Yes", label: "Yes"),
+            DropdownMenuEntry(value: "No", label: "No")
+            ],
+            onSelected: (value) {
+              _classes=value;
             },),
           
 
             /* SignUp Button */
             const SizedBox(height: 30,),
-            FutureBuilder(future: control.fetchPage(), builder: (context, snapshot) {
-              if(snapshot.hasData){
-                control.pageText = snapshot.data!;
-                return ElevatedButton(onPressed: () {
+
+                ElevatedButton(onPressed: () {
                 setState(() {
                   _validateName = _name.text.isEmpty;
                   _validateEmail = _email.text.isEmpty;
@@ -258,15 +198,17 @@ class Signupview extends StatefulWidget{
                   _validateHospital = _hospital.text.isEmpty;
                   _validatePostcode = _postcode.text.isEmpty;
                 });
-              signup();}, child: Text(control.pageText.title));
-              }
-              else{return Text("Loading");}
-            },)
+              signup();}, child: Text(control.pageText.title)),
           ],
         )
-      )
+      );
+            }
+     else{
+      return Text("loading");
+      }           
+    },)
     )
-  )
+    )
   );
 }
   /* Sends data to controller */

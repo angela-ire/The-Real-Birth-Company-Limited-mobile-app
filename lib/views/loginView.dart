@@ -24,9 +24,11 @@ class Loginview extends StatelessWidget{
             /* email */
             const Text("Real Birth Company", style: TextStyle(fontSize: 40, fontWeight: FontWeight.w700),),
             const SizedBox(height: 50,),
+            Text("Email"),
             TextField(controller: _email,),
             /* password */
             const SizedBox(height: 50,),
+            Text("password"),
             TextField(controller: _password,),
             /* 2 buttons */
             const SizedBox(height: 30,),
