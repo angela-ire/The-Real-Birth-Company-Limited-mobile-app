@@ -12,24 +12,45 @@ class MobileScannerSimple extends StatefulWidget {
 
 class _MobileScannerSimpleState extends State<MobileScannerSimple> {
   Barcode? _barcode;
+  final MobileScannerController controller = MobileScannerController();
 
-  Widget _barcodePreview(Barcode? value) {
-    if (value == null) {
-      return const Text(
-        'Scan something!',
-        overflow: TextOverflow.fade,
-        style: TextStyle(color: Colors.white),
+  @override
+  Widget build(BuildContext context) {
+    final scanWindow = Rect.fromCenter(center: MediaQuery.sizeOf(context).center(Offset.zero) , width: 200, height: 200);
+    return Scaffold(
+      appBar: AppBar(title: const Text('Scan a RealBirth QR')),
+      backgroundColor: Colors.black,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Center(
+            child: MobileScanner(
+              onDetect: _handleBarcode,
+              fit: BoxFit.contain,
+              controller: controller,
+              scanWindow: scanWindow,
+              overlayBuilder: (context, constraints){
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                  )
+                );
+              },
+            ),
+          ),
+          ValueListenableBuilder(valueListenable: controller, builder: (context, value, child){
+            if(!value.isInitialized || !value.isRunning || value.error != null){
+              return const SizedBox();
+            }
+            return ScanWindowOverlay(scanWindow: scanWindow, controller: controller);},
+            )
+          ])
+        ,
       );
-    }
-
-    return Text(
-      value.displayValue ?? 'No display value.',
-      overflow: TextOverflow.fade,
-      style: const TextStyle(color: Colors.white),
-    );
   }
 
-  void _handleBarcode(BarcodeCapture barcodes) {
+    void _handleBarcode(BarcodeCapture barcodes) {
     if (mounted) {
       setState(() {
         _barcode = barcodes.barcodes.firstOrNull;
@@ -42,18 +63,5 @@ class _MobileScannerSimpleState extends State<MobileScannerSimple> {
    if (!await launchUrl(_url)) {
         throw Exception('Could not launch $_url');
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Scan a RealBirth QR')),
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          MobileScanner(onDetect: _handleBarcode),
-        ],
-      ),
-    );
   }
 }
