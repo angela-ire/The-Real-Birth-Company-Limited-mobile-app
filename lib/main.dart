@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:real_birth_app/views/homePageView.dart';
 import 'package:real_birth_app/views/loginView.dart';
 import 'firebase_options.dart';
 import 'package:get/get.dart';
@@ -9,5 +11,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
-  runApp(GetMaterialApp(theme:ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFBEAF2))), home: Loginview()));
+  runApp(GetMaterialApp(theme:ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFBEAF2))), 
+  home: StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(), builder: (context, snapshot){
+    if (snapshot.hasData){return Homepageview();}
+    else {return Loginview();}
+  })));
 }

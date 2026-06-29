@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:real_birth_app/controllers/homePageController.dart';
+import 'package:real_birth_app/views/QRView.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Homepageview extends StatelessWidget{
   final control = Homepagecontroller();
@@ -50,7 +54,12 @@ class _Navigation extends State<Navigation>{
         //Workshop
         Card(
           child: Center(
-            child: Text("Workshop"),
+            child: Column(
+              children: [
+                ElevatedButton(onPressed:() => _launchURL() , child: Text("Link To Workshop")),
+                ElevatedButton(onPressed:() => QR(), child: Text("QR Scanner"))
+              ],
+            )
           ),
         ),
 
@@ -76,4 +85,17 @@ class _Navigation extends State<Navigation>{
       ][currentPageIndex],
     );
   }
+
+
+
+  _launchURL() async {
+   final Uri _url = Uri.parse('https://therealbirthworkshop.online/public/');
+   if (!await launchUrl(_url)) {
+        throw Exception('Could not launch $_url');
+    }
+  }
+  void QR(){
+    Get.to(MobileScannerSimple());
+  }
+
 }
