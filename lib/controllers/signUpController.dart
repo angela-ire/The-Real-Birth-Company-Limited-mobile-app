@@ -94,16 +94,16 @@ class signUpController {
     db.runTransaction((transaction){
       return transaction.get(sfDocRef).then((sfDoc) {
         final totalUsers = sfDoc.get("totalUsers") + 1;
-        final classes = sfDoc.get("classes") + 1;
-        final discoveryOption1 = sfDoc.get("discoveryOption1") + 1;
-        final discoveryOption2 = sfDoc.get("discoveryOption2") + 1;
-        final en = sfDoc.get("en") + 1;
-        final ar = sfDoc.get("ar") + 1;
-        final female = sfDoc.get("female") + 1;
-        final male = sfDoc.get("male");
-        final underEighteen = sfDoc.get("underEighteen") + 1;
-        final eighteenTwentyFive = sfDoc.get("eighteenTwentyFive") + 1;
-        final twentyFivePlus = sfDoc.get("twentyFivePlus") + 1;
+        final classes = sfDoc.get("classes") + userStats.classes;
+        final discoveryOption1 = sfDoc.get("discoveryOption1") + userStats.discoveryOption1;
+        final discoveryOption2 = sfDoc.get("discoveryOption2") + userStats.discoveryOption2;
+        final en = sfDoc.get("en") + userStats.en;
+        final ar = sfDoc.get("ar") + userStats.ar;
+        final female = sfDoc.get("female") + userStats.female;
+        final male = sfDoc.get("male") + userStats.male;
+        final underEighteen = sfDoc.get("underEighteen") + userStats.underEighteen;
+        final eighteenTwentyFive = sfDoc.get("eighteenTwentyFive") + userStats.eighteenTwentyFive;
+        final twentyFivePlus = sfDoc.get("twentyFivePlus") + userStats.twentyFivePlus;
         transaction.update(sfDocRef, {"totalUsers": totalUsers, "classes": classes, "discoveryOption1": discoveryOption1,
         "discoveryOption2": discoveryOption2, "en": en, "ar": ar, "female": female, "male": male, "underEighteen": underEighteen,
         "eighteenTwentyFive": eighteenTwentyFive, "twentyFivePlus": twentyFivePlus});

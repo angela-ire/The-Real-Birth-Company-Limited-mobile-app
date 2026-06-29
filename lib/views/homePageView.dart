@@ -22,18 +22,58 @@ class _Navigation extends State<Navigation>{
 
   @override
   Widget build(BuildContext context){
+    final ThemeData theme = Theme.of(context);
     return Scaffold(
       bottomNavigationBar: NavigationBar(onDestinationSelected: (int index){
         setState(() {
           currentPageIndex = index;
         });
-      }, destinations: const<Widget>[
+      }, 
+        selectedIndex: currentPageIndex,
+        destinations: const<Widget>[
         NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
         NavigationDestination(icon: Icon(Icons.link), label: 'Workshop'),
         NavigationDestination(icon: Icon(Icons.archive), label: 'resources'),
         NavigationDestination(icon: Icon(Icons.shopping_cart), label: 'Store'),
         NavigationDestination(icon: Icon(Icons.calendar_today,), label: 'Bookings')
-      ],),
+        ],
+      ),
+      body: <Widget>[
+
+        //HOME
+        Card(
+          child: Center(
+            child: Text("Home Page"),
+          )
+        ),
+
+        //Workshop
+        Card(
+          child: Center(
+            child: Text("Workshop"),
+          ),
+        ),
+
+        //Resources
+        Card(
+          child: Center(
+            child: Text("Resources"),
+          ),
+        ),
+
+        //TBD
+        Card(
+          child: Center(
+            child: Text("In Development"),
+          ),
+        ),
+        
+        Card(
+          child: Center(
+            child: Text("In Development"),
+          )
+        )
+      ][currentPageIndex],
     );
   }
 }

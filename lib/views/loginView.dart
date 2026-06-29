@@ -14,6 +14,7 @@ class Loginview extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
+    final ThemeData theme = Theme.of(context);
     return Scaffold(
       body:Center( 
         child:Padding(padding: const EdgeInsets.all(30),

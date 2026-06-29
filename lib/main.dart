@@ -9,5 +9,5 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
-  runApp(GetMaterialApp(home: Loginview()));
+  runApp(GetMaterialApp(theme:ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFBEAF2))), home: Loginview()));
 }

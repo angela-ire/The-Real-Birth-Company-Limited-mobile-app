@@ -123,7 +123,6 @@ class Signupview extends StatefulWidget{
                 onSelected: (value) {
                   _lang=value;
                   control.preferences.langKey=value!;
-                  print(control.preferences.langKey);
                 },);
               }
             else{
