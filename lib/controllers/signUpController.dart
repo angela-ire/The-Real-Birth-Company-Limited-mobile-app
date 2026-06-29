@@ -14,7 +14,8 @@ import 'package:real_birth_app/views/homePageView.dart';
 class signUpController {
   final auth = FirebaseAuth.instance;
   final FirebaseFirestore db = FirebaseFirestore.instance;
-  late Usersignupstats userStats;
+  Usersignupstats userStats = Usersignupstats(totalUsers: 0, en: 0, ar: 0, classes: 0, underEighteen: 0, 
+  eighteenTwentyFive: 0, twentyFivePlus: 0, discoveryOption1: 0, discoveryOption2: 0, female: 0, male: 0);
   var preferences = AppConfig();
 
   late Signuppagetext pageText;
@@ -46,51 +47,68 @@ class signUpController {
 
   /* Create new user stats records */
   Future createUserStats(userModel user) async{
-    userStats = await fetchStats();
-    userStats.totalUsers = userStats.totalUsers! + 1;
+    userStats.totalUsers = 1;
 
     /* Finds user age and sperates by bracket */
     int ageInDays = DateTime.now().difference(user.dateOfBirth).inDays;
     if(ageInDays < 6575){
-      userStats.underEighteen = userStats.underEighteen! + 1;
+      userStats.underEighteen = 1;
     } 
     else if(ageInDays >= 6575 && ageInDays < 9132){
-      userStats.eighteenTwentyFive = userStats.eighteenTwentyFive! + 1;
+      userStats.eighteenTwentyFive = 1;
     }
     else{
-      userStats.twentyFivePlus = userStats.twentyFivePlus! + 1;
+      userStats.twentyFivePlus = 1;
     }
 
     /*Checks how user found app*/
     if(user.discover == "Option 1"){
-      userStats.discoveryOption1 = userStats.discoveryOption1! + 1;
+      userStats.discoveryOption1 = 1;
     }
     else{
-      userStats.discoveryOption2 = userStats.discoveryOption2! + 1;
+      userStats.discoveryOption2 = 1;
     }
 
   /*Checks if user takes classes*/
     if(user.classes == "Yes"){
-      userStats.classes = userStats.classes! + 1;
+      userStats.classes = 1;
      }
 
   /*Find user Gender*/
     if(user.bioSex == "F"){
-      userStats.female = userStats.female! + 1;
+      userStats.female = 1;
     }
     else{
-      userStats.male = userStats.male! + 1;
+      userStats.male = 1;
     }
 
     /*Checks user language*/
     if(user.lang == "en"){
-      userStats.en = userStats.en! + 1;
+      userStats.en = 1;
     }
     else if(user.lang == "ar"){
-      userStats.ar = userStats.ar! + 1;
+      userStats.ar = 1;
     }
 
-    db.collection("stats").doc("userStats").update(userStats.toJson());
+    final sfDocRef =  db.collection("stats").doc("userStats");
+    db.runTransaction((transaction){
+      return transaction.get(sfDocRef).then((sfDoc) {
+        final totalUsers = sfDoc.get("totalUsers") + 1;
+        final classes = sfDoc.get("classes") + 1;
+        final discoveryOption1 = sfDoc.get("discoveryOption1") + 1;
+        final discoveryOption2 = sfDoc.get("discoveryOption2") + 1;
+        final en = sfDoc.get("en") + 1;
+        final ar = sfDoc.get("ar") + 1;
+        final female = sfDoc.get("female") + 1;
+        final male = sfDoc.get("male");
+        final underEighteen = sfDoc.get("underEighteen") + 1;
+        final eighteenTwentyFive = sfDoc.get("eighteenTwentyFive") + 1;
+        final twentyFivePlus = sfDoc.get("twentyFivePlus") + 1;
+        transaction.update(sfDocRef, {"totalUsers": totalUsers, "classes": classes, "discoveryOption1": discoveryOption1,
+        "discoveryOption2": discoveryOption2, "en": en, "ar": ar, "female": female, "male": male, "underEighteen": underEighteen,
+        "eighteenTwentyFive": eighteenTwentyFive, "twentyFivePlus": twentyFivePlus});
+      });
+    });
   }
 
   /* Creates the document for the specific user */

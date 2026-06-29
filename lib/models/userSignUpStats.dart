@@ -1,17 +1,17 @@
 // ignore_for_file: file_names
 
 class Usersignupstats {
-  int? totalUsers;
-  int? en;
-  int? ar;
-  int? classes;
+  int totalUsers = 0;
+  int en = 0;
+  int ar = 0;
+  int classes = 0;
   /*Rough proof of concept age brackets*/
-  int? underEighteen;
-  int? eighteenTwentyFive;
-  int? twentyFivePlus;
+  int underEighteen = 0;
+  int eighteenTwentyFive = 0;
+  int twentyFivePlus = 0;
 
-  int? female;
-  int? male;
+  int female = 0;
+  int male = 0;
 
   int? discoveryOption1;
   int? discoveryOption2;
