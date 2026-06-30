@@ -11,5 +11,4 @@ class Acticlelistcontroller {
             .map((doc) => Articlemodel.fromJson(doc.data()))
             .toList());
   }
-  
 }

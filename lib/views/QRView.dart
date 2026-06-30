@@ -58,7 +58,7 @@ class _MobileScannerSimpleState extends State<MobileScannerSimple> {
       });
     }
   }
-  _launchURL(Barcode) async {
+  Future<void> _launchURL(Barcode) async {
    final Uri _url = Uri.parse(Barcode.rawValue);
    if (!await launchUrl(_url)) {
         throw Exception('Could not launch $_url');

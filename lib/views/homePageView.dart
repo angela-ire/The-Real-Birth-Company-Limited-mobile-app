@@ -4,7 +4,6 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:real_birth_app/controllers/homePageController.dart';
 import 'package:real_birth_app/views/QRView.dart';
 import 'package:real_birth_app/views/articleListView.dart';
-import 'package:real_birth_app/views/tempWebview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Homepageview extends StatelessWidget{
