@@ -33,7 +33,7 @@ class _MobileScannerSimpleState extends State<MobileScannerSimple> {
                 return Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Align(
-                    alignment: Alignment.bottomCenter,
+                    alignment: Alignment.center,
                   )
                 );
               },
