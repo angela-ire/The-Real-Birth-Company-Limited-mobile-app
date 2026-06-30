@@ -6,7 +6,8 @@ import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 
 class WebViewExample extends StatefulWidget {
-  const WebViewExample({super.key});
+  final String link;
+  const WebViewExample({super.key, required this.link});
 
   @override
   State<WebViewExample> createState() => _WebViewExampleState();
@@ -35,7 +36,7 @@ class _WebViewExampleState extends State<WebViewExample> {
 
     controller
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse('https://realbirthcompany.com/beyond-learning-styles-rethinking-how-birth-information-is-shared/'));
+      ..loadRequest(Uri.parse(widget.link));
         _controller = controller;
   }
   @override

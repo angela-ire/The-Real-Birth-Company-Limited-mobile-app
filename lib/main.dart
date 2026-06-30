@@ -11,7 +11,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
-  runApp(GetMaterialApp(theme:ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFBEAF2))), 
+  runApp(GetMaterialApp(theme:ThemeData(scaffoldBackgroundColor: Color.fromARGB(255, 251, 234, 247),colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFBEAF2))), 
   home: StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(), builder: (context, snapshot){
     if (snapshot.hasData){return Homepageview();}
     else {return Loginview();}

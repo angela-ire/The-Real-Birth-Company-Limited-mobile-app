@@ -3,6 +3,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:real_birth_app/controllers/homePageController.dart';
 import 'package:real_birth_app/views/QRView.dart';
+import 'package:real_birth_app/views/articleListView.dart';
 import 'package:real_birth_app/views/tempWebview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -28,6 +29,7 @@ class _Navigation extends State<Navigation>{
   Widget build(BuildContext context){
     final ThemeData theme = Theme.of(context);
     return Scaffold(
+      appBar: AppBar(leading: null, title: Text("Real Birth App"),),
       bottomNavigationBar: NavigationBar(onDestinationSelected: (int index){
         setState(() {
           currentPageIndex = index;
@@ -87,7 +89,7 @@ class _Navigation extends State<Navigation>{
   }
 
   void iFramePage(){
-    Get.to(WebViewExample());
+    Get.to(Articlelistview());
   }
 
   Future<void> _launchURL() async {
