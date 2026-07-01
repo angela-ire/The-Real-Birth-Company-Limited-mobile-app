@@ -7,6 +7,7 @@ import 'package:real_birth_app/views/tempWebview.dart';
 class Articlelistview extends StatelessWidget {
   final controller = Acticlelistcontroller();
   List<Articlemodel> articles = [];
+  Articlelistview({super.key});
 
    @override
   Widget build(BuildContext context){

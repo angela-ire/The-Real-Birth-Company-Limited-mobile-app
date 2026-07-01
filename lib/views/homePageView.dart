@@ -46,14 +46,14 @@ class _Navigation extends State<Navigation>{
       body: <Widget>[
 
         //HOME
-        Card(
+        Card( color: Color.fromARGB(255, 251, 234, 247),
           child: Center(
             child: Text("Home Page"),
           )
         ),
 
         //Workshop
-        Card(
+        Card(color: Color.fromARGB(255, 251, 234, 247),
           child: Center(
             child: Column(
               children: [
@@ -65,20 +65,20 @@ class _Navigation extends State<Navigation>{
         ),
 
         //Resources
-        Card(
+        Card(color: Color.fromARGB(255, 251, 234, 247),
           child: Center(
             child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press")),
           ),
         ),
 
         //TBD
-        Card(
+        Card(color: Color.fromARGB(255, 251, 234, 247),
           child: Center(
             child: Text("In Development"),
           ),
         ),
         
-        Card(
+        Card(color: Color.fromARGB(255, 251, 234, 247),
           child: Center(
             child: Text("In Development"),
           )
