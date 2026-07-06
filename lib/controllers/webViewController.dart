@@ -21,8 +21,8 @@ class webViewController{
       db.collection("articles").doc("pregnancyInfo").collection("docs")
       .doc(ARTICLE).collection("read").doc("2mins").collection("reads").add(articletrackingmodel.toJson());
 
-      db.collection("users").doc(auth.currentUser!.uid).collection("stats").doc(ARTICLE).collection("read")
-      .add(articletrackingmodel.toJson());
+      db.collection("users").doc(auth.currentUser!.uid).collection("stats").doc(ARTICLE).collection("read").doc("read")
+      .set(articletrackingmodel.toJson());
 
       db.runTransaction((transaction){
       return transaction.get(sfDocRef).then((sfDoc) {
@@ -36,8 +36,8 @@ class webViewController{
       db.collection("articles").doc("pregnancyInfo").collection("docs")
       .doc(ARTICLE).collection("read").doc("4mins").collection("reads").add(articletrackingmodel.toJson());
 
-      db.collection("users").doc(auth.currentUser!.uid).collection("stats").doc(ARTICLE).collection("read")
-      .add(articletrackingmodel.toJson());
+      db.collection("users").doc(auth.currentUser!.uid).collection("stats").doc(ARTICLE).collection("read").doc("read")
+      .set(articletrackingmodel.toJson());
 
       db.runTransaction((transaction){
       return transaction.get(sfDocRef).then((sfDoc) {
@@ -51,8 +51,8 @@ class webViewController{
       db.collection("articles").doc("pregnancyInfo").collection("docs")
       .doc(ARTICLE).collection("read").doc("6mins").collection("reads").add(articletrackingmodel.toJson());
 
-      db.collection("users").doc(auth.currentUser!.uid).collection("stats").doc(ARTICLE).collection("read")
-      .add(articletrackingmodel.toJson());
+      db.collection("users").doc(auth.currentUser!.uid).collection("stats").doc(ARTICLE).collection("read").doc("read")
+      .set(articletrackingmodel.toJson());
 
       db.runTransaction((transaction){
       return transaction.get(sfDocRef).then((sfDoc) {
@@ -123,7 +123,7 @@ class webViewController{
 
   void checkIfRevisit(DateTime OPEN, DateTime CLOSE, String ARTICLE)async{
     try {
-        await db.collection("users").doc(auth.currentUser!.uid).collection("stats").doc(ARTICLE).get().then((doc) {
+        await db.collection("users").doc(auth.currentUser!.uid).collection("stats").doc(ARTICLE).collection("read").doc("read").get().then((doc) {
             if(doc.exists){
               trackArticleRevisit(OPEN, CLOSE, ARTICLE);
             }
