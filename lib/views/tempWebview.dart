@@ -1,11 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:real_birth_app/controllers/webViewController.dart';
+import 'package:real_birth_app/models/articleModel.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 
 
 class WebViewExample extends StatefulWidget {
-  final String link;
+  final Articlemodel link;
   const WebViewExample({super.key, required this.link});
 
   @override
@@ -14,7 +17,9 @@ class WebViewExample extends StatefulWidget {
 
 class _WebViewExampleState extends State<WebViewExample> {
   late final WebViewController _controller;
-
+  final webViewController web = webViewController();
+  late DateTime currTime;
+  final initTime  = DateTime.now();
   
   @override
   void initState() {
@@ -35,9 +40,17 @@ class _WebViewExampleState extends State<WebViewExample> {
 
     controller
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse(widget.link));
+      ..loadRequest(Uri.parse(widget.link.link));
         _controller = controller;
   }
+
+  @override
+  void dispose() {
+    currTime = DateTime.now();
+    web.checkIfRevisit(initTime, currTime, widget.link.key);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
