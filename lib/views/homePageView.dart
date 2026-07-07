@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
@@ -7,7 +8,6 @@ import 'package:real_birth_app/views/articleListView.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Homepageview extends StatelessWidget{
-  final control = Homepagecontroller();
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +23,12 @@ class Navigation extends StatefulWidget{
 
 class _Navigation extends State<Navigation>{
   int currentPageIndex = 0;
+  final control = Homepagecontroller();
+   @override
+  void initState() {
+    super.initState();
+    control.getRole();
+    }
 
   @override
   Widget build(BuildContext context){
@@ -67,7 +73,14 @@ class _Navigation extends State<Navigation>{
         //Resources
         Card(color: Color.fromARGB(255, 251, 234, 247),
           child: Center(
-            child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press")),
+            child:Column(
+              children: [
+                Expanded(child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press"))), 
+                Expanded(child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press"))),
+                Expanded(child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press"))),
+                Expanded(child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press")))
+              ]
+            )
           ),
         ),
 

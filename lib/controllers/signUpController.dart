@@ -131,7 +131,7 @@ class signUpController {
       /* Adds user to Auth table(account creation) */
       userModel user = userModel(uid: uid, name: name, email: email, postcode: postcode, 
       hospital: hospital, dateOfBirth: dateOfBirth, lang: lang, bioSex: bioSex, 
-      dueDate: dueDate, registrationDate: registrationDate, discover: discover, classes: classes);
+      dueDate: dueDate, registrationDate: registrationDate, discover: discover, classes: classes, role: "user");
 
     createUserDocument(user);
     }

@@ -1,6 +1,7 @@
 class AppConfig {
   static AppConfig? _instance;
   String langKey = "en";
+  String role = "";
 
   // Private constructor
   AppConfig._();
