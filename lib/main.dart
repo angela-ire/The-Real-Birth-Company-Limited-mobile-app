@@ -6,6 +6,7 @@ import 'package:real_birth_app/models/userModel.dart';
 import 'package:real_birth_app/views/adminHomeView.dart';
 import 'package:real_birth_app/views/homePageView.dart';
 import 'package:real_birth_app/views/loginView.dart';
+import 'package:real_birth_app/views/preLoginView.dart';
 import 'firebase_options.dart';
 import 'package:get/get.dart';
 import 'package:birth_picker/birth_picker.dart';
@@ -19,7 +20,7 @@ Future<void> main() async {
   home: StreamBuilder(
     stream: FirebaseAuth.instance.authStateChanges(), builder: (context, snapshot){
       if (snapshot.hasData){
-        return Homepageview();
+        return Preloginview();
     }
     else{return Loginview();}
   })));

@@ -24,11 +24,6 @@ class Navigation extends StatefulWidget{
 class _Navigation extends State<Navigation>{
   int currentPageIndex = 0;
   final control = Homepagecontroller();
-   @override
-  void initState() {
-    super.initState();
-    control.getRole();
-    }
 
   @override
   Widget build(BuildContext context){
