@@ -10,7 +10,7 @@ import 'package:real_birth_app/views/homePageView.dart';
 class Prelogincontroller {
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
-
+//Checks user role and sends them to correct page
   void getRole() async{
     userModel u = await db.collection("users").doc(auth.currentUser!.uid).get().then((value) {
       return userModel.fromJson(value.data());

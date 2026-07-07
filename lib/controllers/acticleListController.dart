@@ -4,6 +4,7 @@ import 'package:real_birth_app/models/articleModel.dart';
 class Acticlelistcontroller {
   final FirebaseFirestore db = FirebaseFirestore.instance;
 
+//Gets a list of all articles into a stream to be outputted
   Stream<List<Articlemodel>> fetchArticles(){
      return db.collection("articles").doc("pregnancyInfo").collection("docs")
         .snapshots()

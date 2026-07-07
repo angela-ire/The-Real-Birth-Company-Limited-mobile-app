@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:real_birth_app/controllers/webViewController.dart';
 import 'package:real_birth_app/models/articleModel.dart';
@@ -43,7 +42,7 @@ class _WebViewExampleState extends State<WebViewExample> {
       ..loadRequest(Uri.parse(widget.link.link));
         _controller = controller;
   }
-
+//Create log
   @override
   void dispose() {
     currTime = DateTime.now();
