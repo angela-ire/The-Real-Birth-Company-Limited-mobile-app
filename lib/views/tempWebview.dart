@@ -3,7 +3,6 @@ import 'package:real_birth_app/controllers/webViewController.dart';
 import 'package:real_birth_app/models/articleModel.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
 
 class WebViewExample extends StatefulWidget {
   final Articlemodel link;
