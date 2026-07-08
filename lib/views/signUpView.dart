@@ -40,8 +40,6 @@ class Signupview extends StatefulWidget{
       return Scaffold(
         body:Center( 
           child:Padding(padding: const EdgeInsets.all(30),
-
-
           child: FutureBuilder(future: control.fetchPage(), builder: (context,snapshot){
             if(snapshot.hasData){
               control.pageText = snapshot.data!;
