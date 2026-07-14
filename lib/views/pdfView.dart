@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pdfrx/pdfrx.dart';
+import 'package:real_birth_app/controllers/pdfViewController.dart';
 import 'package:real_birth_app/controllers/webViewController.dart';
 import 'package:real_birth_app/models/articleModel.dart';
 
@@ -12,7 +13,7 @@ class Pdfview extends StatefulWidget {
 }
 
 class _Pdfview extends State<Pdfview> {
-  final webViewController web = webViewController();
+  final Pdfviewcontroller web = Pdfviewcontroller();
   late DateTime currTime;
   final initTime  = DateTime.now();
   
