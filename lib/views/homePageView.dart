@@ -104,6 +104,7 @@ class _Navigation extends State<Navigation>{
   }
 
   Future<void> _launchURL() async {
+    control.urlTrack();
    final Uri _url = Uri.parse('https://therealbirthworkshop.online/public/');
    if (!await launchUrl(_url)) {
         throw Exception('Could not launch $_url');

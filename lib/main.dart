@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,7 +11,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
-  final db = FirebaseFirestore.instance;
   runApp(GetMaterialApp(theme:ThemeData(scaffoldBackgroundColor: Color.fromARGB(255, 251, 234, 247),colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFBEAF2))), 
   home: StreamBuilder(
     stream: FirebaseAuth.instance.authStateChanges(), builder: (context, snapshot){
