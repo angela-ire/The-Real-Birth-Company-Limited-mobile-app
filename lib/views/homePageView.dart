@@ -4,6 +4,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:real_birth_app/controllers/homePageController.dart';
 import 'package:real_birth_app/views/QRView.dart';
 import 'package:real_birth_app/views/articleListView.dart';
+import 'package:real_birth_app/views/pdfListView.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Homepageview extends StatelessWidget{
@@ -70,7 +71,7 @@ class _Navigation extends State<Navigation>{
             child:Column(
               children: [
                 Expanded(child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press"))), 
-                Expanded(child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press"))),
+                Expanded(child: ElevatedButton(onPressed: () => pdfPage(), child: Text("PDF"))),
                 Expanded(child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press"))),
                 Expanded(child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press")))
               ]
@@ -96,6 +97,10 @@ class _Navigation extends State<Navigation>{
 
   void iFramePage(){
     Get.to(Articlelistview());
+  }
+
+  void pdfPage(){
+    Get.to(Pdflistview());
   }
 
   Future<void> _launchURL() async {
