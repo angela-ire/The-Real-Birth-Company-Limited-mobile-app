@@ -4,6 +4,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:real_birth_app/controllers/homePageController.dart';
 import 'package:real_birth_app/views/QRView.dart';
 import 'package:real_birth_app/views/articleListView.dart';
+import 'package:real_birth_app/views/birthPlannerView.dart';
 import 'package:real_birth_app/views/pdfListView.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -72,7 +73,7 @@ class _Navigation extends State<Navigation>{
               children: [
                 Expanded(child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press"))), 
                 Expanded(child: ElevatedButton(onPressed: () => pdfPage(), child: Text("PDF"))),
-                Expanded(child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press"))),
+                Expanded(child: ElevatedButton(onPressed: () => birthPlanner(), child: Text("BIRTH PLANNER"))),
                 Expanded(child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press")))
               ]
             )
@@ -101,6 +102,10 @@ class _Navigation extends State<Navigation>{
 
   void pdfPage(){
     Get.to(Pdflistview());
+  }
+
+  void birthPlanner(){
+    Get.to(Birthplannerview());
   }
 
   Future<void> _launchURL() async {
