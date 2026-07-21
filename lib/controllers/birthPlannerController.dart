@@ -6,17 +6,26 @@ class Birthplannercontroller {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  Stream<List<Birthnotes>> fetchNotes(String type){
+  Stream<QuerySnapshot> fetchNotes(String type){
     return db.collection("users").doc(auth.currentUser?.uid).collection("tools").doc("birthPlanner")
-    .collection(type).snapshots()
-    .map((snapshot) => snapshot.docs
-            .map((doc) => Birthnotes.fromJson(doc.data()))
-            .toList());
+    .collection(type).orderBy("date", descending: true).snapshots();
     }
 
-  Future<void> addNote(String type, String text){
+  Future<void> addNote(String type, String text, String? docId){
     Birthnotes note = Birthnotes(text: text, date: DateTime.now(), title: text);
+    if(docId == null){
     return db.collection("users").doc(auth.currentUser!.uid).collection("tools").doc("birthPlanner")
     .collection(type).add(note.toJson());
+    }
+    else{
+
+      return db.collection("users").doc(auth.currentUser!.uid).collection("tools").doc("birthPlanner")
+      .collection(type).doc(docId).update({"text": text});
+    }
+  }
+
+  Future<void> deleteNote(String type, String docId){
+    return db.collection("users").doc(auth.currentUser!.uid).collection("tools").doc("birthPlanner")
+    .collection(type).doc(docId).delete();
   }
 }

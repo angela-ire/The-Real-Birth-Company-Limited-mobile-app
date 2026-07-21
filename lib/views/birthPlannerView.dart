@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:real_birth_app/controllers/birthPlannerController.dart';
 import 'package:real_birth_app/models/birthNotes.dart';
@@ -11,15 +12,14 @@ class Birthplannerview extends StatefulWidget {
 
   class _Birthplannerview extends State<Birthplannerview>{
   final controller = Birthplannercontroller(); 
-  List<Birthnotes>? _note;
   final TextEditingController con = TextEditingController();
 
-  void openDialouge(String type){
+  void openDialouge(String type, String? DocId){
     showDialog(
     context: context,
     builder: (context) => AlertDialog(
       content: TextField(controller: con,),
-      actions: [ElevatedButton(onPressed:(){ controller.addNote(type ,con.text);}, child: Text("Add"))],
+      actions: [ElevatedButton(onPressed:(){ controller.addNote(type ,con.text, DocId); con.clear(); Navigator.pop(context);}, child: Text("Add"))],
       )
     );
   }
@@ -46,21 +46,29 @@ class Birthplannerview extends StatefulWidget {
               //Notes
               Center(child:
                 Column(children: [
-                  StreamBuilder(stream: controller.fetchNotes("birthNotes") , builder: (context, snapshot){
+                  StreamBuilder<QuerySnapshot>(stream: controller.fetchNotes("birthNotes") , builder: (context, snapshot){
                     if(snapshot.hasData){
-                      _note  = snapshot.data;
+                      List note = snapshot.data!.docs;
                       return ListView.builder(shrinkWrap: true, physics: ScrollPhysics(), scrollDirection: Axis.vertical,
-                        itemCount: _note!.length,
+                        itemCount: note.length,
                         itemBuilder:  (context, index){
-                        final item = _note![index];
-                        return ListTile(title: Text(item.title));
+                        DocumentSnapshot item = note[index];
+                        String id = item.id;
+
+                        Map<String, dynamic> data = item.data() as Map<String, dynamic>;                        
+
+                        return ListTile(title: Text(data["text"]), 
+                        trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                          IconButton(onPressed: (){openDialouge("birthNotes", id);}, icon: Icon(Icons.settings)),
+                          IconButton(onPressed: (){controller.deleteNote("birthNotes", id);}, icon: Icon(Icons.delete))
+                        ],));
                         }
                       );
                     }
                     else{return Text("");}
                 }
                 ),
-                  ElevatedButton(onPressed: () {openDialouge("birthNotes");}, child: Text("Add Note")),
+                  ElevatedButton(onPressed: () {openDialouge("birthNotes", null);}, child: Text("Add Note")),
                 ]),
               ),
             
@@ -69,19 +77,27 @@ class Birthplannerview extends StatefulWidget {
                 Column(children: [
                   StreamBuilder(stream: controller.fetchNotes("birthProcedures") , builder: (context, snapshot){
                     if(snapshot.hasData){
-                      _note  = snapshot.data;
+                      List note = snapshot.data!.docs;
                       return ListView.builder(shrinkWrap: true, physics: ScrollPhysics(), scrollDirection: Axis.vertical,
-                        itemCount: _note!.length,
+                        itemCount: note.length,
                         itemBuilder:  (context, index){
-                        final item = _note![index];
-                        return ListTile(title: Text(item.title));
+                        DocumentSnapshot item = note[index];
+                        String id = item.id;
+
+                        Map<String, dynamic> data = item.data() as Map<String, dynamic>;                        
+
+                        return ListTile(title: Text(data["text"]), 
+                        trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                          IconButton(onPressed: (){openDialouge("birthProcedures", id);}, icon: Icon(Icons.settings)),
+                          IconButton(onPressed: (){controller.deleteNote("birthProcedures", id);}, icon: Icon(Icons.delete))
+                        ],));
                         }
                       );
                     }
                     else{return Text("");}
                 }
                 ),
-                  ElevatedButton(onPressed: () {openDialouge("birthProcedures");}, child: Text("Add Note")),
+                  ElevatedButton(onPressed: () {openDialouge("birthProcedures", null);}, child: Text("Add Note")),
                 ]),
               ),
 
@@ -90,19 +106,27 @@ class Birthplannerview extends StatefulWidget {
                 Column(children: [
                   StreamBuilder(stream: controller.fetchNotes("birthConditions") , builder: (context, snapshot){
                     if(snapshot.hasData){
-                      _note  = snapshot.data;
+                      List note = snapshot.data!.docs;
                       return ListView.builder(shrinkWrap: true, physics: ScrollPhysics(), scrollDirection: Axis.vertical,
-                        itemCount: _note!.length,
+                        itemCount: note.length,
                         itemBuilder:  (context, index){
-                        final item = _note![index];
-                        return ListTile(title: Text(item.title));
+                        DocumentSnapshot item = note[index];
+                        String id = item.id;
+
+                        Map<String, dynamic> data = item.data() as Map<String, dynamic>;                        
+
+                        return ListTile(title: Text(data["text"]), 
+                        trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                          IconButton(onPressed: (){openDialouge("birthConditions", id);}, icon: Icon(Icons.settings)),
+                          IconButton(onPressed: (){controller.deleteNote("birthConditions", id);}, icon: Icon(Icons.delete))
+                        ],));
                         }
                       );
                     }
                     else{return Text("");}
                 }
                 ),
-                  ElevatedButton(onPressed: () {openDialouge("birthConditions");}, child: Text("Add Note")),
+                  ElevatedButton(onPressed: () {openDialouge("birthConditions", null);}, child: Text("Add Note")),
                 ]),
               ),
               
