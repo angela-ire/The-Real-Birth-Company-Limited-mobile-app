@@ -6,27 +6,17 @@ class Birthplannercontroller {
   FirebaseFirestore db = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  Stream<List<Birthnotes>> fetchNotes(){
+  Stream<List<Birthnotes>> fetchNotes(String type){
     return db.collection("users").doc(auth.currentUser?.uid).collection("tools").doc("birthPlanner")
-    .collection("birthNotes").snapshots()
+    .collection(type).snapshots()
     .map((snapshot) => snapshot.docs
             .map((doc) => Birthnotes.fromJson(doc.data()))
             .toList());
     }
 
-  Stream<List<Birthnotes>> fetchProcedures(){
-    return db.collection("users").doc(auth.currentUser?.uid).collection("tools").doc("birthPlanner")
-    .collection("birthProcedures").snapshots()
-    .map((snapshot) => snapshot.docs
-            .map((doc) => Birthnotes.fromJson(doc.data()))
-            .toList());
-  }
-
-  Stream<List<Birthnotes>> fetchConditions(){
-    return db.collection("users").doc(auth.currentUser?.uid).collection("tools").doc("birthPlanner")
-    .collection("birthConditions").snapshots()
-    .map((snapshot) => snapshot.docs
-            .map((doc) => Birthnotes.fromJson(doc.data()))
-            .toList());
+  Future<void> addNote(String type, String text){
+    Birthnotes note = Birthnotes(text: text, date: DateTime.now(), title: text);
+    return db.collection("users").doc(auth.currentUser!.uid).collection("tools").doc("birthPlanner")
+    .collection(type).add(note.toJson());
   }
 }
