@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:real_birth_app/controllers/birthPlannerController.dart';
-import 'package:real_birth_app/models/birthNotes.dart';
-
 
 class Birthplannerview extends StatefulWidget {
   const Birthplannerview({super.key});
