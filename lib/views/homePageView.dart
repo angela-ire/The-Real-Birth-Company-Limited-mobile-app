@@ -6,6 +6,7 @@ import 'package:real_birth_app/views/QRView.dart';
 import 'package:real_birth_app/views/articleListView.dart';
 import 'package:real_birth_app/views/bagChecklistView.dart';
 import 'package:real_birth_app/views/birthPlannerView.dart';
+import 'package:real_birth_app/views/contractionTrackerView.dart';
 import 'package:real_birth_app/views/pdfListView.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -75,7 +76,8 @@ class _Navigation extends State<Navigation>{
                 Expanded(child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press"))), 
                 Expanded(child: ElevatedButton(onPressed: () => pdfPage(), child: Text("PDF"))),
                 Expanded(child: ElevatedButton(onPressed: () => birthPlanner(), child: Text("BIRTH PLANNER"))),
-                Expanded(child: ElevatedButton(onPressed: () => bagChecklist(), child: Text("Checklist")))
+                Expanded(child: ElevatedButton(onPressed: () => bagChecklist(), child: Text("Checklist"))),
+                Expanded(child: ElevatedButton(onPressed: () => contractionTracker(), child: Text("contractionTracker")))
               ]
             )
           ),
@@ -95,6 +97,10 @@ class _Navigation extends State<Navigation>{
         )
       ][currentPageIndex],
     );
+  }
+
+  void contractionTracker(){
+    Get.to(Contractiontrackerview());
   }
 
   void bagChecklist(){

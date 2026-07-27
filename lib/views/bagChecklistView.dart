@@ -46,6 +46,7 @@ class _Bagchecklistview extends State<Bagchecklistview>{
                   trailing: Row(mainAxisSize: MainAxisSize.min,
                     children: [
                     IconButton(onPressed: (){controller.checkItem(false, id);} ,icon: Icon(Icons.check_circle_outline)),
+                    IconButton(onPressed: (){openDialouge(id);}, icon: Icon(Icons.edit)),
                     IconButton(onPressed: (){controller.deleteItem(id);}, icon: Icon(Icons.delete))
                     ]
                   ));
@@ -55,6 +56,7 @@ class _Bagchecklistview extends State<Bagchecklistview>{
                   trailing: Row(mainAxisSize: MainAxisSize.min,
                     children: [
                     IconButton(onPressed: (){controller.checkItem(true, id);} ,icon: Icon(Icons.highlight_off)),
+                    IconButton(onPressed: (){openDialouge(id);}, icon: Icon(Icons.edit)),
                     IconButton(onPressed: (){controller.deleteItem(id);}, icon: Icon(Icons.delete))
                     ]
                   ));
