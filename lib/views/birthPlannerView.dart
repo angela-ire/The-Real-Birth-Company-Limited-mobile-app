@@ -29,6 +29,7 @@ class Birthplannerview extends StatefulWidget {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            leading: BackButton(onPressed: () => Navigator.of(context).pop()),
             bottom: const TabBar(
               tabs: [
                 Tab(text: "notes",),
@@ -37,6 +38,7 @@ class Birthplannerview extends StatefulWidget {
               ],
             ),
             title: const Text('Tabs Demo'),
+            
           ),
           body: TabBarView(
             children: [
