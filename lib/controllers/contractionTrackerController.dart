@@ -12,6 +12,7 @@ class Contractiontrackercontroller extends GetxController{
   DateTime? start;
   RxString startStop = "Start".obs;
 
+  //Changes Stopwatch state and runs end contraction function
   void contractionSwitch(){
     //true
     if(timeELapsed.isRunning){
@@ -29,6 +30,7 @@ class Contractiontrackercontroller extends GetxController{
     }
   }
 
+  //Runs when a contraction ends
   void contractionEnd(double elapsed, DateTime start, DateTime end){
     elapsed = double.parse(elapsed.toStringAsFixed(2));
     Contractionmodel model = Contractionmodel(startTime: start, endTime: end, duration: elapsed);
@@ -36,6 +38,7 @@ class Contractiontrackercontroller extends GetxController{
     .collection("contractions").add(model.toJson());
   }
 
+  //Gets a list of all contractions for this user
   Stream<List<Contractionmodel>> getContraction(){
     return db.collection("users").doc(auth.currentUser!.uid).collection("tools").doc("contractionTracker")
     .collection("contractions").orderBy("endTime", descending: true)
@@ -45,6 +48,7 @@ class Contractiontrackercontroller extends GetxController{
             .toList());
   }
 
+  //Takes a doube and converst as a standard minute format (mm:ss)
   String returnAsMinutes(double total){
     double mins = total / 60;
     double secs = total % 60;

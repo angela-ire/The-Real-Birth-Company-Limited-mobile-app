@@ -7,6 +7,7 @@ class webViewController{
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
 
+  // Track article reading
   void trackArticleRead(DateTime OPEN, DateTime CLOSE, String ARTICLE)async {
     int seconds = CLOSE.difference(OPEN).inSeconds;
     Articletrackingmodel articletrackingmodel = Articletrackingmodel();
@@ -16,7 +17,8 @@ class webViewController{
 
     final sfDocRef =  db.collection("articles").doc("pregnancyInfo").collection("docs").doc(ARTICLE).
     collection("read").doc("total");
-
+    
+    // Between 2 and 4 minutes
     if (seconds >= 120 && seconds < 240){
       db.collection("articles").doc("pregnancyInfo").collection("docs")
       .doc(ARTICLE).collection("read").doc("2mins").collection("reads").add(articletrackingmodel.toJson());
@@ -32,6 +34,8 @@ class webViewController{
       });
       });
     }
+
+    // Between 4 and 6 minutes
     else if(seconds >= 240 && seconds < 360){
       db.collection("articles").doc("pregnancyInfo").collection("docs")
       .doc(ARTICLE).collection("read").doc("4mins").collection("reads").add(articletrackingmodel.toJson());
@@ -47,6 +51,8 @@ class webViewController{
       });
       });
     }
+
+    // Over 6 minutes
     else if(seconds >= 360){
       db.collection("articles").doc("pregnancyInfo").collection("docs")
       .doc(ARTICLE).collection("read").doc("6mins").collection("reads").add(articletrackingmodel.toJson());
@@ -64,6 +70,7 @@ class webViewController{
     }
   }
 
+  // Tracks users revisiting an article
   void trackArticleRevisit(DateTime OPEN, DateTime CLOSE, String ARTICLE)async {
     int seconds = CLOSE.difference(OPEN).inSeconds;
     Articletrackingmodel articletrackingmodel = Articletrackingmodel();
@@ -121,6 +128,7 @@ class webViewController{
     }
  }
 
+  // Checks if users are revisiting or first time reading
   void checkIfRevisit(DateTime OPEN, DateTime CLOSE, String ARTICLE)async{
     try {
         await db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).collection("read").doc("read").get().then((doc) {

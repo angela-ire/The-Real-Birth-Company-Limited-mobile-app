@@ -22,7 +22,9 @@ class _Contractiontrackerview extends State<Contractiontrackerview>{
       body: Center(
         child: Column(
           children: [
+            //Start and end contraction button
             ElevatedButton(onPressed:(){controller.contractionSwitch();},child: Obx(() => Text("${controller.startStop}"))),
+            // Get Average
             StreamBuilder(stream: controller.getContraction(), builder: (context, snapshot){
               if(snapshot.hasData){
                 controller.pageModel = snapshot.data;
@@ -42,6 +44,7 @@ class _Contractiontrackerview extends State<Contractiontrackerview>{
               else{return Text("");}
             }),
 
+            //Get number of contractions in last hour
             StreamBuilder(stream: controller.getContraction(), builder:(context, snapshot){
               if(snapshot.hasData){
                 controller.pageModel = snapshot.data;
@@ -57,7 +60,8 @@ class _Contractiontrackerview extends State<Contractiontrackerview>{
               }
               else{return Text("");}
             }),
-
+            
+            //List all existing contractions
             StreamBuilder(stream: controller.getContraction(), builder: (context, snapshot){
               if(snapshot.hasData){
                 controller.pageModel = snapshot.data;
@@ -65,6 +69,7 @@ class _Contractiontrackerview extends State<Contractiontrackerview>{
                 itemCount: controller.pageModel!.length,
                 itemBuilder:  (context, index){
                   Contractionmodel curr = controller.pageModel![index];
+                  //Formats into correct 24hour clock
                   String _stop = DateFormat.Hm().format(curr.endTime);  
                   String _start = DateFormat.Hm().format(curr.startTime);
                   return ListTile(title: Text("$_start until $_stop lasted ${controller.returnAsMinutes(curr.duration)}"),);

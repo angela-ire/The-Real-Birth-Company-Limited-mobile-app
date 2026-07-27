@@ -12,7 +12,7 @@ import 'package:real_birth_app/views/homePageView.dart';
 class Logincontroller {
 final auth = FirebaseAuth.instance;
 final db  = FirebaseFirestore.instance;
-/* Sign in */
+// Sign in
 Future signInUser(String e, String p) async{
   try{
     await auth.signInWithEmailAndPassword(email: e, password: p);

@@ -8,6 +8,7 @@ class Homepagecontroller {
   final FirebaseFirestore db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
 
+  //Tracks if a user uses the workshop from the app
   void urlTrack()async{
     await db.collection("users").doc(auth.currentUser!.uid).collection("workshopStats").doc("workshopAccesses")
     .get().then((doc){

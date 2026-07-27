@@ -7,6 +7,7 @@ class Pdfviewcontroller{
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
 
+  //Tracks users reading articles
   void trackArticleRead(DateTime OPEN, DateTime CLOSE, String ARTICLE)async {
     int seconds = CLOSE.difference(OPEN).inSeconds;
     Articletrackingmodel articletrackingmodel = Articletrackingmodel();
@@ -16,6 +17,7 @@ class Pdfviewcontroller{
 
     final sfDocRef =  db.collection("pdfs").doc(ARTICLE).collection("read").doc("total");
 
+    //if users used for between 2 and 4 minutes
     if (seconds >= 120 && seconds < 240){
       db.collection("pdfs")
       .doc(ARTICLE).collection("read").doc("2mins").collection("reads").add(articletrackingmodel.toJson());
@@ -31,6 +33,8 @@ class Pdfviewcontroller{
       });
       });
     }
+
+    //if users used between 4 and 6 minutes
     else if(seconds >= 240 && seconds < 360){
       db.collection("pdfs")
       .doc(ARTICLE).collection("read").doc("4mins").collection("reads").add(articletrackingmodel.toJson());
@@ -46,6 +50,8 @@ class Pdfviewcontroller{
       });
       });
     }
+
+    // 6 minutes plus
     else if(seconds >= 360){
       db.collection("pdfs")
       .doc(ARTICLE).collection("read").doc("6mins").collection("reads").add(articletrackingmodel.toJson());
@@ -63,6 +69,7 @@ class Pdfviewcontroller{
     }
   }
 
+  //Same as above but tracks if a user is revisiting an article instead of a fresh read
   void trackArticleRevisit(DateTime OPEN, DateTime CLOSE, String ARTICLE)async {
     int seconds = CLOSE.difference(OPEN).inSeconds;
     Articletrackingmodel articletrackingmodel = Articletrackingmodel();
@@ -120,6 +127,7 @@ class Pdfviewcontroller{
     }
  }
 
+  //Checks if user is revisiting or not
   void checkIfRevisit(DateTime OPEN, DateTime CLOSE, String ARTICLE)async{
     try {
         await db.collection("users").doc(auth.currentUser!.uid).collection("pdfStats").doc(ARTICLE).collection("read").doc("read").get().then((doc) {

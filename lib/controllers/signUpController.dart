@@ -20,7 +20,7 @@ class signUpController {
 
   late Signuppagetext pageText;
 
-  /* Creates an open stream for language selection */
+  // Creates an open stream for language selection
   Stream <List<Langmodel>> fetchLanguages(){
     return db.collection("resources")
     .snapshots()
@@ -29,6 +29,7 @@ class signUpController {
             .toList());
   }
 
+  // Fetchs current stats
   Future<Usersignupstats> fetchStats()async {
      return db.collection("stats").doc("userStats")
         .get()
@@ -37,6 +38,7 @@ class signUpController {
         });
   }
 
+  // fetch the page Text
   Future<Signuppagetext> fetchPage()async {
     return db.collection("resources").doc(preferences.langKey).collection("pages").doc("signUpPage")
     .get()
@@ -45,11 +47,11 @@ class signUpController {
     });
   }
 
-  /* Create new user stats records */
+  // Create new user stats records
   Future createUserStats(userModel user) async{
     userStats.totalUsers = 1;
 
-    /* Finds user age and sperates by bracket */
+    // Finds user age and sperates by bracket
     int ageInDays = DateTime.now().difference(user.dateOfBirth).inDays;
     if(ageInDays < 6575){
       userStats.underEighteen = 1;
@@ -61,7 +63,7 @@ class signUpController {
       userStats.twentyFivePlus = 1;
     }
 
-    /*Checks how user found app*/
+    //Checks how user found app
     if(user.discover == "Option 1"){
       userStats.discoveryOption1 = 1;
     }
@@ -69,12 +71,12 @@ class signUpController {
       userStats.discoveryOption2 = 1;
     }
 
-  /*Checks if user takes classes*/
+  //Checks if user takes classes
     if(user.classes == "Yes"){
       userStats.classes = 1;
      }
 
-  /*Find user Gender*/
+  //Find user Gender
     if(user.bioSex == "F"){
       userStats.female = 1;
     }
@@ -82,7 +84,7 @@ class signUpController {
       userStats.male = 1;
     }
 
-    /*Checks user language*/
+    //Checks user language
     if(user.lang == "en"){
       userStats.en = 1;
     }
@@ -111,7 +113,7 @@ class signUpController {
     });
   }
 
-  /* Creates the document for the specific user */
+  // Creates the document for the specific user 
   Future createUserDocument(userModel user) async{
     try{
       await db.collection("users").doc(user.uid).set(user.toJson());
@@ -121,14 +123,14 @@ class signUpController {
     catch(e){}
   }
 
-  /* Adds user to Auth table(account creation) */
+  // Adds user to Auth table(account creation)
   Future createUser(String name, String email, String password, String postcode, String hospital, DateTime dateOfBirth, String lang, String bioSex, DateTime dueDate, DateTime registrationDate, String discover, String classes) async{
     try{
     await auth.createUserWithEmailAndPassword(email: email, password: password);
     final u = auth.currentUser;
     final uid = u!.uid;
 
-      /* Adds user to Auth table(account creation) */
+      // Adds user to Auth table(account creation)
       userModel user = userModel(uid: uid, name: name, email: email, postcode: postcode, 
       hospital: hospital, dateOfBirth: dateOfBirth, lang: lang, bioSex: bioSex, 
       dueDate: dueDate, registrationDate: registrationDate, discover: discover, classes: classes, role: "user");
