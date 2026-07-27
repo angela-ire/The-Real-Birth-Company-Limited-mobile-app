@@ -44,4 +44,23 @@ class Contractiontrackercontroller extends GetxController{
             .map((doc) => Contractionmodel.fromJson(doc.data()))
             .toList());
   }
+
+  String returnAsMinutes(double total){
+    double mins = total / 60;
+    double secs = total % 60;
+    String? _secs;
+    String? _mins;
+
+    if(mins < 0){mins = 0;}
+    
+    if(secs < 10){
+      _secs = "0${secs.truncate().toString()}";
+    }
+    else{
+      _secs = secs.truncate().toString();
+    }
+    _mins = mins.truncate().toString();
+    return "$_mins:$_secs"; 
+    
+  }
 }

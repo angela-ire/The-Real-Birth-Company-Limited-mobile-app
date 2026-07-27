@@ -31,24 +31,12 @@ class _Contractiontrackerview extends State<Contractiontrackerview>{
                 for(int i = 0; i < numOf; i++){
                   total = total + controller.pageModel![i].duration;
                 }
-                double avg = total / numOf;
-                avg = double.parse(avg.toStringAsFixed(0));
-                double mins = avg / 60;
                 if(total == 0.0){
                   return Text("average");
                 }
                 else{
-                  if(mins < 1){
-                    mins = 0;
-                  }
-                  double secs = avg % 60;
-                  if(secs < 10){
-                    String s = "0${secs.truncate().toString()}";
-                    return Text("average = ${mins.truncate().toString()}:$s");  
-                  }
-                  else{
-                    return Text("average = ${mins.truncate().toString()}:${secs.truncate().toString()}");
-                  }
+                double avg = total / numOf;
+                return Text("average = ${controller.returnAsMinutes(avg)}");
                 }
               }              
               else{return Text("");}
@@ -79,7 +67,7 @@ class _Contractiontrackerview extends State<Contractiontrackerview>{
                   Contractionmodel curr = controller.pageModel![index];
                   String _stop = DateFormat.Hm().format(curr.endTime);  
                   String _start = DateFormat.Hm().format(curr.startTime);
-                  return ListTile(title: Text("$_start until $_stop lasted ${curr.duration}"),);
+                  return ListTile(title: Text("$_start until $_stop lasted ${controller.returnAsMinutes(curr.duration)}"),);
                 });
               }
               else{return Text("Loading");}
