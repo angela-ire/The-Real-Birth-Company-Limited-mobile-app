@@ -75,6 +75,7 @@ class Contractiontrackercontroller extends GetxController{
     }
   }
 
+  //Gets total frequency
   double getFrequency(List<Contractionmodel> listOfContractions){
     double total = 0;
     int count = 0;
@@ -98,6 +99,7 @@ class Contractiontrackercontroller extends GetxController{
     }
   }
 
+  //Gets average length of contraction
   double getAverage(List<Contractionmodel> listOfContractions){
     double total = 0.0;
     double avg = 0;

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:real_birth_app/models/AppConfig.dart';
+import 'package:real_birth_app/models/userModel.dart';
 
 
 class Homepagecontroller {
@@ -35,5 +36,16 @@ class Homepagecontroller {
         transaction.update(newDocRef, {"totalAccess": _total});
       });
     });
+  }
+
+  //  Gets number of weeks until birth
+  Future<int> getWeeks() async {
+    DateTime curr = DateTime.now();
+    userModel u = await db.collection("users").doc(auth.currentUser!.uid).get()
+    .then((value){
+      return userModel.fromJson(value.data());
+    });
+    int day = u.dueDate.difference(curr).inDays;
+    return (day/7).truncate();
   }
 }

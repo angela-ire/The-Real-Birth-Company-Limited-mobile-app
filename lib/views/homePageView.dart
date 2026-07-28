@@ -42,9 +42,9 @@ class _Navigation extends State<Navigation>{
         destinations: const<Widget>[
         NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
         NavigationDestination(icon: Icon(Icons.link), label: 'Workshop'),
-        NavigationDestination(icon: Icon(Icons.archive), label: 'resources'),
-        NavigationDestination(icon: Icon(Icons.shopping_cart), label: 'Store'),
-        NavigationDestination(icon: Icon(Icons.calendar_today,), label: 'Bookings')
+        NavigationDestination(icon: Icon(Icons.person_pin), label: 'Profile'),
+        NavigationDestination(icon: Icon(Icons.construction), label: 'Tools'),
+        NavigationDestination(icon: Icon(Icons.book), label: 'Resources')
         ],
       ),
       body: <Widget>[
@@ -52,7 +52,12 @@ class _Navigation extends State<Navigation>{
         //HOME
         Card( color: Color.fromARGB(255, 251, 234, 247),
           child: Center(
-            child: Text("Home Page"),
+            child: FutureBuilder(future: control.getWeeks(), builder: (context, snapshot){
+              if(snapshot.hasData){
+                return Text("${(40 - snapshot.data!).toString()} weeks along");
+              }
+              else{return Text("");}
+            }),
           )
         ),
 
@@ -68,32 +73,56 @@ class _Navigation extends State<Navigation>{
           ),
         ),
 
+        //Profile
+        Card(color: Color.fromARGB(255, 251, 234, 247),
+        ),
+
+        //Tools
+        Card(color: Color.fromARGB(255, 251, 234, 247),
+        child: Center(
+            child: Column(
+              children: [
+              FutureBuilder(future: control.getWeeks(), builder: (context, snapshot){
+                if(snapshot.hasData){
+                  return Text("${(40 - snapshot.data!).toString()} weeks along");
+                }
+                else{return Text("");}
+              }),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+              Flexible(child: ElevatedButton(onPressed: () => {}, child: Text("Pregnancy Tools"))),
+              Flexible(child: ElevatedButton(onPressed: () => {}, child: Text("Birth Tools"))),
+              ]),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children:[
+                Flexible(child: ElevatedButton(onPressed: () => {}, child: Text("Postnatal Tools"))),
+                Flexible(child: ElevatedButton(onPressed: () => {}, child: Text("Family Tools"))),
+              ]
+              )
+            ]
+            )
+          ),
+                  ),
+        
         //Resources
         Card(color: Color.fromARGB(255, 251, 234, 247),
           child: Center(
-            child:Column(
+            child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Expanded(child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press"))), 
-                Expanded(child: ElevatedButton(onPressed: () => pdfPage(), child: Text("PDF"))),
-                Expanded(child: ElevatedButton(onPressed: () => birthPlanner(), child: Text("BIRTH PLANNER"))),
-                Expanded(child: ElevatedButton(onPressed: () => bagChecklist(), child: Text("Checklist"))),
-                Expanded(child: ElevatedButton(onPressed: () => contractionTracker(), child: Text("contractionTracker")))
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+              Flexible(child: ElevatedButton(onPressed: () => iFramePage(), child: Text("Press"))),
+              Flexible(child: ElevatedButton(onPressed: () => pdfPage(), child: Text("PDF"))),
+              ]),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children:[
+                Flexible(child: ElevatedButton(onPressed: () => birthPlanner(), child: Text("BIRTH PLANNER"))),
+                Flexible(child: ElevatedButton(onPressed: () => bagChecklist(), child: Text("Checklist"))),
               ]
+              )
+            ]
             )
           ),
-        ),
-
-        //TBD
-        Card(color: Color.fromARGB(255, 251, 234, 247),
-          child: Center(
-            child: Text("In Development"),
-          ),
-        ),
-        
-        Card(color: Color.fromARGB(255, 251, 234, 247),
-          child: Center(
-            child: Text("In Development"),
-          )
         )
       ][currentPageIndex],
     );
