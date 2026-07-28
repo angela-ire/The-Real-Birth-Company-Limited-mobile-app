@@ -6,6 +6,7 @@ import 'package:real_birth_app/views/QRView.dart';
 import 'package:real_birth_app/views/articleListView.dart';
 import 'package:real_birth_app/views/bagChecklistView.dart';
 import 'package:real_birth_app/views/birthPlannerView.dart';
+import 'package:real_birth_app/views/calendarView.dart';
 import 'package:real_birth_app/views/contractionTrackerView.dart';
 import 'package:real_birth_app/views/pdfListView.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -90,8 +91,8 @@ class _Navigation extends State<Navigation>{
               }),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-              Flexible(child: ElevatedButton(onPressed: () => {}, child: Text("Pregnancy Tools"))),
-              Flexible(child: ElevatedButton(onPressed: () => {}, child: Text("Birth Tools"))),
+              Flexible(child: ElevatedButton(onPressed: () => contractionTracker(), child: Text("Pregnancy Tools"))),
+              Flexible(child: ElevatedButton(onPressed: () => {Get.to(Calendarview())}, child: Text("Birth Tools"))),
               ]),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children:[
@@ -116,7 +117,7 @@ class _Navigation extends State<Navigation>{
               ]),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children:[
-                Flexible(child: ElevatedButton(onPressed: () => birthPlanner(), child: Text("BIRTH PLANNER"))),
+                Flexible(child: ElevatedButton(onPressed: () => birthPlanner(), child: Text("Birth Planner"))),
                 Flexible(child: ElevatedButton(onPressed: () => bagChecklist(), child: Text("Checklist"))),
               ]
               )

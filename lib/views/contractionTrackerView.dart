@@ -28,13 +28,13 @@ class _Contractiontrackerview extends State<Contractiontrackerview>{
             //Start and end contraction button
             ElevatedButton(onPressed:(){controller.contractionSwitch();},child: Obx(() => Text("${controller.startStop}"))),
 
-            Text("average = ${controller.returnAsMinutes(controller.getAverage(controller.pageModel!))}"),
+            Text("average = ${controller.returnAsMinutes(controller.getAverage())}"),
                 
-            Text("amount in last hour ${controller.getTotalOfHour(controller.pageModel!).toString()}"),
+            Text("amount in last hour ${controller.getTotalOfHour().toString()}"),
             
-            Text("Frequency of last hour ${controller.returnAsMinutes(controller.getFrequencyPastHour(controller.pageModel!))}"),
+            Text("Frequency of last hour ${controller.returnAsMinutes(controller.getFrequencyPastHour())}"),
 
-            Text("Frequency ${controller.returnAsMinutes(controller.getFrequency(controller.pageModel!))}"),
+            Text("Frequency ${controller.returnAsMinutes(controller.getFrequency())}"),
 
             //List all existing contractions   
             ListView.builder(shrinkWrap: true, physics: ScrollPhysics(), scrollDirection: Axis.vertical,

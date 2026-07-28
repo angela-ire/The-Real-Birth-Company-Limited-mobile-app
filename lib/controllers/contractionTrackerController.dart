@@ -49,19 +49,19 @@ class Contractiontrackercontroller extends GetxController{
   }
 
   //Gets the average difference between contractions in the past hour
-  double getFrequencyPastHour(List<Contractionmodel> listOfContractions){
+  double getFrequencyPastHour(){
     DateTime curr = DateTime.now();
     double total = 0;
     int count = 0;
     DateTime? lastEnd;
-    for(int i = 0; i < listOfContractions.length; i++){
-      if(curr.difference(listOfContractions[i].endTime).inHours < 1){
+    for(int i = 0; i < pageModel!.length; i++){
+      if(curr.difference(pageModel![i].endTime).inHours < 1){
         if(lastEnd == null){
-          lastEnd = listOfContractions[i].endTime;
+          lastEnd = pageModel![i].endTime;
         }
         else{
-          total = total + lastEnd.difference(listOfContractions[i].startTime).inSeconds;
-          lastEnd = listOfContractions[i].endTime;
+          total = total + lastEnd.difference(pageModel![i].startTime).inSeconds;
+          lastEnd = pageModel![i].endTime;
         }
         count++;
       }
@@ -76,17 +76,17 @@ class Contractiontrackercontroller extends GetxController{
   }
 
   //Gets total frequency
-  double getFrequency(List<Contractionmodel> listOfContractions){
+  double getFrequency(){
     double total = 0;
     int count = 0;
     DateTime? lastEnd;
-    for(int i = 0; i < listOfContractions.length; i++){
+    for(int i = 0; i < pageModel!.length; i++){
       if(lastEnd == null){
-          lastEnd = listOfContractions[i].endTime;
+          lastEnd = pageModel![i].endTime;
         }
         else{
-          total = total + lastEnd.difference(listOfContractions[i].startTime).inSeconds;
-          lastEnd = listOfContractions[i].endTime;
+          total = total + lastEnd.difference(pageModel![i].startTime).inSeconds;
+          lastEnd = pageModel![i].endTime;
         }
       count++;
     }
@@ -100,26 +100,27 @@ class Contractiontrackercontroller extends GetxController{
   }
 
   //Gets average length of contraction
-  double getAverage(List<Contractionmodel> listOfContractions){
+  double getAverage(){
     double total = 0.0;
     double avg = 0;
-    for(int i = 0; i < listOfContractions.length; i++){
-      total = total + listOfContractions[i].duration;
+    for(int i = 0; i < pageModel!.length; i++){
+      total = total + pageModel![i].duration;
     }
     if(total == 0.0){
       avg = 0.0;
     }
     else{
-      avg = total / listOfContractions.length;
+      avg = total / pageModel!.length;
     }
     return avg;
   }
 
-  int getTotalOfHour(List<Contractionmodel> listOfContractions){
+  //Total contractions of the last hour
+  int getTotalOfHour(){
     final curr = DateTime.now();
     int total = 0;
-    for(int i = 0; i < listOfContractions.length; i++){
-      if(curr.difference(listOfContractions[i].endTime).inHours < 1){
+    for(int i = 0; i < pageModel!.length; i++){
+      if(curr.difference(pageModel![i].endTime).inHours < 1){
         total++;
       }
     }
