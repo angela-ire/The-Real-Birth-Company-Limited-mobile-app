@@ -48,6 +48,82 @@ class Contractiontrackercontroller extends GetxController{
             .toList());
   }
 
+  //Gets the average difference between contractions in the past hour
+  double getFrequencyPastHour(List<Contractionmodel> listOfContractions){
+    DateTime curr = DateTime.now();
+    double total = 0;
+    int count = 0;
+    DateTime? lastEnd;
+    for(int i = 0; i < listOfContractions.length; i++){
+      if(curr.difference(listOfContractions[i].endTime).inHours < 1){
+        if(lastEnd == null){
+          lastEnd = listOfContractions[i].endTime;
+        }
+        else{
+          total = total + lastEnd.difference(listOfContractions[i].startTime).inSeconds;
+          lastEnd = listOfContractions[i].endTime;
+        }
+        count++;
+      }
+    }
+    if(total == 0){
+      return 0.0;
+    }
+    else{
+      double avg = total / count;
+      return avg;
+    }
+  }
+
+  double getFrequency(List<Contractionmodel> listOfContractions){
+    double total = 0;
+    int count = 0;
+    DateTime? lastEnd;
+    for(int i = 0; i < listOfContractions.length; i++){
+      if(lastEnd == null){
+          lastEnd = listOfContractions[i].endTime;
+        }
+        else{
+          total = total + lastEnd.difference(listOfContractions[i].startTime).inSeconds;
+          lastEnd = listOfContractions[i].endTime;
+        }
+      count++;
+    }
+    if(total == 0){
+      return 0.0;
+    }
+    else{
+      double avg = total / count;
+      return avg;
+    }
+  }
+
+  double getAverage(List<Contractionmodel> listOfContractions){
+    double total = 0.0;
+    double avg = 0;
+    for(int i = 0; i < listOfContractions.length; i++){
+      total = total + listOfContractions[i].duration;
+    }
+    if(total == 0.0){
+      avg = 0.0;
+    }
+    else{
+      avg = total / listOfContractions.length;
+    }
+    return avg;
+  }
+
+  int getTotalOfHour(List<Contractionmodel> listOfContractions){
+    final curr = DateTime.now();
+    int total = 0;
+    for(int i = 0; i < listOfContractions.length; i++){
+      if(curr.difference(listOfContractions[i].endTime).inHours < 1){
+        total++;
+      }
+    }
+    return total;
+  }
+
   //Takes a doube and converst as a standard minute format (mm:ss)
   String returnAsMinutes(double total){
     double mins = total / 60;

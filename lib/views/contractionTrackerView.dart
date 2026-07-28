@@ -20,66 +20,35 @@ class _Contractiontrackerview extends State<Contractiontrackerview>{
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Column(
-          children: [
+        child: StreamBuilder(stream: controller.getContraction(), builder: (context, snapshot){
+          if(snapshot.hasData){
+            controller.pageModel = snapshot.data;
+            return SingleChildScrollView( child: Column(
+            children: [
             //Start and end contraction button
             ElevatedButton(onPressed:(){controller.contractionSwitch();},child: Obx(() => Text("${controller.startStop}"))),
-            // Get Average
-            StreamBuilder(stream: controller.getContraction(), builder: (context, snapshot){
-              if(snapshot.hasData){
-                controller.pageModel = snapshot.data;
-                int numOf = controller.pageModel!.length;
-                double total = 0;
-                for(int i = 0; i < numOf; i++){
-                  total = total + controller.pageModel![i].duration;
-                }
-                if(total == 0.0){
-                  return Text("average");
-                }
-                else{
-                double avg = total / numOf;
-                return Text("average = ${controller.returnAsMinutes(avg)}");
-                }
-              }              
-              else{return Text("");}
-            }),
 
-            //Get number of contractions in last hour
-            StreamBuilder(stream: controller.getContraction(), builder:(context, snapshot){
-              if(snapshot.hasData){
-                controller.pageModel = snapshot.data;
-                int length = controller.pageModel!.length;
-                final curr = DateTime.now();
-                int total = 0;
-                for(int i = 0; i < length; i++){
-                  if(curr.difference(controller.pageModel![i].endTime).inHours < 1){
-                    total++;
-                  }
-                }
-                return Text("amount in last hour ${total.toString()}");
-              }
-              else{return Text("");}
-            }),
+            Text("average = ${controller.returnAsMinutes(controller.getAverage(controller.pageModel!))}"),
+                
+            Text("amount in last hour ${controller.getTotalOfHour(controller.pageModel!).toString()}"),
             
-            //List all existing contractions
-            StreamBuilder(stream: controller.getContraction(), builder: (context, snapshot){
-              if(snapshot.hasData){
-                controller.pageModel = snapshot.data;
-                return ListView.builder(shrinkWrap: true, physics: ScrollPhysics(), scrollDirection: Axis.vertical,
-                itemCount: controller.pageModel!.length,
-                itemBuilder:  (context, index){
-                  Contractionmodel curr = controller.pageModel![index];
-                  //Formats into correct 24hour clock
-                  String _stop = DateFormat.Hm().format(curr.endTime);  
-                  String _start = DateFormat.Hm().format(curr.startTime);
-                  return ListTile(title: Text("$_start until $_stop lasted ${controller.returnAsMinutes(curr.duration)}"),);
-                });
-              }
-              else{return Text("Loading");}
-            })
-          ],
-        ),
-      ),
-    );
+            Text("Frequency of last hour ${controller.returnAsMinutes(controller.getFrequencyPastHour(controller.pageModel!))}"),
+
+            Text("Frequency ${controller.returnAsMinutes(controller.getFrequency(controller.pageModel!))}"),
+
+            //List all existing contractions   
+            ListView.builder(shrinkWrap: true, physics: ScrollPhysics(), scrollDirection: Axis.vertical,
+            itemCount: controller.pageModel!.length,
+            itemBuilder:  (context, index){
+            Contractionmodel curr = controller.pageModel![index];
+            //Formats into correct 24hour clock
+            String _stop = DateFormat.Hm().format(curr.endTime);  
+            String _start = DateFormat.Hm().format(curr.startTime);
+            return ListTile(title: Text("$_start until $_stop lasted ${controller.returnAsMinutes(curr.duration)}"),);})   
+          ]));
+          }
+          else{return Text("");}
+      }))
+    ,);
     }
   }
