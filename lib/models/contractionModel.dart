@@ -5,7 +5,7 @@ class Contractionmodel {
   DateTime endTime;
   double duration;
 
-  Contractionmodel({required this.startTime, required this.endTime, required this.duration}){}
+  Contractionmodel({required this.startTime, required this.endTime, required this.duration});
 
   static Contractionmodel fromJson(Map<String, dynamic> json) => 
    Contractionmodel(startTime: json['startTime'].toDate(), endTime: json['endTime'].toDate(), duration: json['duration']);

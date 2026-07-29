@@ -6,6 +6,7 @@ class Calendarcontroller {
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
 
+  //Get list of Appointement models from firebase
   Stream<List<Appointmentmodel>> getDates(){
     return db.collection("users").doc(auth.currentUser!.uid).collection("calendar")
     .snapshots()
@@ -13,23 +14,24 @@ class Calendarcontroller {
     .map((doc) => Appointmentmodel.fromJson(doc.data())).toList());
   }
   
- List<DateTime?> changeDate(List<DateTime?> dates,List<DateTime> date){
-  if(dates.length > date.length){
-    for(int i = 0; i < dates.length; i ++){
-      if(!date.contains(dates[i])){
-        db.collection("users").doc(auth.currentUser!.uid).collection("calendar")
-        .doc(dates[i].toString()).delete();
+  //Either adds from or takes away from Firebase depending on what was clicked
+  List<DateTime?> changeDate(List<DateTime?> dates,List<DateTime> date){
+    if(dates.length > date.length){
+      for(int i = 0; i < dates.length; i ++){
+        if(!date.contains(dates[i])){
+          db.collection("users").doc(auth.currentUser!.uid).collection("calendar")
+          .doc(dates[i].toString()).delete();
+        }
       }
     }
-  }
-  else{
-    for(int i = 0; i < date.length; i++){
-      if(!dates.contains(date[i])){
-        db.collection("users").doc(auth.currentUser!.uid).collection("calendar")
-      .doc(date[i].toString()).set({"date": Timestamp.fromDate(date[i])});
+    else{
+      for(int i = 0; i < date.length; i++){
+        if(!dates.contains(date[i])){
+          db.collection("users").doc(auth.currentUser!.uid).collection("calendar")
+        .doc(date[i].toString()).set({"date": Timestamp.fromDate(date[i])});
+        }
       }
     }
-  }
   return date;
  }
 }

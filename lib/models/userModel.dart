@@ -18,7 +18,7 @@ class userModel {
 
   userModel({required this.uid, required this.name, required this.email, required this.postcode, required this.hospital,
   required this.dateOfBirth, required this.lang, required this.bioSex, required this.dueDate, required this.registrationDate,
-  required this.discover, required this.classes, required this.role}){}
+  required this.discover, required this.classes, required this.role});
 
   static userModel fromJson(Map<String, dynamic>? json) => 
   userModel(uid: json?['uid'], name: json?['name'], email: json?['email'], 

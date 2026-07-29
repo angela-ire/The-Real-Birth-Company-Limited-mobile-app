@@ -18,7 +18,7 @@ class Signuppagetext {
   Signuppagetext({required this.title, required this.nameBox, required this.passwordBox, required this.ageBox,
   required this.emailBox, required this.postcodeBox, 
   required this.hospitalBox, required this.lnBox, required this.genderBox, required this.dueDateBox,
-  required this.discoveryBox, required this.classesBox}){}
+  required this.discoveryBox, required this.classesBox});
 
     /* Converts Firebase Json into class object */
   static Signuppagetext fromJson(Map<String, dynamic>? json) => 

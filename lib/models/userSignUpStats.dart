@@ -18,7 +18,7 @@ class Usersignupstats {
 
   Usersignupstats({required this.totalUsers, required this.en, required this.ar, required this.classes, 
   required this.underEighteen, required this.eighteenTwentyFive, required this.twentyFivePlus, 
-  required this.discoveryOption1, required this.discoveryOption2, required this.female, required this.male}){}
+  required this.discoveryOption1, required this.discoveryOption2, required this.female, required this.male});
 
     /* Converts Firebase Json into class object */
   static Usersignupstats fromJson(Map<String, dynamic>? json) => 

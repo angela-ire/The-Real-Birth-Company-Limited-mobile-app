@@ -13,9 +13,14 @@ class _Calendarview extends State<Calendarview>{
   Calendarcontroller controller = Calendarcontroller();
   List<Appointmentmodel>? d;
 
+  void openDialog(List<DateTime> oldDates, List<DateTime> newDates){
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body:
       StreamBuilder(stream: controller.getDates(), builder: (context, snapshot){
       if(snapshot.hasData){    
