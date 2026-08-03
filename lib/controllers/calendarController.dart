@@ -15,7 +15,7 @@ class Calendarcontroller {
   }
   
   //Either adds from or takes away from Firebase depending on what was clicked
-  List<DateTime?> changeDate(List<DateTime?> dates,List<DateTime> date){
+  List<DateTime?> changeDate(List<DateTime?> dates,List<DateTime> date, String? name){
     if(dates.length > date.length){
       for(int i = 0; i < dates.length; i ++){
         if(!date.contains(dates[i])){
@@ -27,8 +27,9 @@ class Calendarcontroller {
     else{
       for(int i = 0; i < date.length; i++){
         if(!dates.contains(date[i])){
+          final model = Appointmentmodel(date: date[i], name: name!);
           db.collection("users").doc(auth.currentUser!.uid).collection("calendar")
-        .doc(date[i].toString()).set({"date": Timestamp.fromDate(date[i])});
+        .doc(date[i].toString()).set(model.toJson());
         }
       }
     }

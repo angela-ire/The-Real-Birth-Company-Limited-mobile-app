@@ -11,11 +11,38 @@ class Calendarview extends StatefulWidget{
 
 class _Calendarview extends State<Calendarview>{
   Calendarcontroller controller = Calendarcontroller();
+  TextEditingController con = TextEditingController();
   List<Appointmentmodel>? d;
+  List<DateTime?> _dates = [];
 
-  void openDialog(List<DateTime> oldDates, List<DateTime> newDates){
-
+  void openDialog(List<DateTime?> oldDates, List<DateTime> newDates){
+   showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      content: TextField(controller: con,),
+      actions: [ElevatedButton(onPressed:(){ controller.changeDate(oldDates, newDates, con.text);
+      _dates = newDates; Navigator.pop(context); con.clear();}, child: Text("Add"))],
+      )
+    );
   }
+
+  void preDialog(List<DateTime?> oldDates, List<DateTime> newDates){
+    if(oldDates.length > newDates.length){
+      controller.changeDate(oldDates, newDates, null);
+      _dates = newDates;
+    }
+    else{
+      openDialog(oldDates, newDates);
+    }
+  }
+
+  void rebuildAllChildren(BuildContext context) {
+  void rebuild(Element el) {
+    el.markNeedsBuild();
+    el.visitChildren(rebuild);
+  }
+  (context as Element).visitChildren(rebuild);
+}
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +50,13 @@ class _Calendarview extends State<Calendarview>{
       appBar: AppBar(),
       body:
       StreamBuilder(stream: controller.getDates(), builder: (context, snapshot){
-      if(snapshot.hasData){    
+      if(snapshot.hasData){
         d = snapshot.data;
-        List<DateTime?> _dates = [];
+        List<DateTime?> x = [];
         for(int i = 0; i < d!.length; i++){
-          _dates.add(d![i].date);
+          x.add(d![i].date);
         }
+        _dates = x;
         return Center( 
           child: Column(
             children: [
@@ -36,15 +64,13 @@ class _Calendarview extends State<Calendarview>{
               config: CalendarDatePicker2Config(
               calendarType: CalendarDatePicker2Type.multi,),
               value: _dates,
-              onValueChanged: (dates) {_dates = controller.changeDate(_dates ,dates);},),
+              onValueChanged: (dates) {preDialog(_dates ,dates); rebuildAllChildren(context); _dates = dates;},),
               ElevatedButton(onPressed:(){}, child:Text("data"))
             ]
           )
         );
       }
-      else{
-        return Text("");
-      }
+      else{return Text("");}
       }
     )
   );
