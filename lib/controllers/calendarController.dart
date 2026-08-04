@@ -35,4 +35,25 @@ class Calendarcontroller {
     }
   return date;
  }
+
+  void updateDate(List<DateTime?> oldDates, List<DateTime> newDates, String name){
+    for(int i = 0; i < oldDates.length; i++){
+      if(!newDates.contains(oldDates[i])){
+        final model = Appointmentmodel(date: oldDates[i]!, name: name);
+        db.collection("users").doc(auth.currentUser!.uid).collection("calendar")
+        .doc(oldDates[i].toString()).update(model.toJson());
+      }
+    }
+  }
+
+  Future<String> getName(List<DateTime?> oldDates, List<DateTime> newDates) async{
+    for(int i = 0; i < oldDates.length; i++){
+      if(!newDates.contains(oldDates[i])){
+        Appointmentmodel model = await db.collection("users").doc(auth.currentUser!.uid).collection("calendar")
+        .doc(oldDates[i].toString()).get().then((value) { return Appointmentmodel.fromJson(value.data()!);});
+        return model.name;
+      }
+    }
+    return "";
+  }
 }

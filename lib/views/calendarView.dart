@@ -26,9 +26,22 @@ class _Calendarview extends State<Calendarview>{
     );
   }
 
+  Future<void> editDialog(List<DateTime?> oldDates, List<DateTime> newDates) async {
+    String exist = await controller.getName(oldDates, newDates);
+    con.text = exist;
+    showDialog(context: context, 
+    builder: (context) => AlertDialog(
+      content: TextField(controller: con,),
+      actions: [ElevatedButton(onPressed: (){controller.updateDate(oldDates, newDates, con.text);}, child: Text("Update")),
+      ElevatedButton(onPressed: (){controller.changeDate(oldDates, newDates, null);}, child: Text("Delete"))],
+    )
+    );
+  }
+
   void preDialog(List<DateTime?> oldDates, List<DateTime> newDates){
+     _dates = newDates;
     if(oldDates.length > newDates.length){
-      controller.changeDate(oldDates, newDates, null);
+      editDialog(oldDates, newDates);
       _dates = newDates;
     }
     else{
@@ -46,6 +59,7 @@ class _Calendarview extends State<Calendarview>{
 
   @override
   Widget build(BuildContext context) {
+    rebuildAllChildren(context);
     return Scaffold(
       appBar: AppBar(),
       body:
@@ -64,7 +78,7 @@ class _Calendarview extends State<Calendarview>{
               config: CalendarDatePicker2Config(
               calendarType: CalendarDatePicker2Type.multi,),
               value: _dates,
-              onValueChanged: (dates) {preDialog(_dates ,dates); rebuildAllChildren(context); _dates = dates;},),
+              onValueChanged: (dates) {preDialog(_dates ,dates); rebuildAllChildren(context);},),
               ElevatedButton(onPressed:(){}, child:Text("data"))
             ]
           )
