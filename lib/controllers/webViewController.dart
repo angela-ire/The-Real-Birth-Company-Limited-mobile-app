@@ -23,6 +23,8 @@ class webViewController{
       db.collection("articles").doc("pregnancyInfo").collection("docs")
       .doc(ARTICLE).collection("read").doc("2mins").collection("reads").add(articletrackingmodel.toJson());
 
+      db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).set({"name": ARTICLE});
+
       db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).collection("read").doc("read")
       .set(articletrackingmodel.toJson());
 
@@ -40,6 +42,8 @@ class webViewController{
       db.collection("articles").doc("pregnancyInfo").collection("docs")
       .doc(ARTICLE).collection("read").doc("4mins").collection("reads").add(articletrackingmodel.toJson());
 
+      db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).set({"name": ARTICLE});
+
       db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).collection("read").doc("read")
       .set(articletrackingmodel.toJson());
 
@@ -56,6 +60,8 @@ class webViewController{
     else if(seconds >= 360){
       db.collection("articles").doc("pregnancyInfo").collection("docs")
       .doc(ARTICLE).collection("read").doc("6mins").collection("reads").add(articletrackingmodel.toJson());
+
+      db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).set({"name": ARTICLE});
 
       db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).collection("read").doc("read")
       .set(articletrackingmodel.toJson());
