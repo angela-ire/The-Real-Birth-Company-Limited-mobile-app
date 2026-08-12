@@ -10,10 +10,7 @@ class Pdfviewcontroller{
   //Tracks users reading articles
   void trackArticleRead(DateTime OPEN, DateTime CLOSE, String ARTICLE)async {
     int seconds = CLOSE.difference(OPEN).inSeconds;
-    Articletrackingmodel articletrackingmodel = Articletrackingmodel();
-    articletrackingmodel.timeStamp = CLOSE;
-    articletrackingmodel.uid = auth.currentUser!.uid;
-    articletrackingmodel.articleKey = ARTICLE;
+    Articletrackingmodel articletrackingmodel = Articletrackingmodel(uid: auth.currentUser!.uid, articleKey: ARTICLE, timeStamp: CLOSE);
 
     final sfDocRef =  db.collection("pdfs").doc(ARTICLE).collection("read").doc("total");
 
@@ -72,10 +69,8 @@ class Pdfviewcontroller{
   //Same as above but tracks if a user is revisiting an article instead of a fresh read
   void trackArticleRevisit(DateTime OPEN, DateTime CLOSE, String ARTICLE)async {
     int seconds = CLOSE.difference(OPEN).inSeconds;
-    Articletrackingmodel articletrackingmodel = Articletrackingmodel();
-    articletrackingmodel.timeStamp = CLOSE;
-    articletrackingmodel.uid = auth.currentUser!.uid;
-    articletrackingmodel.articleKey = ARTICLE;
+    Articletrackingmodel articletrackingmodel = Articletrackingmodel(uid: auth.currentUser!.uid, articleKey: ARTICLE, timeStamp: CLOSE);
+
 
     final sfDocRef =  db.collection("pdfs").doc(ARTICLE).
     collection("read").doc("total");

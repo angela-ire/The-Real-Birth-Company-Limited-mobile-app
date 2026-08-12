@@ -6,6 +6,7 @@ import 'package:real_birth_app/models/articleTrackingModel.dart';
 class Adminusercontroller {
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
+  
 
   Stream<List<Articletrackingmodel>> getIndividualArticle(String uid, String article){
     return db.collection("users").doc("articleStats")

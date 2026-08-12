@@ -10,10 +10,8 @@ class webViewController{
   // Track article reading
   void trackArticleRead(DateTime OPEN, DateTime CLOSE, String ARTICLE)async {
     int seconds = CLOSE.difference(OPEN).inSeconds;
-    Articletrackingmodel articletrackingmodel = Articletrackingmodel();
-    articletrackingmodel.timeStamp = CLOSE;
-    articletrackingmodel.uid = auth.currentUser!.uid;
-    articletrackingmodel.articleKey = ARTICLE;
+    Articletrackingmodel articletrackingmodel = Articletrackingmodel(uid: auth.currentUser!.uid, articleKey: ARTICLE, timeStamp: CLOSE);
+
 
     final sfDocRef =  db.collection("articles").doc("pregnancyInfo").collection("docs").doc(ARTICLE).
     collection("read").doc("total");
@@ -79,10 +77,8 @@ class webViewController{
   // Tracks users revisiting an article
   void trackArticleRevisit(DateTime OPEN, DateTime CLOSE, String ARTICLE)async {
     int seconds = CLOSE.difference(OPEN).inSeconds;
-    Articletrackingmodel articletrackingmodel = Articletrackingmodel();
-    articletrackingmodel.timeStamp = CLOSE;
-    articletrackingmodel.uid = auth.currentUser!.uid;
-    articletrackingmodel.articleKey = ARTICLE;
+    Articletrackingmodel articletrackingmodel = Articletrackingmodel(uid: auth.currentUser!.uid, articleKey: ARTICLE, timeStamp: CLOSE);
+
 
     final sfDocRef =  db.collection("articles").doc("pregnancyInfo").collection("docs").doc(ARTICLE).
     collection("read").doc("total");
