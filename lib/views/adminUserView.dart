@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:real_birth_app/controllers/adminUserController.dart';
-import 'package:real_birth_app/models/articleTrackingModel.dart';
 import 'package:real_birth_app/models/userModel.dart';
 import 'package:real_birth_app/views/adminUserArticleView.dart';
 
@@ -23,6 +22,7 @@ class _Adminuserview extends State<Adminuserview>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: FutureBuilder(future: controller.getVisitedArticles(widget.link.uid), builder: (context, snapshot){
           if(snapshot.hasData){

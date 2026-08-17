@@ -24,16 +24,12 @@ class Adminusercontroller {
     List<Articletrackingmodel> currRevis = await db.collection("users").doc(uid)
     .collection("articleStats").doc(article).collection("revisits").get()
     .then(((value) {
-      List<Articletrackingmodel> l =[];
-      l = value.docs.map((data) => Articletrackingmodel.fromJson(data.data())).toList();
-      return l;
+      return value.docs.map((data) => Articletrackingmodel.fromJson(data.data())).toList();
     }));
     List<Articletrackingmodel> currRead = await db.collection("users").doc(uid)
     .collection("articleStats").doc(article).collection("read").get()
     .then(((value) {
-      List<Articletrackingmodel> l =[];
-      l = value.docs.map((data) => Articletrackingmodel.fromJson(data.data())).toList();
-      return l;
+      return value.docs.map((data) => Articletrackingmodel.fromJson(data.data())).toList();
     }));
     List<Articletrackingmodel> currArts = currRevis;
     currArts.add(currRead[0]);

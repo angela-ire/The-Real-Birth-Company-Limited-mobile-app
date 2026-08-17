@@ -1,0 +1,82 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:real_birth_app/models/articleTrackingModel.dart';
+
+class Adminarticlestatscontroller {
+  final db = FirebaseFirestore.instance;
+  final auth = FirebaseAuth.instance;
+
+  Future<List<Articletrackingmodel>> getAllStats(String article) async{
+    List<Articletrackingmodel> allReads = await getReads(article);
+    List<Articletrackingmodel> allRevisits = await getRevisits(article);
+
+    for(int i = 0; i < allReads.length; i++){
+      allRevisits.add(allReads[i]);
+    }
+    return allRevisits;
+  }
+
+  Future<List<Articletrackingmodel>> getReads(String article) async{
+    List<Articletrackingmodel> twoMinsRead = await db.collection("articles").doc("pregnancyInfo").collection("docs")
+    .doc(article).collection("read").doc("2mins").collection("reads").get()
+    .then(((value) {
+      return value.docs.map((data) => Articletrackingmodel.fromJson(data.data())).toList();
+    }));
+
+    List<Articletrackingmodel> fourMinsRead = await db.collection("articles").doc("pregnancyInfo").collection("docs")
+    .doc(article).collection("read").doc("4mins").collection("reads").get()
+    .then(((value) {
+      return value.docs.map((data) => Articletrackingmodel.fromJson(data.data())).toList();
+    }));
+
+    List<Articletrackingmodel> sixMinsRead = await db.collection("articles").doc("pregnancyInfo").collection("docs")
+    .doc(article).collection("read").doc("6mins").collection("reads").get()
+    .then(((value) {
+      return value.docs.map((data) => Articletrackingmodel.fromJson(data.data())).toList();
+    }));
+    List<Articletrackingmodel> totalRead = [];
+
+    for(int i = 0; i < twoMinsRead.length; i++){
+      totalRead.add(twoMinsRead[i]);
+    }
+    for(int i = 0; i < fourMinsRead.length; i++){
+      totalRead.add(fourMinsRead[i]);
+    }
+    for(int i = 0; i < sixMinsRead.length; i++){
+      totalRead.add(sixMinsRead[i]);
+    }
+    return totalRead;
+  }
+
+  Future<List<Articletrackingmodel>> getRevisits(String article) async{
+    List<Articletrackingmodel> twoMinsRead = await db.collection("articles").doc("pregnancyInfo").collection("docs")
+    .doc(article).collection("read").doc("2mins").collection("revisits").get()
+    .then(((value) {
+      return value.docs.map((data) => Articletrackingmodel.fromJson(data.data())).toList();
+    }));
+
+    List<Articletrackingmodel> fourMinsRead = await db.collection("articles").doc("pregnancyInfo").collection("docs")
+    .doc(article).collection("read").doc("4mins").collection("revisits").get()
+    .then(((value) {
+      return value.docs.map((data) => Articletrackingmodel.fromJson(data.data())).toList();
+    }));
+
+    List<Articletrackingmodel> sixMinsRead = await db.collection("articles").doc("pregnancyInfo").collection("docs")
+    .doc(article).collection("read").doc("6mins").collection("revisits").get()
+    .then(((value) {
+      return value.docs.map((data) => Articletrackingmodel.fromJson(data.data())).toList();
+    }));
+    List<Articletrackingmodel> totalRead = [];
+
+    for(int i = 0; i < twoMinsRead.length; i++){
+      totalRead.add(twoMinsRead[i]);
+    }
+    for(int i = 0; i < fourMinsRead.length; i++){
+      totalRead.add(fourMinsRead[i]);
+    }
+    for(int i = 0; i < sixMinsRead.length; i++){
+      totalRead.add(sixMinsRead[i]);
+    }
+    return totalRead;
+  }
+}
