@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:real_birth_app/controllers/adminUserController.dart';
 import 'package:real_birth_app/models/articleTrackingModel.dart';
 import 'package:real_birth_app/models/userModel.dart';
+import 'package:real_birth_app/views/adminUserArticleView.dart';
 
 class Adminuserview extends StatefulWidget{
   final userModel link;
@@ -23,13 +24,14 @@ class _Adminuserview extends State<Adminuserview>{
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: FutureBuilder(future: controller.getVisitedArticles("iKECUNKfC6hhfJc2CLqTZUaomJv1"), builder: (context, snapshot){
+        child: FutureBuilder(future: controller.getVisitedArticles(widget.link.uid), builder: (context, snapshot){
           if(snapshot.hasData){
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                return StreamBuilder(stream: controller.getIndividualArticle("iKECUNKfC6hhfJc2CLqTZUaomJv1", snapshot.data![index]), builder: (context, snapshot){
-                });
+                return ListTile(title: Text(snapshot.data![index]), onTap: () {
+                  {Navigator.push(context, MaterialPageRoute(builder: (context)=> Adminuserarticleview(link: widget.link, article: snapshot.data![index],)));}
+                },);
               },
             );
           }

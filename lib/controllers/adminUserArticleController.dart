@@ -1,26 +1,12 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:real_birth_app/models/articleTrackingModel.dart';
 
-class Adminusercontroller {
+class Adminuserarticlecontroller {
   final db = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
 
-  Future<List<String>> getVisitedArticles(String uid) async{
-    List<String> seenDocs = await db.collection("users").doc(uid)
-    .collection("articleStats").get()
-    .then((value) {
-      List<String> l = [];
-      for(int i = 0; i < value.docs.length; i++){
-        l.add(value.docs[i].id);
-      }
-      return l;
-    });
-    return seenDocs;
-  }
-
-  Future<List<Articletrackingmodel>> getAll(String uid, String article) async{
+Future<List<Articletrackingmodel>> getAll(String uid, String article) async{
     List<Articletrackingmodel> currRevis = await db.collection("users").doc(uid)
     .collection("articleStats").doc(article).collection("revisits").get()
     .then(((value) {
