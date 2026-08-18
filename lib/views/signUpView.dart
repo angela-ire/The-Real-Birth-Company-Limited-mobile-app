@@ -35,12 +35,19 @@ class Signupview extends StatefulWidget{
     bool _validateHospital = false;
     bool _validatePostcode = false;
 
+    late Future FUTURE;
+    @override
+    void initState() {
+      super.initState();
+      FUTURE = control.fetchPage();
+    }
+
     @override
     Widget build(BuildContext context) {
       return Scaffold(
         body:Center( 
           child:Padding(padding: const EdgeInsets.all(30),
-          child: FutureBuilder(future: control.fetchPage(), builder: (context,snapshot){
+          child: FutureBuilder(future: FUTURE, builder: (context,snapshot){
             if(snapshot.hasData){
               control.pageText = snapshot.data!;
               return 

@@ -14,6 +14,13 @@ class _Calendarview extends State<Calendarview>{
   TextEditingController con = TextEditingController();
   List<Appointmentmodel>? d;
   List<DateTime?> _dates = [];
+  late Stream STREAM;
+
+  @override
+  void initState() {
+    super.initState();
+    STREAM = controller.getDates();
+  }
 
   void openDialog(List<DateTime?> oldDates, List<DateTime> newDates){
    showDialog(
@@ -32,8 +39,8 @@ class _Calendarview extends State<Calendarview>{
     showDialog(context: context, 
     builder: (context) => AlertDialog(
       content: TextField(controller: con,),
-      actions: [ElevatedButton(onPressed: (){controller.updateDate(oldDates, newDates, con.text);}, child: Text("Update")),
-      ElevatedButton(onPressed: (){controller.changeDate(oldDates, newDates, null);}, child: Text("Delete"))],
+      actions: [ElevatedButton(onPressed: (){controller.updateDate(oldDates, newDates, con.text); rebuildAllChildren(context); Navigator.pop(context); con.clear();}, child: Text("Update"),),
+      ElevatedButton(onPressed: (){controller.changeDate(oldDates, newDates, null); rebuildAllChildren(context); Navigator.pop(context); con.clear();}, child: Text("Delete"))],
     )
     );
   }
@@ -63,7 +70,7 @@ class _Calendarview extends State<Calendarview>{
     return Scaffold(
       appBar: AppBar(),
       body:
-      StreamBuilder(stream: controller.getDates(), builder: (context, snapshot){
+      StreamBuilder(stream: STREAM, builder: (context, snapshot){
       if(snapshot.hasData){
         d = snapshot.data;
         List<DateTime?> x = [];

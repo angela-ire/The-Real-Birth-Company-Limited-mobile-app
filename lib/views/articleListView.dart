@@ -3,10 +3,23 @@ import 'package:real_birth_app/controllers/acticleListController.dart';
 import 'package:real_birth_app/models/articleModel.dart';
 import 'package:real_birth_app/views/tempWebview.dart';
 
-class Articlelistview extends StatelessWidget {
+class Articlelistview extends StatefulWidget {
+  Articlelistview({super.key});
+
+  @override
+  State<Articlelistview> createState() => _Articlelistview();
+}
+
+class _Articlelistview extends State<Articlelistview>{
   final controller = Acticlelistcontroller();
   List<Articlemodel> articles = [];
-  Articlelistview({super.key});
+  late Stream STREAM;
+
+  @override
+  void initState(){
+    super.initState();
+    STREAM = controller.fetchArticles();
+  }
 
    @override
   Widget build(BuildContext context){
@@ -17,7 +30,7 @@ class Articlelistview extends StatelessWidget {
         child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
-          children:[ StreamBuilder(stream: controller.fetchArticles(), builder: (context, snapshot){
+          children:[ StreamBuilder(stream: STREAM, builder: (context, snapshot){
             if (snapshot.hasData){
                 articles = snapshot.data!;
                 return ListView.builder(

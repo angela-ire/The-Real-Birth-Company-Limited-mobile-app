@@ -13,10 +13,11 @@ class Adminuserview extends StatefulWidget{
 
 class _Adminuserview extends State<Adminuserview>{
   final controller = Adminusercontroller();
-
+  late Future FUTURE;
   @override
   void initState(){
     super.initState();
+    FUTURE = controller.getVisitedArticles(widget.link.uid);
   }
 
   @override
@@ -24,7 +25,7 @@ class _Adminuserview extends State<Adminuserview>{
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: FutureBuilder(future: controller.getVisitedArticles(widget.link.uid), builder: (context, snapshot){
+        child: FutureBuilder(future: FUTURE, builder: (context, snapshot){
           if(snapshot.hasData){
             return ListView.builder(
               itemCount: snapshot.data!.length,

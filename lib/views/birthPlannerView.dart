@@ -11,6 +11,17 @@ class Birthplannerview extends StatefulWidget {
   class _Birthplannerview extends State<Birthplannerview>{
   final controller = Birthplannercontroller(); 
   final TextEditingController con = TextEditingController();
+  late Stream<QuerySnapshot> STREAMNOTES;
+  late Stream<QuerySnapshot> STREAMPROCEDURES;
+  late Stream<QuerySnapshot> STREAMCONDITIONS;
+  
+  @override
+  void initState() {
+    super.initState();
+    STREAMNOTES = controller.fetchNotes("birthNotes");
+    STREAMCONDITIONS = controller.fetchNotes("birthConditions");
+    STREAMPROCEDURES = controller.fetchNotes("birthProcedures");
+  }
 
   void openDialouge(String type, String? DocId){
     showDialog(
@@ -46,7 +57,7 @@ class Birthplannerview extends StatefulWidget {
               //Notes
               Center(child:
                 Column(children: [
-                  StreamBuilder<QuerySnapshot>(stream: controller.fetchNotes("birthNotes") , builder: (context, snapshot){
+                  StreamBuilder<QuerySnapshot>(stream: STREAMNOTES , builder: (context, snapshot){
                     if(snapshot.hasData){
                       List note = snapshot.data!.docs;
                       return ListView.builder(shrinkWrap: true, physics: ScrollPhysics(), scrollDirection: Axis.vertical,
@@ -75,7 +86,7 @@ class Birthplannerview extends StatefulWidget {
               //Procedures
               Center(child:
                 Column(children: [
-                  StreamBuilder(stream: controller.fetchNotes("birthProcedures") , builder: (context, snapshot){
+                  StreamBuilder(stream: STREAMPROCEDURES , builder: (context, snapshot){
                     if(snapshot.hasData){
                       List note = snapshot.data!.docs;
                       return ListView.builder(shrinkWrap: true, physics: ScrollPhysics(), scrollDirection: Axis.vertical,
@@ -104,7 +115,7 @@ class Birthplannerview extends StatefulWidget {
               //Conditions
               Center(child:
                 Column(children: [
-                  StreamBuilder(stream: controller.fetchNotes("birthConditions") , builder: (context, snapshot){
+                  StreamBuilder(stream: STREAMCONDITIONS , builder: (context, snapshot){
                     if(snapshot.hasData){
                       List note = snapshot.data!.docs;
                       return ListView.builder(shrinkWrap: true, physics: ScrollPhysics(), scrollDirection: Axis.vertical,

@@ -13,14 +13,20 @@ class Contractiontrackerview extends StatefulWidget{
 
 class _Contractiontrackerview extends State<Contractiontrackerview>{
   Contractiontrackercontroller controller = Contractiontrackercontroller();
+  late Stream STREAM;
 
+  @override
+  void initState() {
+    super.initState();
+    STREAM = controller.getContraction();
+  }
 
   @override
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: StreamBuilder(stream: controller.getContraction(), builder: (context, snapshot){
+        child: StreamBuilder(stream: STREAM, builder: (context, snapshot){
           if(snapshot.hasData){
             controller.pageModel = snapshot.data;
             return SingleChildScrollView( child: Column(

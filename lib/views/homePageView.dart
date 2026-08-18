@@ -28,6 +28,13 @@ class Navigation extends StatefulWidget{
 class _Navigation extends State<Navigation>{
   int currentPageIndex = 0;
   final control = Homepagecontroller();
+  late Future FUTURE;
+  
+  @override
+  void initState() {
+    super.initState();
+    FUTURE = control.getWeeks();
+  }
 
   @override
   Widget build(BuildContext context){
@@ -53,7 +60,7 @@ class _Navigation extends State<Navigation>{
         //HOME
         Card( color: Color.fromARGB(255, 251, 234, 247),
           child: Center(
-            child: FutureBuilder(future: control.getWeeks(), builder: (context, snapshot){
+            child: FutureBuilder(future: FUTURE, builder: (context, snapshot){
               if(snapshot.hasData){
                 return Text("${(40 - snapshot.data!).toString()} weeks along");
               }
@@ -83,7 +90,7 @@ class _Navigation extends State<Navigation>{
         child: Center(
             child: Column(
               children: [
-              FutureBuilder(future: control.getWeeks(), builder: (context, snapshot){
+              FutureBuilder(future: FUTURE, builder: (context, snapshot){
                 if(snapshot.hasData){
                   return Text("${(40 - snapshot.data!).toString()} weeks along");
                 }

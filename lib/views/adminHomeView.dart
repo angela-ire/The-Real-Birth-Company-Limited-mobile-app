@@ -22,6 +22,14 @@ class _NavigationAdmin extends State<NavigationAdmin>{
   int currentPageIndex = 0;
   final controller = Adminhomeviewcontroller();
 
+  late Stream STREAM;
+
+  @override
+  void initState(){
+    super.initState();
+    STREAM = controller.fetchUsers();
+  }
+
   @override
   Widget build(BuildContext context){
     final ThemeData theme = Theme.of(context);
@@ -62,7 +70,7 @@ class _NavigationAdmin extends State<NavigationAdmin>{
         //UserList
         Card(color: Color.fromARGB(255, 251, 234, 247),
           child: Center(
-            child: StreamBuilder(stream: controller.fetchUsers(), builder: (context, snapshot){
+            child: StreamBuilder(stream: STREAM, builder: (context, snapshot){
               if(snapshot.hasData){
                 List userAmounts = snapshot.data!.docs;
                 return ListView.builder(shrinkWrap: true, physics: ScrollPhysics(), scrollDirection: Axis.vertical,

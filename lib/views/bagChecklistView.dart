@@ -13,6 +13,13 @@ class Bagchecklistview extends StatefulWidget{
 class _Bagchecklistview extends State<Bagchecklistview>{
   final controller = Bagchecklistcontroller();
   final TextEditingController con = TextEditingController();
+  late Stream<QuerySnapshot> STREAM;
+
+  @override
+  void initState() {
+    super.initState();
+    STREAM = controller.fetchBagItem();
+  }
 
   void openDialouge(String? DocId){
     showDialog(
@@ -31,7 +38,7 @@ class _Bagchecklistview extends State<Bagchecklistview>{
       body : Center(
         child: Column(
           children: [
-          StreamBuilder<QuerySnapshot>(stream: controller.fetchBagItem(), builder:(context, snapshot){
+          StreamBuilder<QuerySnapshot>(stream: STREAM, builder:(context, snapshot){
             if (snapshot.hasData){
               List bagItem = snapshot.data!.docs;
               return ListView.builder(shrinkWrap: true, physics: ScrollPhysics(), scrollDirection: Axis.vertical,

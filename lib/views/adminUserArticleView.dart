@@ -13,10 +13,11 @@ class Adminuserarticleview extends StatefulWidget{
 
 class _Adminuserarticleview extends State<Adminuserarticleview>{
   final controller = Adminuserarticlecontroller();
-
+  late Future FUTURE;
   @override
   void initState(){
     super.initState();
+    FUTURE = controller.getAll(widget.link.uid, widget.article);
   }
 
   @override
@@ -25,7 +26,7 @@ class _Adminuserarticleview extends State<Adminuserarticleview>{
       appBar: AppBar(),
       body: Center(
         child: 
-        FutureBuilder(future: controller.getAll(widget.link.uid, widget.article), builder: (context, snapshot){
+        FutureBuilder(future: FUTURE, builder: (context, snapshot){
           if(snapshot.hasData){
             return ListView.builder( itemCount:snapshot.data!.length, itemBuilder:(context, index) {
               return ListTile(title: Text(snapshot.data![index].timeStamp.toString()));
