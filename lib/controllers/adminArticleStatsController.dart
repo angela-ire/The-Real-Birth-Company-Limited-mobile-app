@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:real_birth_app/models/articleTrackingModel.dart';
+import 'package:real_birth_app/models/totalArticleModel.dart';
 
 class Adminarticlestatscontroller {
   final db = FirebaseFirestore.instance;
@@ -14,6 +15,15 @@ class Adminarticlestatscontroller {
       allRevisits.add(allReads[i]);
     }
     return allRevisits;
+  }
+
+  Future<Totalarticlemodel> getNumberTotal(String article) async{
+    Totalarticlemodel model = await db.collection("articles").doc("pregnancyInfo").collection("docs")
+    .doc(article).collection("read").doc("total").get().then((value) {
+      return Totalarticlemodel.fromJson(value.data());
+    
+    });
+    return model;
   }
 
   Future<List<Articletrackingmodel>> getReads(String article, String type) async{
