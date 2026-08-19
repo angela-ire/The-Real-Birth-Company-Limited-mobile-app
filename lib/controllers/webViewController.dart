@@ -12,65 +12,17 @@ class webViewController{
     int seconds = CLOSE.difference(OPEN).inSeconds;
     Articletrackingmodel articletrackingmodel = Articletrackingmodel(uid: auth.currentUser!.uid, articleKey: ARTICLE, timeStamp: CLOSE);
 
-
-    final sfDocRef =  db.collection("articles").doc("pregnancyInfo").collection("docs").doc(ARTICLE).
-    collection("read").doc("total");
-    
     // Between 2 and 4 minutes
     if (seconds >= 120 && seconds < 240){
-      db.collection("articles").doc("pregnancyInfo").collection("docs")
-      .doc(ARTICLE).collection("read").doc("2mins").collection("reads").add(articletrackingmodel.toJson());
-
-      db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).set({"name": ARTICLE});
-
-      db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).collection("read").doc("read")
-      .set(articletrackingmodel.toJson());
-
-      db.runTransaction((transaction){
-      return transaction.get(sfDocRef).then((sfDoc) {
-        final total = sfDoc.get("total") + 1;
-        final reads = sfDoc.get("reads") + 1;
-        transaction.update(sfDocRef, {"total": total, "reads" : reads});
-      });
-      });
+      runReadTransaction(articletrackingmodel, "2mins");
     }
-
     // Between 4 and 6 minutes
     else if(seconds >= 240 && seconds < 360){
-      db.collection("articles").doc("pregnancyInfo").collection("docs")
-      .doc(ARTICLE).collection("read").doc("4mins").collection("reads").add(articletrackingmodel.toJson());
-
-      db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).set({"name": ARTICLE});
-
-      db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).collection("read").doc("read")
-      .set(articletrackingmodel.toJson());
-
-      db.runTransaction((transaction){
-      return transaction.get(sfDocRef).then((sfDoc) {
-        final total = sfDoc.get("total") + 1;
-        final reads = sfDoc.get("reads") + 1;
-        transaction.update(sfDocRef, {"total": total, "reads" : reads});
-      });
-      });
+      runReadTransaction(articletrackingmodel, "4mins");
     }
-
     // Over 6 minutes
     else if(seconds >= 360){
-      db.collection("articles").doc("pregnancyInfo").collection("docs")
-      .doc(ARTICLE).collection("read").doc("6mins").collection("reads").add(articletrackingmodel.toJson());
-
-      db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).set({"name": ARTICLE});
-
-      db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).collection("read").doc("read")
-      .set(articletrackingmodel.toJson());
-
-      db.runTransaction((transaction){
-      return transaction.get(sfDocRef).then((sfDoc) {
-        final total = sfDoc.get("total") + 1;
-        final reads = sfDoc.get("reads") + 1;
-        transaction.update(sfDocRef, {"total": total, "reads" : reads});
-      });
-      });
+      runReadTransaction(articletrackingmodel, "6mins");
     }
   }
 
@@ -79,56 +31,56 @@ class webViewController{
     int seconds = CLOSE.difference(OPEN).inSeconds;
     Articletrackingmodel articletrackingmodel = Articletrackingmodel(uid: auth.currentUser!.uid, articleKey: ARTICLE, timeStamp: CLOSE);
 
-
-    final sfDocRef =  db.collection("articles").doc("pregnancyInfo").collection("docs").doc(ARTICLE).
-    collection("read").doc("total");
-
     if (seconds >= 120 && seconds < 240){
-      db.collection("articles").doc("pregnancyInfo").collection("docs")
-      .doc(ARTICLE).collection("read").doc("2mins").collection("revisits").add(articletrackingmodel.toJson());
-
-      db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).collection("revisits")
-      .add(articletrackingmodel.toJson());
-
-      db.runTransaction((transaction){
-      return transaction.get(sfDocRef).then((sfDoc) {
-        final total = sfDoc.get("total") + 1;
-        final revisits = sfDoc.get("revisits") + 1;
-        transaction.update(sfDocRef, {"total": total, "revisits" : revisits});
-      });
-      });
+      runTransactions(articletrackingmodel, "2mins", "revisits");
     }
     else if(seconds >= 240 && seconds < 360){
-      db.collection("articles").doc("pregnancyInfo").collection("docs")
-      .doc(ARTICLE).collection("read").doc("4mins").collection("revisits").add(articletrackingmodel.toJson());
-
-      db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).collection("revisits")
-      .add(articletrackingmodel.toJson());
-
-      db.runTransaction((transaction){
-      return transaction.get(sfDocRef).then((sfDoc) {
-        final total = sfDoc.get("total") + 1;
-        final revisits = sfDoc.get("revisits") + 1;
-        transaction.update(sfDocRef, {"total": total, "revisits" : revisits});
-      });
-      });
+      runTransactions(articletrackingmodel, "4mins", "revisits");
     }
     else if(seconds >= 360){
-      db.collection("articles").doc("pregnancyInfo").collection("docs")
-      .doc(ARTICLE).collection("read").doc("6mins").collection("revisits").add(articletrackingmodel.toJson());
-
-      db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(ARTICLE).collection("revisits")
-      .add(articletrackingmodel.toJson());
-
-      db.runTransaction((transaction){
-      return transaction.get(sfDocRef).then((sfDoc) {
-        final total = sfDoc.get("total") + 1;
-        final revisits = sfDoc.get("revisits") + 1;
-        transaction.update(sfDocRef, {"total": total, "revisits" : revisits});
-      });
-      });
+      runTransactions(articletrackingmodel, "6mins", "revisits");
     }
  }
+
+ void runReadTransaction(Articletrackingmodel MODEL, String time){
+  final sfDocRef =  db.collection("articles").doc("pregnancyInfo").collection("docs").doc(MODEL.articleKey).
+    collection("read").doc("total");
+
+    db.collection("articles").doc("pregnancyInfo").collection("docs")
+    .doc(MODEL.articleKey).collection("read").doc(time).collection("reads").add(MODEL.toJson());
+
+    db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(MODEL.articleKey).set({"name": MODEL.articleKey});
+
+    db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(MODEL.articleKey).collection("read").doc("read")
+    .set(MODEL.toJson());
+
+    db.runTransaction((transaction){
+      return transaction.get(sfDocRef).then((sfDoc) {
+        final total = sfDoc.get("total") + 1;
+        final reads = sfDoc.get("reads") + 1;
+        transaction.update(sfDocRef, {"total": total, "reads" : reads});
+      });
+    });
+  }
+
+  void runTransactions(Articletrackingmodel MODEL, String time, String type){
+    final sfDocRef =  db.collection("articles").doc("pregnancyInfo").collection("docs").doc(MODEL.articleKey).
+    collection("read").doc("total");
+
+    db.collection("articles").doc("pregnancyInfo").collection("docs")
+    .doc(MODEL.articleKey).collection("read").doc(time).collection(type).add(MODEL.toJson());
+
+    db.collection("users").doc(auth.currentUser!.uid).collection("articleStats").doc(MODEL.articleKey).collection(type)
+    .add(MODEL.toJson());
+
+    db.runTransaction((transaction){
+      return transaction.get(sfDocRef).then((sfDoc) {
+        final total = sfDoc.get("total") + 1;
+        final revisits = sfDoc.get(type) + 1;
+        transaction.update(sfDocRef, {"total": total, type : revisits});
+      });
+    });
+  }
 
   // Checks if users are revisiting or first time reading
   void checkIfRevisit(DateTime OPEN, DateTime CLOSE, String ARTICLE)async{
@@ -138,7 +90,6 @@ class webViewController{
               trackArticleRevisit(OPEN, CLOSE, ARTICLE);
             }
             else{trackArticleRead(OPEN, CLOSE, ARTICLE);}
-            ;
         });
     } catch (e) {
         // If any error
