@@ -122,6 +122,46 @@ class Pdfviewcontroller{
     }
  }
 
+  void pdfRead(Articletrackingmodel MODEL, String time){
+    final sfDocRef =  db.collection("pdfs").doc(MODEL.articleKey).
+    collection("read").doc("total");
+
+    db.collection("pdfs")
+    .doc(MODEL.articleKey).collection("read").doc("time").collection("reads").add(MODEL.toJson());
+
+    db.collection("users").doc(auth.currentUser!.uid).collection("pdftats").doc(MODEL.articleKey).set({"name": MODEL.articleKey});
+
+    db.collection("users").doc(auth.currentUser!.uid).collection("pdfStats").doc(MODEL.articleKey).collection("read").doc("read")
+    .set(MODEL.toJson());
+
+    db.runTransaction((transaction){
+      return transaction.get(sfDocRef).then((sfDoc) {
+        final total = sfDoc.get("total") + 1;
+        final reads = sfDoc.get("reads") + 1;
+        transaction.update(sfDocRef, {"total": total, "reads" : reads});
+      });
+    });
+  }
+
+  void pdfRevisit(Articletrackingmodel MODEL, String time){
+    final sfDocRef =  db.collection("pdfs").doc(MODEL.articleKey).
+    collection("read").doc("total");
+
+    db.collection("articles")
+    .doc(MODEL.articleKey).collection("read").doc(time).collection("revisits").add(MODEL.toJson());
+
+    db.collection("users").doc(auth.currentUser!.uid).collection("pdfStats").doc(MODEL.articleKey).collection("revisits")
+    .add(MODEL.toJson());
+
+    db.runTransaction((transaction){
+      return transaction.get(sfDocRef).then((sfDoc) {
+        final total = sfDoc.get("total") + 1;
+        final revisits = sfDoc.get("revisits") + 1;
+        transaction.update(sfDocRef, {"total": total, "revisits" : revisits});
+      });
+    });
+  }
+
   //Checks if user is revisiting or not
   void checkIfRevisit(DateTime OPEN, DateTime CLOSE, String ARTICLE)async{
     try {

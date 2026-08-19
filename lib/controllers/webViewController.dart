@@ -42,6 +42,7 @@ class webViewController{
     }
  }
 
+//Funtion for reading an article the first time
  void runReadTransaction(Articletrackingmodel MODEL, String time){
   final sfDocRef =  db.collection("articles").doc("pregnancyInfo").collection("docs").doc(MODEL.articleKey).
     collection("read").doc("total");
@@ -63,6 +64,7 @@ class webViewController{
     });
   }
 
+//Function for subsequent revisits to an article 
   void runTransactions(Articletrackingmodel MODEL, String time, String type){
     final sfDocRef =  db.collection("articles").doc("pregnancyInfo").collection("docs").doc(MODEL.articleKey).
     collection("read").doc("total");
