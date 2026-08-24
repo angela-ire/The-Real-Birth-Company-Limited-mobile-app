@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:real_birth_app/controllers/adminHomeViewController.dart';
+import 'package:real_birth_app/models/articleModel.dart';
 import 'package:real_birth_app/models/userModel.dart';
 import 'package:real_birth_app/views/adminUserView.dart';
 
@@ -90,7 +91,17 @@ class _NavigationAdmin extends State<NavigationAdmin>{
         
         Card(color: Color.fromARGB(255, 251, 234, 247),
           child: Center(
-            child: Text("In Development"),
+            child: FutureBuilder(future: controller.getArticles(), builder: (context,snapshot){
+              if(snapshot.hasData){
+                List<Articlemodel>? MODEL = snapshot.data;
+                return ListView.builder( itemCount: MODEL!.length, itemBuilder: (context, index){
+                  ListTile(title: Text(MODEL[index].name),);
+                });
+              }
+              else{
+                return Text("");
+              }
+            })
           )
         )
       ][currentPageIndex],

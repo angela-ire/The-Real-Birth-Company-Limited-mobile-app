@@ -16,7 +16,8 @@ Future<void> main() async {
     stream: FirebaseAuth.instance.authStateChanges(), builder: (context, snapshot){
       if (snapshot.hasData){
         return Preloginview();
+      }
+      else{return Loginview();}
     }
-    else{return Loginview();}
-  })));
+  )));
 }
