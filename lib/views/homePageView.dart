@@ -40,7 +40,7 @@ class _Navigation extends State<Navigation>{
   Widget build(BuildContext context){
     final ThemeData theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(leading: null, title: Text("Real Birth App"),),
+      appBar: AppBar(leading: Text("Week", style: TextStyle(fontSize: 20, ),textAlign: ,), title: Text("Real Birth App"),leadingWidth: 250,),
       bottomNavigationBar: NavigationBar(onDestinationSelected: (int index){
         setState(() {
           currentPageIndex = index;
@@ -60,12 +60,85 @@ class _Navigation extends State<Navigation>{
         //HOME
         Card( color: Color.fromARGB(255, 251, 234, 247),
           child: Center(
-            child: FutureBuilder(future: FUTURE, builder: (context, snapshot){
+            child: Column(
+              children: [
+                Container(
+                constraints: BoxConstraints.expand(
+                height: Theme.of(context).textTheme.headlineMedium!.fontSize! * 1.1 + 50.0,
+                ),
+                padding: const EdgeInsets.all(8.0),
+                color: Colors.blue[600],
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Next Appointment", textAlign: TextAlign.left,),
+                    Text("XX", textAlign: TextAlign.right,)
+                  ],
+                ),
+                ),
+
+                const SizedBox(height: 30,),
+
+                Container(
+                  constraints: BoxConstraints.expand(
+                height: Theme.of(context).textTheme.headlineMedium!.fontSize! * 1.1 + 150.0,
+                ),
+                padding: const EdgeInsets.all(8.0),
+                color: Colors.blue[600],
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Next Appointment", textAlign: TextAlign.left,),
+                    Text("XX", textAlign: TextAlign.right,)
+                  ],
+                ),
+                ),
+                
+                const SizedBox(height: 30,),
+
+                Container(
+                  constraints: BoxConstraints.expand(
+                height: Theme.of(context).textTheme.headlineMedium!.fontSize! * 1.1 + 150.0,
+                ),
+                padding: const EdgeInsets.all(8.0),
+                color: Colors.blue[600],
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Next Appointment", textAlign: TextAlign.left,),
+                    Text("XX", textAlign: TextAlign.right,)
+                  ],
+                ),
+                ),
+
+                const SizedBox(height: 30,),
+                
+                Container(
+                  constraints: BoxConstraints.expand(
+                height: Theme.of(context).textTheme.headlineMedium!.fontSize! * 1.1 + 150.0,),
+                padding: const EdgeInsets.all(8.0),
+                color: Colors.blue[600],
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Next Appointment", textAlign: TextAlign.left,),
+                    Text("XX", textAlign: TextAlign.right,)
+                  ],
+                ),
+                ),
+                
+              ]
+            )
+            /*FutureBuilder(future: FUTURE, builder: (context, snapshot){
               if(snapshot.hasData){
                 return Text("${(40 - snapshot.data!).toString()} weeks along");
               }
               else{return Text("");}
-            }),
+            }),*/
           )
         ),
 
