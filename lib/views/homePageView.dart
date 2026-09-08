@@ -40,7 +40,7 @@ class _Navigation extends State<Navigation>{
   Widget build(BuildContext context){
     final ThemeData theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(leading: Text("Week", style: TextStyle(fontSize: 20, ),textAlign: ,), title: Text("Real Birth App"),leadingWidth: 250,),
+      appBar: AppBar(leading: Text("Week", style: TextStyle(fontSize: 20, ),textAlign: TextAlign.center), title: Text("Real Birth App"),leadingWidth: 250,),
       bottomNavigationBar: NavigationBar(onDestinationSelected: (int index){
         setState(() {
           currentPageIndex = index;
@@ -87,7 +87,7 @@ class _Navigation extends State<Navigation>{
                 padding: const EdgeInsets.all(8.0),
                 color: Colors.blue[600],
                 alignment: Alignment.center,
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Next Appointment", textAlign: TextAlign.left,),
@@ -105,7 +105,7 @@ class _Navigation extends State<Navigation>{
                 padding: const EdgeInsets.all(8.0),
                 color: Colors.blue[600],
                 alignment: Alignment.center,
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Next Appointment", textAlign: TextAlign.left,),
@@ -122,11 +122,10 @@ class _Navigation extends State<Navigation>{
                 padding: const EdgeInsets.all(8.0),
                 color: Colors.blue[600],
                 alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
                   children: [
-                    Text("Next Appointment", textAlign: TextAlign.left,),
-                    Text("XX", textAlign: TextAlign.right,)
+                    Text("Next Appointment", textAlign: TextAlign.left),
+                    Image.network('https://picsum.photos/250?image=9', width: 100, height: 100,)
                   ],
                 ),
                 ),
