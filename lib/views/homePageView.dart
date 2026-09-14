@@ -39,13 +39,13 @@ class _Navigation extends State<Navigation>{
   @override
   Widget build(BuildContext context){
     final ThemeData theme = Theme.of(context);
-    return Scaffold(
-      appBar: AppBar(leading: Text("Week", style: TextStyle(fontSize: 20, ),textAlign: TextAlign.center), title: Text("Real Birth App"),leadingWidth: 250,),
+    return Scaffold(backgroundColor: Colors.blue[600],
+      appBar: AppBar(leading: Text("Week", style: TextStyle(fontSize: 20, ),textAlign: TextAlign.center), title: Text("Real Birth App"),leadingWidth: 250, backgroundColor: Colors.blue[600],),
       bottomNavigationBar: NavigationBar(onDestinationSelected: (int index){
         setState(() {
           currentPageIndex = index;
         });
-      }, 
+      }, backgroundColor: Colors.white,
         selectedIndex: currentPageIndex,
         destinations: const<Widget>[
         NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
@@ -58,76 +58,89 @@ class _Navigation extends State<Navigation>{
       body: <Widget>[
 
         //HOME
-        Card( color: Color.fromARGB(255, 251, 234, 247),
+        Card( color: Colors.blue[600],
+        elevation: 0.0,
           child: Center(
             child: Column(
               children: [
+                const SizedBox(height: 30,),
+
                 Container(
-                constraints: BoxConstraints.expand(
-                height: Theme.of(context).textTheme.headlineMedium!.fontSize! * 1.1 + 50.0,
-                ),
-                padding: const EdgeInsets.all(8.0),
-                color: Colors.blue[600],
-                alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Next Appointment", textAlign: TextAlign.left,),
-                    Text("XX", textAlign: TextAlign.right,)
-                  ],
-                ),
+                  decoration: 
+                  BoxDecoration(color: Colors.white,borderRadius: BorderRadius.all(Radius.circular(12.0),)),
+                  
+                  constraints: 
+                  BoxConstraints.expand(height: Theme.of(context).textTheme.headlineMedium!.fontSize! * 1.1 + 50.0, width: 400),
+
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Next Appointment", textAlign: TextAlign.left,),
+                      Text("XX", textAlign: TextAlign.right,)
+                    ],
+                  ),
                 ),
 
                 const SizedBox(height: 30,),
 
                 Container(
-                  constraints: BoxConstraints.expand(
-                height: Theme.of(context).textTheme.headlineMedium!.fontSize! * 1.1 + 150.0,
-                ),
-                padding: const EdgeInsets.all(8.0),
-                color: Colors.blue[600],
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Next Appointment", textAlign: TextAlign.left,),
-                    Text("XX", textAlign: TextAlign.right,)
-                  ],
-                ),
+                  decoration: 
+                  BoxDecoration(color: Colors.white,borderRadius: BorderRadius.all(Radius.circular(12.0),)),
+                  
+                  constraints: 
+                  BoxConstraints.expand(height: Theme.of(context).textTheme.headlineMedium!.fontSize! * 1.1 + 150.0, width: 400),
+
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Next Appointment", textAlign: TextAlign.left,),
+                      Text("XX", textAlign: TextAlign.right,)
+                    ],
+                  ),
                 ),
                 
                 const SizedBox(height: 30,),
 
                 Container(
-                  constraints: BoxConstraints.expand(
-                height: Theme.of(context).textTheme.headlineMedium!.fontSize! * 1.1 + 150.0,
-                ),
-                padding: const EdgeInsets.all(8.0),
-                color: Colors.blue[600],
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Next Appointment", textAlign: TextAlign.left,),
-                    Text("XX", textAlign: TextAlign.right,)
-                  ],
-                ),
+                  decoration: 
+                  BoxDecoration(color: Colors.white,borderRadius: BorderRadius.all(Radius.circular(12.0),)),
+                  
+                  constraints: 
+                  BoxConstraints.expand(height: Theme.of(context).textTheme.headlineMedium!.fontSize! * 1.1 + 150.0, width: 400),
+
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Next Appointment", textAlign: TextAlign.left,),
+                      Text("XX", textAlign: TextAlign.right,)
+                    ],
+                  ),
                 ),
 
                 const SizedBox(height: 30,),
                 
                 Container(
-                  constraints: BoxConstraints.expand(
-                height: Theme.of(context).textTheme.headlineMedium!.fontSize! * 1.1 + 150.0,),
-                padding: const EdgeInsets.all(8.0),
-                color: Colors.blue[600],
-                alignment: Alignment.center,
-                child: Column(
-                  children: [
-                    Text("Next Appointment", textAlign: TextAlign.left),
-                    Image.network('https://picsum.photos/250?image=9', width: 100, height: 100,)
-                  ],
-                ),
+                  decoration: 
+                  BoxDecoration(color: Colors.white,borderRadius: BorderRadius.all(Radius.circular(12.0),)),
+                  
+                  constraints: 
+                  BoxConstraints.expand(height: Theme.of(context).textTheme.headlineMedium!.fontSize! * 1.1 + 150.0, width: 400),
+
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Next Appointment", textAlign: TextAlign.left),
+                      Image.network('https://picsum.photos/250?image=9',fit: BoxFit.cover ,width: 200, height: 100,)
+                    ],
+                  ),
                 ),
                 
               ]
