@@ -29,6 +29,8 @@ class _Navigation extends State<Navigation>{
   int currentPageIndex = 0;
   final control = Homepagecontroller();
   late Future FUTURE;
+
+  
   
   @override
   void initState() {
@@ -39,7 +41,9 @@ class _Navigation extends State<Navigation>{
   @override
   Widget build(BuildContext context){
     final ThemeData theme = Theme.of(context);
-    return Scaffold(backgroundColor: Colors.blue[600],
+    return Scaffold(
+      backgroundColor: Colors.blue[600],
+      
       appBar: AppBar(leading: Text("Week", style: TextStyle(fontSize: 20, ),textAlign: TextAlign.center), title: Text("Real Birth App"),leadingWidth: 250, backgroundColor: Colors.blue[600],),
       bottomNavigationBar: NavigationBar(onDestinationSelected: (int index){
         setState(() {
@@ -134,14 +138,23 @@ class _Navigation extends State<Navigation>{
 
                   padding: const EdgeInsets.all(8.0),
                   alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  
+                  child: Stack(fit: StackFit.expand,
                     children: [
-                      Text("Next Appointment", textAlign: TextAlign.left),
-                      Image.network('https://picsum.photos/250?image=9',fit: BoxFit.cover ,width: 200, height: 100,)
-                    ],
-                  ),
-                ),
+                      Image.network('https://realbirthcompany.com/wp-content/uploads/2025/09/200-500mls-480x402.png', fit: BoxFit.fill), 
+                      Container(alignment: 
+                      Alignment.topLeft, 
+                      color: Colors.white,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Flexible(child: Text("The title", textAlign: TextAlign.left,))
+                          ],
+                        ),
+                      ),],
+                  )
+
+                  )
                 
               ]
             )
