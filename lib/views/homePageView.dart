@@ -8,6 +8,7 @@ import 'package:real_birth_app/views/bagChecklistView.dart';
 import 'package:real_birth_app/views/birthPlannerView.dart';
 import 'package:real_birth_app/views/calendarView.dart';
 import 'package:real_birth_app/views/contractionTrackerView.dart';
+import 'package:real_birth_app/views/pdfCreatorView.dart';
 import 'package:real_birth_app/views/pdfListView.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -153,7 +154,6 @@ class _Navigation extends State<Navigation>{
                         ),
                       ),],
                   )
-
                   )
                 
               ]
@@ -201,7 +201,7 @@ class _Navigation extends State<Navigation>{
               ]),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children:[
-                Flexible(child: ElevatedButton(onPressed: () => {}, child: Text("Postnatal Tools"))),
+                Flexible(child: ElevatedButton(onPressed: () => {Get.to(Pdfcreatorview())}, child: Text("Postnatal Tools"))),
                 Flexible(child: ElevatedButton(onPressed: () => {}, child: Text("Family Tools"))),
               ]
               )
