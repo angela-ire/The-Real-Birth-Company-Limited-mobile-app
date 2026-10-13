@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -7,6 +6,20 @@ import 'package:pdf/widgets.dart' as pw;
 class Pdfcreatorcontroller {
   final pdf = pw.Document();
   
+  Future<String> createFolder(String cow) async {
+    final dir = Directory('${(Platform.isAndroid
+      ? await getExternalStorageDirectory() //FOR ANDROID
+      : await getApplicationSupportDirectory() //FOR IOS
+      )!
+        .path}/$cow');
+    if ((await dir.exists())) {
+      return dir.path;
+    } else {
+      dir.create();
+      return dir.path;
+    }
+  }
+
   Future<void> createPdf() async {
     pdf.addPage(
       pw.Page(
@@ -29,7 +42,7 @@ class Pdfcreatorcontroller {
 
           pw.Text('Month: July'),
 
-          pw.Text('Total Expense: ₹18,450'),
+          pw.Text('Total Expense: £18,450'),
 
           pw.SizedBox(height: 20),
 
@@ -47,8 +60,10 @@ class Pdfcreatorcontroller {
     );
     final output = await getDownloadsDirectory();
     final bytes = await pdf.save();
-    final file = File("${"/storage/emulated/0/Download"}/example.pdf");
+    //final file = File("${"/storage/emulated/0/Download"}/example.pdf");
+    String path = await createFolder("RBC_APP");
+    print(path);
+    final file = File("${path}/example1.pdf");
     await file.writeAsBytes(bytes);
-    print(output!.path);
   }
 }
