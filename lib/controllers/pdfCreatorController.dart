@@ -63,7 +63,20 @@ class Pdfcreatorcontroller {
     //final file = File("${"/storage/emulated/0/Download"}/example.pdf");
     String path = await createFolder("RBC_APP");
     print(path);
-    final file = File("${path}/example1.pdf");
+    final file = File("${path}/example2.pdf");
     await file.writeAsBytes(bytes);
+    listPDF();
   }
+
+  void listPDF() async{
+    final dir = Directory('${(Platform.isAndroid
+      ? await getExternalStorageDirectory() //FOR ANDROID
+      : await getApplicationSupportDirectory() //FOR IOS
+      )!
+        .path}/RBC_APP');
+    List<FileSystemEntity> _files;
+    _files = dir.listSync(recursive: true, followLinks: false);
+    print(_files.length);
+  }
+
 }
