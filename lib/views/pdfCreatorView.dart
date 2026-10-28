@@ -11,11 +11,23 @@ class Pdfcreatorview extends StatefulWidget{
 
 class _Pdfcreatorview extends State<Pdfcreatorview>{
   final controller = Pdfcreatorcontroller();
+  final _title = TextEditingController();
+  final _text = TextEditingController();
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(body: 
-    Center(child: 
-    ElevatedButton(onPressed: controller.createPdf, child: Text("data")),));
+    return Scaffold(
+      appBar: AppBar(),
+      body: 
+    Center(
+      child: Column(
+        children:[
+          Text("NAME"),
+          TextField(controller: _title),
+          Text("INFORMATION"),
+          TextField(controller: _text,),
+          ElevatedButton(onPressed: (){controller.createPdf(_title.text, _text.text);}, child: Text("Button"))]
+      ) )
+    );
   }
 }
