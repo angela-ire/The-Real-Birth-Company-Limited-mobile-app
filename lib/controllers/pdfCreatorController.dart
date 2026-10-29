@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -21,8 +22,8 @@ class Pdfcreatorcontroller {
     }
   }
 
-  Future<void> createPdf(String title, String imageDescribe, String didToday, String feel) async {
-    final netImage = await networkImage('https://realbirthcompany.com/wp-content/uploads/2025/09/200-500mls-480x402.png');
+  Future<void> createPdf(String title, String imageDescribe, String didToday, String feel, Uint8List image) async {
+    final memImage = pw.MemoryImage(image);
     pdf.addPage(
       pw.Page(
         build: (context) {
@@ -49,7 +50,7 @@ class Pdfcreatorcontroller {
             pw.SizedBox(width: 10),
 
             pw.Align(alignment: pw.Alignment.centerRight,
-            child: pw.Image(netImage, width: 250, height: 250,)),
+            child: pw.Image(memImage, width: 250, height: 250,)),
           ]),
           
           pw.Divider(),
@@ -71,8 +72,7 @@ class Pdfcreatorcontroller {
 
     final bytes = await pdf.save();
     String path = await createFolder("RBC_APP");
-    print(path);
-    final file = File("${path}/${title}.pdf");
+    final file = File("$path/$title.pdf");
     await file.writeAsBytes(bytes);
     listPDF();
   }
