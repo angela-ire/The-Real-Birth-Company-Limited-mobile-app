@@ -19,12 +19,13 @@ class _Pdfcreatorview extends State<Pdfcreatorview>{
   final _image = TextEditingController();
   final _today = TextEditingController();
   final _feeling = TextEditingController();
-  late XFile? image;
+  XFile? image;
   late Uint8List byte;
 
   void getImage () async{
     image = await _picker.pickImage(source: ImageSource.gallery);
-    byte = await image!.readAsBytes();
+    try{byte = await image!.readAsBytes();}
+    catch(Exception){image = null;}
   }
 
   @override
@@ -43,13 +44,30 @@ class _Pdfcreatorview extends State<Pdfcreatorview>{
           TextField(controller: _today, maxLength: 300,),
           Text("How Do I Feel"),
           TextField(controller: _feeling, maxLength: 300,),
+          
           ElevatedButton.icon(
                     onPressed: () {getImage();},
                     icon: const Icon(Icons.camera_alt),
                     label: const Text('Choose Image'),
                   ),
-          ElevatedButton(onPressed: (){controller.createPdf(_title.text, _image.text, _today.text, _feeling.text, byte);}, child: Text("Button"))]
+          ElevatedButton(onPressed: (){clearPhoto();}, child: Text("Clear Photo")),
+
+          ElevatedButton(onPressed: (){imageOrNoImage();}, child: Text("Button"))]
       ) )
     );
+  }
+  void clearPhoto(){
+    if(image != null){
+      image = null;
+    }
+    else{}
+  }
+  void imageOrNoImage(){
+    if(image != null){
+      controller.createPdf(_title.text, _image.text, _today.text, _feeling.text, image!);
+    }
+    else{
+      controller.createPdfNoImage(_title.text, _today.text, _feeling.text);
+    }
   }
 }
