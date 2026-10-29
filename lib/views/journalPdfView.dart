@@ -35,7 +35,7 @@ class _Journalpdfview extends State<Journalpdfview> {
       body: Center(
         child:  FutureBuilder(future: FUTURE , builder: ((context, snapshot) {
           if (snapshot.hasData){
-            return PdfViewer.file('${snapshot.data!}/ImageTest8.pdf');
+            return PdfViewer.file('${snapshot.data!}/New spacer test though !!.pdf');
           }
           else{
             return Text("");

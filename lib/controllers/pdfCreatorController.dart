@@ -21,7 +21,7 @@ class Pdfcreatorcontroller {
     }
   }
 
-  Future<void> createPdf(String title, String text) async {
+  Future<void> createPdf(String title, String imageDescribe, String didToday, String feel) async {
     final netImage = await networkImage('https://realbirthcompany.com/wp-content/uploads/2025/09/200-500mls-480x402.png');
     pdf.addPage(
       pw.Page(
@@ -29,25 +29,40 @@ class Pdfcreatorcontroller {
         return pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
-
-          pw.Text(
-            title,
-            textAlign: pw.TextAlign.center,
-            style: pw.TextStyle(
-              fontSize: 26,
-              fontWeight: pw.FontWeight.bold,
-            ),
-          ),
-
+          
+          pw.Row(mainAxisAlignment: pw.MainAxisAlignment.spaceBetween, children:[
+            pw.Align(child: pw.Text(title,style: pw.TextStyle(fontSize: 20,fontWeight: pw.FontWeight.bold,)), alignment: pw.Alignment.topLeft),
+            pw.Align(child: pw.Text("Other abstract",style: pw.TextStyle(fontSize: 20,fontWeight: pw.FontWeight.bold,)), alignment: pw.Alignment.topRight)
+          ]),
+          
+          pw.Divider(),
+          
           pw.SizedBox(height: 50),
 
           pw.Row(children:
           [
-            pw.Container(height: 250,width: 200, padding: pw.EdgeInsets.all(20), alignment: pw.Alignment.topLeft, 
-            child: pw.Text(text, maxLines: 99, style: pw.TextStyle(fontSize: 20))), 
+            pw.Container(height: 250, width: 225, alignment: pw.Alignment.topLeft, 
+            child: pw.Text(imageDescribe, maxLines: 12, style: pw.TextStyle(fontSize: 18))), 
+
+            pw.SizedBox(width: 10),
+            pw.SizedBox(child: pw.VerticalDivider(),height: 250),
+            pw.SizedBox(width: 10),
+
             pw.Align(alignment: pw.Alignment.centerRight,
             child: pw.Image(netImage, width: 250, height: 250,)),
-          ])
+          ]),
+          
+          pw.Divider(),
+          pw.SizedBox(height: 5),
+          pw.Text("What I did today", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
+          pw.SizedBox(height: 5),
+          pw.Text(didToday, style: pw.TextStyle(fontSize: 18)),
+
+          pw.Divider(),
+          pw.SizedBox(height: 5),
+          pw.Text("How I'm feeling", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
+          pw.SizedBox(height: 5),
+          pw.Text(feel, style: pw.TextStyle(fontSize: 18)),
 
         ],
       );

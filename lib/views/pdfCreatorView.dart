@@ -12,7 +12,9 @@ class Pdfcreatorview extends StatefulWidget{
 class _Pdfcreatorview extends State<Pdfcreatorview>{
   final controller = Pdfcreatorcontroller();
   final _title = TextEditingController();
-  final _text = TextEditingController();
+  final _image = TextEditingController();
+  final _today = TextEditingController();
+  final _feeling = TextEditingController();
 
   @override
   Widget build(BuildContext context){
@@ -22,11 +24,15 @@ class _Pdfcreatorview extends State<Pdfcreatorview>{
     Center(
       child: Column(
         children:[
-          Text("NAME"),
-          TextField(controller: _title),
-          Text("INFORMATION"),
-          TextField(controller: _text,),
-          ElevatedButton(onPressed: (){controller.createPdf(_title.text, _text.text);}, child: Text("Button"))]
+          Text("Journal Entry Title"),
+          TextField(controller: _title, maxLength: 25,),
+          Text("Describe the image"),
+          TextField(controller: _image, maxLength: 250,),
+          Text("What I did Today"),
+          TextField(controller: _today, maxLength: 300,),
+          Text("How Do I Feel"),
+          TextField(controller: _feeling, maxLength: 300,),
+          ElevatedButton(onPressed: (){controller.createPdf(_title.text, _image.text, _today.text, _feeling.text);}, child: Text("Button"))]
       ) )
     );
   }
