@@ -40,8 +40,9 @@ class _Journalpdfview extends State<Journalpdfview> {
           else{
             return Text("");
           }
-        })) 
-    ) ,
-      );
+        }
+        )) 
+      ) ,
+    );
   }
 }

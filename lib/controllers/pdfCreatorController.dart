@@ -1,10 +1,7 @@
 import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 
 class Pdfcreatorcontroller {
   final pdf = pw.Document();
@@ -29,48 +26,48 @@ class Pdfcreatorcontroller {
     pdf.addPage(
       pw.Page(
         build: (context) {
-        return pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: [
+          return pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
       
-          pw.Row(mainAxisAlignment: pw.MainAxisAlignment.spaceBetween, children:[
-            pw.Align(child: pw.Text(title,style: pw.TextStyle(fontSize: 20,fontWeight: pw.FontWeight.bold,)), alignment: pw.Alignment.topLeft),
-            pw.Align(child: pw.Text("${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}" ,style: pw.TextStyle(fontSize: 20,fontWeight: pw.FontWeight.bold,)), alignment: pw.Alignment.topRight)
-          ]),
+            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.spaceBetween, children:[
+              pw.Align(child: pw.Text(title,style: pw.TextStyle(fontSize: 20,fontWeight: pw.FontWeight.bold,)), alignment: pw.Alignment.topLeft),
+              pw.Align(child: pw.Text("${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}" ,style: pw.TextStyle(fontSize: 20,fontWeight: pw.FontWeight.bold,)), alignment: pw.Alignment.topRight)
+            ]),
           
-          pw.Divider(),
+            pw.Divider(),
           
-          pw.SizedBox(height: 50),
+            pw.SizedBox(height: 50),
 
-          pw.Row(children:
-          [
-            pw.Container(height: 250, width: 225, alignment: pw.Alignment.topLeft, 
-            child: pw.Text(imageDescribe, maxLines: 12, style: pw.TextStyle(fontSize: 18))), 
+            pw.Row(children:
+            [
+              pw.Container(height: 250, width: 225, alignment: pw.Alignment.topLeft, 
+              child: pw.Text(imageDescribe, maxLines: 12, style: pw.TextStyle(fontSize: 18))), 
 
-            pw.SizedBox(width: 10),
-            pw.SizedBox(child: pw.VerticalDivider(),height: 250),
-            pw.SizedBox(width: 10),
+              pw.SizedBox(width: 10),
+              pw.SizedBox(child: pw.VerticalDivider(),height: 250),
+              pw.SizedBox(width: 10),
 
-            pw.Align(alignment: pw.Alignment.centerRight,
-            child: pw.Image(memImage, width: 250, height: 250,)),
-          ]),
+              pw.Align(alignment: pw.Alignment.centerRight,
+              child: pw.Image(memImage, width: 250, height: 250,)),
+            ]),
           
-          pw.Divider(),
-          pw.SizedBox(height: 5),
-          pw.Text("What I did today", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
-          pw.SizedBox(height: 5),
-          pw.Text(didToday, style: pw.TextStyle(fontSize: 18)),
+            pw.Divider(),
+            pw.SizedBox(height: 5),
+            pw.Text("What I did today", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
+            pw.SizedBox(height: 5),
+            pw.Text(didToday, style: pw.TextStyle(fontSize: 18)),
 
-          pw.Divider(),
-          pw.SizedBox(height: 5),
-          pw.Text("How I'm feeling", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
-          pw.SizedBox(height: 5),
-          pw.Text(feel, style: pw.TextStyle(fontSize: 18)),
+            pw.Divider(),
+            pw.SizedBox(height: 5),
+            pw.Text("How I'm feeling", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
+            pw.SizedBox(height: 5),
+            pw.Text(feel, style: pw.TextStyle(fontSize: 18)),
 
-        ],
-      );
-      },),
-    );
+          ],
+        );
+      },
+    ), );
 
     final bytes = await pdf.save();
     String path = await createFolder("RBC_APP");
@@ -83,30 +80,30 @@ class Pdfcreatorcontroller {
     pdf.addPage(
       pw.Page(
         build: (context) {
-        return pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: [
+          return pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
           
-          pw.Row(mainAxisAlignment: pw.MainAxisAlignment.spaceBetween, children:[
-            pw.Align(child: pw.Text(title,style: pw.TextStyle(fontSize: 20,fontWeight: pw.FontWeight.bold,)), alignment: pw.Alignment.topLeft),
-            pw.Align(child: pw.Text("${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}" ,style: pw.TextStyle(fontSize: 20,fontWeight: pw.FontWeight.bold,)), alignment: pw.Alignment.topRight)
-          ]),
+            pw.Row(mainAxisAlignment: pw.MainAxisAlignment.spaceBetween, children:[
+              pw.Align(child: pw.Text(title,style: pw.TextStyle(fontSize: 20,fontWeight: pw.FontWeight.bold,)), alignment: pw.Alignment.topLeft),
+              pw.Align(child: pw.Text("${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}" ,style: pw.TextStyle(fontSize: 20,fontWeight: pw.FontWeight.bold,)), alignment: pw.Alignment.topRight)
+            ]),
           
-          pw.Divider(),
+            pw.Divider(),
           
-          pw.SizedBox(height: 25),
-          pw.Text("What I did today", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
-          pw.SizedBox(height: 5),
-          pw.Text(didToday, style: pw.TextStyle(fontSize: 18)),
+            pw.SizedBox(height: 25),
+            pw.Text("What I did today", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
+            pw.SizedBox(height: 5),
+            pw.Text(didToday, style: pw.TextStyle(fontSize: 18)),
 
-          pw.Divider(),
-          pw.SizedBox(height: 5),
-          pw.Text("How I'm feeling", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
-          pw.SizedBox(height: 5),
-          pw.Text(feel, style: pw.TextStyle(fontSize: 18)),
+            pw.Divider(),
+            pw.SizedBox(height: 5),
+            pw.Text("How I'm feeling", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18)),
+            pw.SizedBox(height: 5),
+            pw.Text(feel, style: pw.TextStyle(fontSize: 18)),
 
-        ],
-      );
+          ],
+        );
       },),
     );
 
@@ -114,7 +111,6 @@ class Pdfcreatorcontroller {
     String path = await createFolder("RBC_APP");
     final file = File("$path/$title.pdf");
     await file.writeAsBytes(bytes);
-    listPDF();
   }
 
   void listPDF() async{
@@ -125,7 +121,6 @@ class Pdfcreatorcontroller {
         .path}/RBC_APP');
     List<FileSystemEntity> _files;
     _files = dir.listSync(recursive: true, followLinks: false);
-    print(_files.length);
   }
 
 }
