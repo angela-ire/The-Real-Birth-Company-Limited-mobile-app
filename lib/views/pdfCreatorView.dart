@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -19,12 +20,14 @@ class _Pdfcreatorview extends State<Pdfcreatorview>{
   final _today = TextEditingController();
   final _feeling = TextEditingController();
   XFile? image;
-  late Uint8List byte;
+  File? _path;
 
   void getImage () async{
     image = await _picker.pickImage(source: ImageSource.gallery);
-    try{byte = await image!.readAsBytes();}
-    on Exception{image = null;}
+    if(image != null){
+      _path = File(image!.path);
+      setState(() {});
+    }
   }
 
   @override
@@ -48,8 +51,14 @@ class _Pdfcreatorview extends State<Pdfcreatorview>{
               icon: const Icon(Icons.camera_alt),
               label: const Text('Choose Image'),
             ),
-              
-            ElevatedButton(onPressed: (){clearPhoto();}, child: Text("Clear Photo")),              ElevatedButton(onPressed: (){imageOrNoImage();}, child: Text("Button"))
+
+            ElevatedButton(onPressed: (){clearPhoto();}, child: Text("Clear Photo")),
+            ElevatedButton(onPressed: (){imageOrNoImage();}, child: Text("Button")),
+
+            SizedBox(height: 250, width: 250, child: _path == null 
+            ? const Text("No Image Selected")
+            :Image.file(_path!))
+            
           ]
         )
       )
@@ -59,6 +68,8 @@ class _Pdfcreatorview extends State<Pdfcreatorview>{
   void clearPhoto(){
     if(image != null){
       image = null;
+      _path = null;
+      setState(() {});
     }
   }
 

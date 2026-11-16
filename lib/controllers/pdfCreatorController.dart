@@ -77,7 +77,8 @@ class Pdfcreatorcontroller {
   }
 
   void createPdfNoImage(String title, String didToday, String feel) async{
-    pdf.addPage(
+    try{
+      pdf.addPage(
       pw.Page(
         build: (context) {
           return pw.Column(
@@ -111,6 +112,8 @@ class Pdfcreatorcontroller {
     String path = await createFolder("RBC_APP");
     final file = File("$path/$title.pdf");
     await file.writeAsBytes(bytes);
+    }
+  on Exception{}
   }
 
   void listPDF() async{

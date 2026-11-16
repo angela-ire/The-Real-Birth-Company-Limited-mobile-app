@@ -11,6 +11,7 @@ import 'package:real_birth_app/views/contractionTrackerView.dart';
 import 'package:real_birth_app/views/journalPdfView.dart';
 import 'package:real_birth_app/views/pdfCreatorView.dart';
 import 'package:real_birth_app/views/pdfListView.dart';
+import 'package:real_birth_app/views/quizView.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Homepageview extends StatelessWidget{
@@ -225,6 +226,8 @@ class _Navigation extends State<Navigation>{
               children:[
                 Flexible(child: ElevatedButton(onPressed: () => birthPlanner(), child: Text("Birth Planner"))),
                 Flexible(child: ElevatedButton(onPressed: () => bagChecklist(), child: Text("Checklist"))),
+                
+                Flexible(child: ElevatedButton(onPressed: () => Get.to(Quizview(quizNum: 1, docName: "when-is-the-cord-clamped")), child: Text("Checklist"))),
               ]
               )
             ]
